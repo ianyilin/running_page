@@ -303,7 +303,8 @@ hr {
   margin-bottom: 1.25rem;
 }
 
-.rp-map-card .mapboxgl-map {
+.rp-map-card .mapboxgl-map,
+.rp-map-card .maplibregl-map {
   border-radius: 8px;
 }
 
@@ -424,7 +425,8 @@ hr {
   overflow: hidden;
 }
 
-.runlog-map-card .mapboxgl-map {
+.runlog-map-card .mapboxgl-map,
+.runlog-map-card .maplibregl-map {
   border-radius: 8px;
 }
 
@@ -1360,11 +1362,13 @@ hr {
   display: none;
 }
 
-.runlog-map-card .mapboxgl-map {
+.runlog-map-card .mapboxgl-map,
+.runlog-map-card .maplibregl-map {
   border-radius: 11px;
 }
 
-.runlog-map-card .mapboxgl-ctrl-bottom-right {
+.runlog-map-card .mapboxgl-ctrl-bottom-right,
+.runlog-map-card .maplibregl-ctrl-bottom-right {
   top: 45px;
   right: 0;
   bottom: auto;

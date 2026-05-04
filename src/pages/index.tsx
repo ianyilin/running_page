@@ -478,8 +478,8 @@ const MonthCalendar = ({
   return (
     <section className="runlog-calendar-card">
       <div className="runlog-weekdays">
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
-          <span key={day}>{day}</span>
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+          <span key={`${day}-${index}`}>{day}</span>
         ))}
       </div>
       <div className="runlog-calendar-grid">

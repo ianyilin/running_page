@@ -320,8 +320,6 @@ jobs:
         run: pnpm install
 
       - name: Build running page for /running/
-        env:
-          VITE_MAPBOX_TOKEN: ${{ secrets.VITE_MAPBOX_TOKEN }}
         run: PATH_PREFIX=/running/ pnpm build
 
       - name: Validate homepage deploy token
