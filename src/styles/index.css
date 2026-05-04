@@ -976,6 +976,40 @@ hr {
   margin: 0.75rem 0 1rem;
 }
 
+.runlog-not-found {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: #000;
+  color: #fafafa;
+  text-align: center;
+}
+
+.runlog-not-found h1 {
+  margin: 0;
+  color: #e31937;
+  font-size: clamp(4rem, 16vw, 9rem);
+  font-weight: 950;
+  line-height: 0.9;
+}
+
+.runlog-not-found p {
+  margin: 0;
+  color: #a1a1aa;
+}
+
+.runlog-not-found a {
+  color: #fafafa;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.runlog-not-found a:hover {
+  color: #e31937;
+}
+
 .runlog-life-grid {
   display: grid;
   grid-template-columns: repeat(24, 0.5rem);

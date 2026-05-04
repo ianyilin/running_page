@@ -11,7 +11,6 @@ import {
 } from './utils/const';
 import '@/styles/index.css';
 import { withOptionalGAPageTracking } from './utils/trackRoute';
-import HomePage from '@/pages/total';
 
 if (USE_GOOGLE_ANALYTICS) {
   ReactGA.initialize(GOOGLE_ANALYTICS_TRACKING_ID);
@@ -42,10 +41,6 @@ const routes = createBrowserRouter(
     {
       path: 'mls/:id',
       element: withOptionalGAPageTracking(<Index />),
-    },
-    {
-      path: 'summary',
-      element: withOptionalGAPageTracking(<HomePage />),
     },
     {
       path: '*',
