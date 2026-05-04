@@ -19,9 +19,25 @@ import {
 import { useTheme } from '@/hooks/useTheme';
 
 type ViewMode = 'log' | 'routes' | 'heatmap' | 'life' | 'races';
+type DisplayMode = 'calendar' | 'routes';
 
+type RaceRecord = {
+  id: string;
+  date: string;
+  name: string;
+  subtitle: string;
+  category: string;
+  chipTime: string;
+  year: string;
+};
+
+const RUNNER_NAME = 'Lin Yi';
 const YEARLY_GOAL_KM = 1000;
 const MONTHLY_GOAL_KM = 120;
+const RUNNING_LIFE_BIRTH_MONTH = '1990-01';
+const RUNNING_LIFE_TOTAL_MONTHS = 1008;
+const ACTIVITY_PAGE_SIZE = 8;
+const RED = '#e31937';
 
 const viewForPath = (pathname: string): ViewMode => {
   if (pathname.startsWith('/routes')) return 'routes';
@@ -32,18 +48,24 @@ const viewForPath = (pathname: string): ViewMode => {
 };
 
 const toKm = (meters: number) => meters / M_TO_DIST;
-
 const monthKey = (date: string) => date.slice(0, 7);
-
+const yearKey = (date: string) => date.slice(0, 4);
 const formatDistance = (meters: number, digits = 2) =>
   toKm(meters).toFixed(digits);
+
+const monthLabel = (month: string) => {
+  const [year, monthNumber] = month.split('-');
+  return `${monthNumber}/${year}`;
+};
 
 const formatDuration = (seconds: number) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
-  if (hours <= 0) return `${minutes}min`;
+  if (hours <= 0) return `${minutes}m`;
   return `${hours}h ${minutes}m`;
 };
+
+const runSeconds = (run: Activity) => convertMovingTime2Sec(run.moving_time);
 
 const paceForRuns = (runs: Activity[]) => {
   const totals = runs.reduce(
@@ -59,6 +81,164 @@ const paceForRuns = (runs: Activity[]) => {
 
   if (!totals.meters || !totals.seconds) return '-';
   return formatPace(totals.meters / totals.seconds);
+};
+
+const maxRunDistance = (runs: Activity[]) =>
+  runs.reduce((max, run) => Math.max(max, toKm(run.distance || 0)), 0);
+
+const averageHeartRate = (runs: Activity[]) => {
+  const heartRates = runs
+    .map((run) => run.average_heartrate)
+    .filter((value): value is number => Boolean(value));
+  if (!heartRates.length) return '-';
+  return `${Math.round(
+    heartRates.reduce((sum, value) => sum + value, 0) / heartRates.length
+  )} bpm`;
+};
+
+const downloadText = (
+  filename: string,
+  text: string,
+  type = 'image/svg+xml'
+) => {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+};
+
+const normalizeRoutePath = (
+  run: Activity,
+  width: number,
+  height: number,
+  padding: number
+) => {
+  const points = run.summary_polyline ? pathForRun(run) : [];
+  if (points.length < 2) return '';
+
+  const lngs = points.map((point) => point[0]);
+  const lats = points.map((point) => point[1]);
+  const minLng = Math.min(...lngs);
+  const maxLng = Math.max(...lngs);
+  const minLat = Math.min(...lats);
+  const maxLat = Math.max(...lats);
+  const lngSpan = maxLng - minLng || 1;
+  const latSpan = maxLat - minLat || 1;
+
+  return points
+    .map(([lng, lat], index) => {
+      const x = padding + ((lng - minLng) / lngSpan) * (width - padding * 2);
+      const y = padding + ((maxLat - lat) / latSpan) * (height - padding * 2);
+      return `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`;
+    })
+    .join(' ');
+};
+
+const routePosterSvg = (runs: Activity[], title: string) => {
+  const width = 900;
+  const height = 620;
+  const paths = runs
+    .map((run) => normalizeRoutePath(run, 760, 430, 22))
+    .filter(Boolean)
+    .map(
+      (d, index) =>
+        `<path d="${d}" transform="translate(70 118)" fill="none" stroke="${RED}" stroke-width="${index === 0 ? 1.6 : 1.1}" stroke-linecap="round" stroke-linejoin="round" opacity="0.82" />`
+    )
+    .join('');
+
+  const totalDistance = runs.reduce((sum, run) => sum + toKm(run.distance), 0);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect width="900" height="620" fill="#09090b"/>
+  <text x="70" y="70" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="34" font-weight="800">${title}</text>
+  <text x="70" y="102" fill="#a1a1aa" font-family="Arial, sans-serif" font-size="15">${runs.length} runs · ${totalDistance.toFixed(2)} km</text>
+  ${paths}
+  <text x="70" y="570" fill="${RED}" font-family="Arial, sans-serif" font-size="18" font-weight="800">RUN.LOG</text>
+</svg>`;
+};
+
+const heatmapSvg = (year: string, runs: Activity[]) => {
+  const width = 980;
+  const height = 210;
+  const start = startOfCalendarYear(Number(year));
+  const dateMap = distanceByDate(runs);
+  const cells = Array.from({ length: 371 }, (_, index) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + index);
+    const dateKey = isoDate(date);
+    const distance = dateMap.get(dateKey) || 0;
+    const week = Math.floor(index / 7);
+    const day = index % 7;
+    const level = distanceLevel(distance);
+    const color = ['#27272a', '#6f839f', '#facc15', '#f75008', RED][level];
+    return `<rect x="${92 + week * 15}" y="${48 + day * 15}" width="11" height="11" rx="2" fill="${color}"><title>${dateKey}: ${distance.toFixed(2)} km</title></rect>`;
+  }).join('');
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect width="980" height="210" fill="#09090b"/>
+  <text x="32" y="34" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="24" font-weight="800">${year} Heatmap</text>
+  ${cells}
+  <text x="32" y="188" fill="${RED}" font-family="Arial, sans-serif" font-size="16" font-weight="800">RUN.LOG</text>
+</svg>`;
+};
+
+const runningLifeSvg = (
+  months: { key: string; distance: number; future: boolean }[],
+  elapsed: number,
+  percent: number
+) => {
+  const width = 980;
+  const height = 620;
+  const columns = 42;
+  const cell = 12;
+  const gap = 5;
+  const cells = months
+    .map((item, index) => {
+      const level = item.future
+        ? 5
+        : item.distance > 300
+          ? 4
+          : item.distance > 200
+            ? 3
+            : item.distance > 100
+              ? 2
+              : item.distance > 0
+                ? 1
+                : 0;
+      const color = [
+        '#27272a',
+        '#6f839f',
+        '#facc15',
+        '#f75008',
+        RED,
+        '#111113',
+      ][level];
+      const x = 36 + (index % columns) * (cell + gap);
+      const y = 112 + Math.floor(index / columns) * (cell + gap);
+      return `<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="3" fill="${color}"><title>${item.key}: ${item.distance.toFixed(1)} km</title></rect>`;
+    })
+    .join('');
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect width="980" height="620" fill="#09090b"/>
+  <text x="36" y="58" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="34" font-weight="800">RUNNING<tspan fill="${RED}">.LIFE</tspan></text>
+  <text x="36" y="88" fill="#a1a1aa" font-family="Arial, sans-serif" font-size="16">${elapsed}/${months.length} months · ${percent.toFixed(1)}%</text>
+  ${cells}
+  <text x="36" y="584" fill="${RED}" font-family="Arial, sans-serif" font-size="16" font-weight="800">RUN.LOG</text>
+</svg>`;
+};
+
+const RouteSketch = ({ run }: { run: Activity }) => {
+  const d = normalizeRoutePath(run, 120, 92, 14);
+  if (!d) return <div className="runlog-route-empty" />;
+
+  return (
+    <svg className="runlog-route-sketch" viewBox="0 0 120 92">
+      <path d={d} />
+    </svg>
+  );
 };
 
 const ProgressCard = ({
@@ -89,37 +269,6 @@ const ProgressCard = ({
   );
 };
 
-const RouteSketch = ({ run }: { run: Activity }) => {
-  const points = run.summary_polyline ? pathForRun(run) : [];
-  if (points.length < 2) return <div className="runlog-route-empty" />;
-
-  const lngs = points.map((point) => point[0]);
-  const lats = points.map((point) => point[1]);
-  const minLng = Math.min(...lngs);
-  const maxLng = Math.max(...lngs);
-  const minLat = Math.min(...lats);
-  const maxLat = Math.max(...lats);
-  const width = 120;
-  const height = 92;
-  const padding = 14;
-  const lngSpan = maxLng - minLng || 1;
-  const latSpan = maxLat - minLat || 1;
-
-  const d = points
-    .map(([lng, lat], index) => {
-      const x = padding + ((lng - minLng) / lngSpan) * (width - padding * 2);
-      const y = padding + ((maxLat - lat) / latSpan) * (height - padding * 2);
-      return `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`;
-    })
-    .join(' ');
-
-  return (
-    <svg className="runlog-route-sketch" viewBox={`0 0 ${width} ${height}`}>
-      <path d={d} />
-    </svg>
-  );
-};
-
 const ActivityCard = ({
   run,
   onSelect,
@@ -147,6 +296,31 @@ const ActivityCard = ({
   </button>
 );
 
+const distanceByDate = (runs: Activity[]) => {
+  const result = new Map<string, number>();
+  runs.forEach((run) => {
+    const date = run.start_date_local.slice(0, 10);
+    result.set(date, (result.get(date) || 0) + toKm(run.distance));
+  });
+  return result;
+};
+
+const isoDate = (date: Date) => date.toISOString().slice(0, 10);
+
+const startOfCalendarYear = (year: number) => {
+  const start = new Date(year, 0, 1);
+  start.setDate(start.getDate() - start.getDay());
+  return start;
+};
+
+const distanceLevel = (distance: number) => {
+  if (distance >= 15) return 4;
+  if (distance >= 8) return 3;
+  if (distance >= 3) return 2;
+  if (distance > 0) return 1;
+  return 0;
+};
+
 const MonthCalendar = ({
   month,
   runs,
@@ -160,15 +334,7 @@ const MonthCalendar = ({
   const firstDay = new Date(year, monthNumber - 1, 1);
   const daysInMonth = new Date(year, monthNumber, 0).getDate();
   const offset = firstDay.getDay();
-  const distanceByDate = new Map<string, number>();
-
-  runs.forEach((run) => {
-    const date = run.start_date_local.slice(0, 10);
-    distanceByDate.set(
-      date,
-      (distanceByDate.get(date) || 0) + toKm(run.distance)
-    );
-  });
+  const totals = distanceByDate(runs);
 
   const cells = [
     ...Array.from({ length: offset }, (_, index) => ({
@@ -177,7 +343,7 @@ const MonthCalendar = ({
     ...Array.from({ length: daysInMonth }, (_, index) => {
       const day = index + 1;
       const date = `${month}-${String(day).padStart(2, '0')}`;
-      return { key: date, day, distance: distanceByDate.get(date) || 0 };
+      return { key: date, day, distance: totals.get(date) || 0 };
     }),
   ];
 
@@ -185,7 +351,7 @@ const MonthCalendar = ({
     <section className="runlog-calendar-card">
       <div className="runlog-calendar-head">
         <div>
-          <strong>{monthNumber.toString().padStart(2, '0')}/2026</strong>
+          <strong>{monthLabel(month)}</strong>
           <span>
             {runs.reduce((sum, run) => sum + toKm(run.distance), 0).toFixed(1)}{' '}
             {DIST_UNIT}
@@ -204,6 +370,7 @@ const MonthCalendar = ({
               key={cell.key}
               className={cell.distance ? 'has-run' : ''}
               onClick={() => onSelectDate(cell.key)}
+              title={`${cell.key}: ${cell.distance.toFixed(2)} ${DIST_UNIT}`}
             >
               <span>{cell.day}</span>
               {cell.distance > 0 && <em>{cell.distance.toFixed(1)}</em>}
@@ -217,7 +384,223 @@ const MonthCalendar = ({
   );
 };
 
+const ActivityLog = ({
+  runs,
+  page,
+  onPageChange,
+  onSelect,
+}: {
+  runs: Activity[];
+  page: number;
+  onPageChange: (_page: number) => void;
+  onSelect: (_run: Activity) => void;
+}) => {
+  const pageCount = Math.max(1, Math.ceil(runs.length / ACTIVITY_PAGE_SIZE));
+  const safePage = Math.min(page, pageCount - 1);
+  const start = safePage * ACTIVITY_PAGE_SIZE;
+  const pageRuns = runs.slice(start, start + ACTIVITY_PAGE_SIZE);
+
+  return (
+    <section className="runlog-activity-log">
+      <div className="runlog-subhead">
+        <h3>Activity Log</h3>
+        <span>
+          Showing {runs.length ? start + 1 : 0}-
+          {Math.min(start + ACTIVITY_PAGE_SIZE, runs.length)} of {runs.length}
+        </span>
+      </div>
+      <div className="runlog-activity-list">
+        {pageRuns.map((run) => (
+          <ActivityCard key={run.run_id} run={run} onSelect={onSelect} />
+        ))}
+      </div>
+      {pageCount > 1 && (
+        <div className="runlog-pager">
+          <button
+            disabled={safePage === 0}
+            onClick={() => onPageChange(safePage - 1)}
+          >
+            Previous
+          </button>
+          <span>
+            {safePage + 1}/{pageCount}
+          </span>
+          <button
+            disabled={safePage >= pageCount - 1}
+            onClick={() => onPageChange(safePage + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </section>
+  );
+};
+
+const MonthRouteView = ({
+  runs,
+  onSelect,
+}: {
+  runs: Activity[];
+  onSelect: (_run: Activity) => void;
+}) => (
+  <div className="runlog-month-routes">
+    {runs.map((run) => (
+      <button key={run.run_id} onClick={() => onSelect(run)}>
+        <RouteSketch run={run} />
+        <span>{run.start_date_local.slice(5, 10)}</span>
+        <strong>{formatDistance(run.distance, 1)} km</strong>
+      </button>
+    ))}
+  </div>
+);
+
+const YearFilter = ({
+  years,
+  active,
+  onChange,
+}: {
+  years: string[];
+  active: string;
+  onChange: (_year: string) => void;
+}) => (
+  <div className="runlog-year-filter">
+    <button
+      className={active === 'all' ? 'active' : ''}
+      onClick={() => onChange('all')}
+    >
+      All
+    </button>
+    {years.map((year) => (
+      <button
+        key={year}
+        className={active === year ? 'active' : ''}
+        onClick={() => onChange(year)}
+      >
+        {year}
+      </button>
+    ))}
+  </div>
+);
+
+const RoutePoster = ({ runs, year }: { runs: Activity[]; year: string }) => {
+  const totalDistance = runs.reduce((sum, run) => sum + toKm(run.distance), 0);
+  const totalSeconds = runs.reduce((sum, run) => sum + runSeconds(run), 0);
+  const title = `${RUNNER_NAME}'s Run`;
+
+  return (
+    <section
+      className="runlog-route-poster"
+      onClick={() =>
+        downloadText(
+          `runlog-routes-${year}.svg`,
+          routePosterSvg(runs, `${title} ${year === 'all' ? 'All' : year}`)
+        )
+      }
+      title="Click to download track map"
+    >
+      <div className="runlog-poster-canvas">
+        {runs
+          .filter((run) => run.summary_polyline)
+          .slice(0, 140)
+          .map((run) => (
+            <svg key={run.run_id} viewBox="0 0 120 92">
+              <path d={normalizeRoutePath(run, 120, 92, 12)} />
+            </svg>
+          ))}
+        <div>
+          <span>{title}</span>
+          <h2>{year === 'all' ? 'ALL' : year}</h2>
+        </div>
+      </div>
+      <div className="runlog-route-stats">
+        <span>Statistics</span>
+        <dl>
+          <dt>Runs:</dt>
+          <dd>{runs.length}</dd>
+          <dt>Dist:</dt>
+          <dd>{totalDistance.toFixed(2)} km</dd>
+          <dt>Time:</dt>
+          <dd>{formatDuration(totalSeconds)}</dd>
+          <dt>Max:</dt>
+          <dd>{maxRunDistance(runs).toFixed(2)} km</dd>
+          <dt>Pace:</dt>
+          <dd>{paceForRuns(runs)}</dd>
+          <dt>HR:</dt>
+          <dd>{averageHeartRate(runs)}</dd>
+        </dl>
+      </div>
+    </section>
+  );
+};
+
+const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
+  const dateMap = distanceByDate(runs);
+  const start = startOfCalendarYear(Number(year));
+  const days = Array.from({ length: 371 }, (_, index) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + index);
+    const key = isoDate(date);
+    return {
+      key,
+      inYear: date.getFullYear().toString() === year,
+      distance: dateMap.get(key) || 0,
+    };
+  });
+
+  return (
+    <section className="runlog-year-heatmap">
+      <div className="runlog-heatmap-head">
+        <h3>{year}</h3>
+        <button
+          onClick={() =>
+            downloadText(`runlog-heatmap-${year}.svg`, heatmapSvg(year, runs))
+          }
+        >
+          Download Year Heatmap
+        </button>
+      </div>
+      <div className="runlog-month-labels">
+        {[
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ].map((month) => (
+          <span key={month}>{month}</span>
+        ))}
+      </div>
+      <div className="runlog-heatmap-body">
+        <div className="runlog-heatmap-weekdays">
+          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+            <span key={day}>{day}</span>
+          ))}
+        </div>
+        <div className="runlog-heatmap-grid">
+          {days.map((day) => (
+            <span
+              key={day.key}
+              data-level={day.inYear ? distanceLevel(day.distance) : 0}
+              data-outside={!day.inYear}
+              title={`${day.key}: ${day.distance.toFixed(2)}km`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const RunningLife = ({ activities }: { activities: Activity[] }) => {
+  const [layout, setLayout] = useState<'wide' | 'compact'>('wide');
   const months = useMemo(() => {
     const byMonth = new Map<string, number>();
     activities.forEach((run) => {
@@ -225,28 +608,26 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
       byMonth.set(key, (byMonth.get(key) || 0) + toKm(run.distance));
     });
 
-    if (!byMonth.size) return [];
-    const keys = Array.from(byMonth.keys()).sort();
-    const [startYear, startMonth] = keys[0].split('-').map(Number);
-    const [endYear, endMonth] = keys[keys.length - 1].split('-').map(Number);
-    const result: { key: string; distance: number; future: boolean }[] = [];
+    const [startYear, startMonth] =
+      RUNNING_LIFE_BIRTH_MONTH.split('-').map(Number);
+    const today = new Date();
+    const currentKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
     const cursor = new Date(startYear, startMonth - 1, 1);
-    const end = new Date(endYear, endMonth - 1, 1);
 
-    while (cursor <= end) {
+    return Array.from({ length: RUNNING_LIFE_TOTAL_MONTHS }, () => {
       const key = `${cursor.getFullYear()}-${String(cursor.getMonth() + 1).padStart(2, '0')}`;
-      result.push({
+      const item = {
         key,
         distance: byMonth.get(key) || 0,
-        future: false,
-      });
+        future: key > currentKey,
+      };
       cursor.setMonth(cursor.getMonth() + 1);
-    }
-
-    return result;
+      return item;
+    });
   }, [activities]);
 
-  const total = months.reduce((sum, item) => sum + item.distance, 0);
+  const elapsed = months.filter((item) => !item.future).length;
+  const percent = (elapsed / months.length) * 100;
 
   return (
     <section className="runlog-life-view">
@@ -254,16 +635,34 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
         RUNNING<span>.LIFE</span>
       </h1>
       <p>
-        {months.length} months · {total.toFixed(1)} {DIST_UNIT}
+        {elapsed}/{months.length} months · {percent.toFixed(1)}%
       </p>
-      <div className="runlog-life-grid">
+      <div className="runlog-life-actions">
+        <button
+          onClick={() =>
+            downloadText(
+              'running-life.svg',
+              runningLifeSvg(months, elapsed, percent)
+            )
+          }
+        >
+          Save Image
+        </button>
+        <button
+          onClick={() => setLayout(layout === 'wide' ? 'compact' : 'wide')}
+        >
+          Toggle Layout
+        </button>
+      </div>
+      <div className={`runlog-life-grid ${layout}`}>
         {months.map((item) => {
-          const level =
-            item.distance > 250
+          const level = item.future
+            ? 5
+            : item.distance > 300
               ? 4
-              : item.distance > 150
+              : item.distance > 200
                 ? 3
-                : item.distance > 80
+                : item.distance > 100
                   ? 2
                   : item.distance > 0
                     ? 1
@@ -277,6 +676,118 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
           );
         })}
       </div>
+    </section>
+  );
+};
+
+const inferRaceCategory = (run: Activity) => {
+  const name = `${run.name || ''} ${run.subtype || ''}`.toLowerCase();
+  const distance = toKm(run.distance || 0);
+  if (name.includes('marathon') || name.includes('马拉松') || distance > 40)
+    return 'Full Marathon';
+  if (name.includes('half') || name.includes('半程') || distance > 20)
+    return 'Half Marathon';
+  if (name.includes('10k') || distance >= 9.5) return '10K';
+  if (name.includes('8k') || (distance >= 7.5 && distance < 9.5)) return '8K';
+  if (name.includes('5k') || (distance >= 4.5 && distance < 6)) return '5K';
+  return '';
+};
+
+const inferRaces = (runs: Activity[]): RaceRecord[] =>
+  runs
+    .map((run) => {
+      const category = inferRaceCategory(run);
+      const raceLike =
+        category &&
+        /marathon|马拉松|半程|半马|10k|8k|5k|race|比赛/i.test(run.name || '');
+      if (!raceLike) return null;
+      return {
+        id: String(run.run_id),
+        date: run.start_date_local.slice(0, 10),
+        name: titleForRun(run),
+        subtitle: '',
+        category,
+        chipTime: formatRunTime(run.moving_time),
+        year: yearKey(run.start_date_local),
+      };
+    })
+    .filter((race): race is RaceRecord => Boolean(race));
+
+const RaceList = ({
+  races,
+  raceId,
+}: {
+  races: RaceRecord[];
+  raceId?: string;
+}) => {
+  const race = races.find((item) => item.id === raceId);
+  const grouped = races.reduce<Record<string, RaceRecord[]>>((acc, item) => {
+    acc[item.year] = acc[item.year] || [];
+    acc[item.year].push(item);
+    return acc;
+  }, {});
+
+  if (race) {
+    return (
+      <section className="runlog-race-detail">
+        <span>{race.date}</span>
+        <h1>{race.name}</h1>
+        <p>{race.subtitle || 'RUN.LOG Race Record'}</p>
+        <dl>
+          <dt>Category</dt>
+          <dd>{race.category}</dd>
+          <dt>Chip Time</dt>
+          <dd>{race.chipTime}</dd>
+          <dt>Result</dt>
+          <dd>PB</dd>
+        </dl>
+      </section>
+    );
+  }
+
+  return (
+    <section className="runlog-races-view">
+      <h1>
+        奔跑 <span>MARATHON LIFE</span>
+      </h1>
+      <p>记录每一次心跳，每一公里，每一块奖牌的故事。</p>
+      {races.length ? (
+        Object.keys(grouped)
+          .sort((a, b) => Number(b) - Number(a))
+          .map((year) => (
+            <div className="runlog-race-year" key={year}>
+              <div className="runlog-race-year-head">
+                <h2>{year}</h2>
+                <span>年度汇总</span>
+                <strong>{grouped[year].length} 场赛事</strong>
+              </div>
+              <div className="runlog-race-list">
+                {grouped[year].map((item) => (
+                  <a
+                    key={item.id}
+                    href={`${import.meta.env.BASE_URL}mls/${item.id}`}
+                  >
+                    <span>{item.date}</span>
+                    <h3>{item.name}</h3>
+                    <p>{item.subtitle}</p>
+                    <div>
+                      <em>Category</em>
+                      <strong>{item.category}</strong>
+                      <em>Chip Time</em>
+                      <strong>{item.chipTime}</strong>
+                      <b>PB</b>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+      ) : (
+        <div className="runlog-empty-races">
+          <h2>暂无赛事记录</h2>
+          <p>正式比赛、PB、完赛证书和照片墙可以在这里继续扩展。</p>
+        </div>
+      )}
     </section>
   );
 };
@@ -313,8 +824,10 @@ const Index = () => {
   const { theme } = useTheme();
   const location = useLocation();
   const view = viewForPath(location.pathname);
-  const [displayMode, setDisplayMode] = useState<'list' | 'calendar'>('list');
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('calendar');
   const [selectedRunIds, setSelectedRunIds] = useState<number[]>([]);
+  const [activityPage, setActivityPage] = useState(0);
+  const [routeYear, setRouteYear] = useState('all');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -328,21 +841,60 @@ const Index = () => {
         .sort(sortDateFunc),
     [activities]
   );
-  const latestMonth = runs[0] ? monthKey(runs[0].start_date_local) : '';
-  const latestYear = runs[0]?.start_date_local.slice(0, 4) || '';
+  const availableMonths = useMemo(
+    () =>
+      Array.from(new Set(runs.map((run) => monthKey(run.start_date_local)))),
+    [runs]
+  );
+  const availableYears = useMemo(
+    () => Array.from(new Set(runs.map((run) => yearKey(run.start_date_local)))),
+    [runs]
+  );
+  const latestMonth = availableMonths[0] || '';
+  const latestYear = availableYears[0] || '';
+  const [selectedMonth, setSelectedMonth] = useState(latestMonth);
+  const [heatmapYear, setHeatmapYear] = useState(latestYear);
+
+  useEffect(() => {
+    if (!selectedMonth && latestMonth) setSelectedMonth(latestMonth);
+  }, [latestMonth, selectedMonth]);
+
+  useEffect(() => {
+    if (!heatmapYear && latestYear) setHeatmapYear(latestYear);
+  }, [heatmapYear, latestYear]);
+
+  useEffect(() => {
+    setActivityPage(0);
+  }, [selectedMonth]);
+
+  const monthIndex = Math.max(0, availableMonths.indexOf(selectedMonth));
   const monthRuns = runs.filter(
-    (run) => monthKey(run.start_date_local) === latestMonth
+    (run) => monthKey(run.start_date_local) === selectedMonth
   );
   const yearRuns = runs.filter((run) =>
     run.start_date_local.startsWith(latestYear)
   );
+  const routeRuns =
+    routeYear === 'all'
+      ? runs
+      : runs.filter((run) => yearKey(run.start_date_local) === routeYear);
+  const heatmapRuns = runs.filter((run) =>
+    run.start_date_local.startsWith(heatmapYear)
+  );
+  const races = useMemo(() => inferRaces(runs), [runs]);
+  const raceId = location.pathname.startsWith('/mls/')
+    ? location.pathname.split('/').filter(Boolean).at(-1)
+    : undefined;
+
   const mapRuns = selectedRunIds.length
     ? runs.filter((run) => selectedRunIds.includes(run.run_id))
     : view === 'routes'
-      ? runs
-      : monthRuns.length
-        ? monthRuns
-        : runs;
+      ? routeRuns
+      : view === 'heatmap'
+        ? heatmapRuns
+        : monthRuns.length
+          ? monthRuns
+          : runs;
   const geoData = useMemo(() => geoJsonForRuns(mapRuns), [mapRuns]);
   const bounds = useMemo(() => getBoundsForGeoData(geoData), [geoData]);
   const [viewState, setViewState] = useState(bounds);
@@ -360,7 +912,7 @@ const Index = () => {
     0
   );
   const monthlySeconds = monthRuns.reduce(
-    (sum, run) => sum + convertMovingTime2Sec(run.moving_time),
+    (sum, run) => sum + runSeconds(run),
     0
   );
 
@@ -372,6 +924,8 @@ const Index = () => {
     setSelectedRunIds(ids);
   };
 
+  const showChrome = view !== 'life' && view !== 'races';
+
   return (
     <div className="runlog-page">
       <Helmet>
@@ -380,24 +934,24 @@ const Index = () => {
       </Helmet>
 
       <main className="runlog-app-shell">
-        {view !== 'life' && (
+        {showChrome && (
           <>
             <header className="runlog-topbar">
               <div>
                 <span>RUN.LOG</span>
-                <strong>Lin Yi</strong>
+                <strong>{RUNNER_NAME}</strong>
               </div>
               <button onClick={() => setSelectedRunIds([])}>RESET</button>
             </header>
 
             <section className="runlog-goals">
               <ProgressCard
-                label="YEARLY GOAL"
+                label="Yearly Goal"
                 value={yearlyDistance}
                 goal={YEARLY_GOAL_KM}
               />
               <ProgressCard
-                label="MONTHLY GOAL"
+                label="Monthly Goal"
                 value={monthlyDistance}
                 goal={MONTHLY_GOAL_KM}
               />
@@ -420,91 +974,123 @@ const Index = () => {
           <section className="runlog-panel">
             <div className="runlog-panel-head">
               <div>
-                <h2>{latestMonth.replace('-', '/')}</h2>
+                <h2>
+                  {selectedMonth ? monthLabel(selectedMonth) : '-'}{' '}
+                  <span>{monthlyDistance.toFixed(0)} km</span>
+                </h2>
                 <span>
                   {monthlyDistance.toFixed(1)} {DIST_UNIT} ·{' '}
                   {formatDuration(monthlySeconds)} · {paceForRuns(monthRuns)}
                 </span>
               </div>
-              <div className="runlog-toggle">
+              <div className="runlog-month-controls">
                 <button
-                  className={displayMode === 'list' ? 'active' : ''}
-                  onClick={() => setDisplayMode('list')}
+                  disabled={monthIndex <= 0}
+                  onClick={() =>
+                    setSelectedMonth(availableMonths[monthIndex - 1])
+                  }
                 >
-                  ☷
+                  ‹
+                </button>
+                <button
+                  disabled={monthIndex >= availableMonths.length - 1}
+                  onClick={() =>
+                    setSelectedMonth(availableMonths[monthIndex + 1])
+                  }
+                >
+                  ›
                 </button>
                 <button
                   className={displayMode === 'calendar' ? 'active' : ''}
                   onClick={() => setDisplayMode('calendar')}
                 >
-                  ▦
+                  Calendar View
+                </button>
+                <button
+                  className={displayMode === 'routes' ? 'active' : ''}
+                  onClick={() => setDisplayMode('routes')}
+                >
+                  Route View
                 </button>
               </div>
             </div>
 
             {displayMode === 'calendar' ? (
               <MonthCalendar
-                month={latestMonth}
+                month={selectedMonth}
                 runs={monthRuns}
                 onSelectDate={selectDate}
               />
             ) : (
-              <div className="runlog-activity-list">
-                {monthRuns.map((run) => (
-                  <ActivityCard
-                    key={run.run_id}
-                    run={run}
-                    onSelect={selectRun}
-                  />
-                ))}
-              </div>
+              <MonthRouteView runs={monthRuns} onSelect={selectRun} />
             )}
-          </section>
-        )}
 
-        {view === 'routes' && (
-          <section className="runlog-panel">
-            <div className="runlog-panel-head">
-              <div>
-                <h2>轨迹墙</h2>
-                <span>{runs.length} activities with Strava routes</span>
-              </div>
-            </div>
-            <div className="runlog-route-wall">
-              {runs.slice(0, 60).map((run) => (
-                <button key={run.run_id} onClick={() => selectRun(run)}>
-                  <RouteSketch run={run} />
-                  <strong>{formatDistance(run.distance, 1)}</strong>
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {view === 'heatmap' && (
-          <section className="runlog-panel">
-            <div className="runlog-panel-head">
-              <div>
-                <h2>热力图</h2>
-                <span>按日期选择跑步记录</span>
-              </div>
-            </div>
-            <MonthCalendar
-              month={latestMonth}
+            <ActivityLog
               runs={monthRuns}
-              onSelectDate={selectDate}
+              page={activityPage}
+              onPageChange={setActivityPage}
+              onSelect={selectRun}
             />
           </section>
         )}
 
-        {view === 'life' && <RunningLife activities={runs} />}
-
-        {view === 'races' && (
-          <section className="runlog-panel runlog-empty-view">
-            <h2>赛事记录</h2>
-            <p>这里预留给正式比赛、PB、完赛证书和照片墙。</p>
+        {view === 'routes' && (
+          <section className="runlog-routes-view">
+            <YearFilter
+              years={availableYears}
+              active={routeYear}
+              onChange={(year) => {
+                setRouteYear(year);
+                setSelectedRunIds([]);
+              }}
+            />
+            <RoutePoster runs={routeRuns} year={routeYear} />
           </section>
         )}
+
+        {view === 'heatmap' && (
+          <section className="runlog-heatmap-view">
+            <div className="runlog-heatmap-toolbar">
+              <button
+                disabled={availableYears.indexOf(heatmapYear) <= 0}
+                onClick={() =>
+                  setHeatmapYear(
+                    availableYears[availableYears.indexOf(heatmapYear) - 1]
+                  )
+                }
+              >
+                Newer years
+              </button>
+              <button
+                disabled={
+                  availableYears.indexOf(heatmapYear) >=
+                  availableYears.length - 1
+                }
+                onClick={() =>
+                  setHeatmapYear(
+                    availableYears[availableYears.indexOf(heatmapYear) + 1]
+                  )
+                }
+              >
+                Older years
+              </button>
+              <button
+                onClick={() =>
+                  downloadText(
+                    `runlog-heatmap-${heatmapYear}.svg`,
+                    heatmapSvg(heatmapYear, heatmapRuns)
+                  )
+                }
+              >
+                Download Heatmap
+              </button>
+            </div>
+            <HeatmapYear year={heatmapYear} runs={heatmapRuns} />
+          </section>
+        )}
+
+        {view === 'life' && <RunningLife activities={runs} />}
+        {view === 'races' && <RaceList races={races} raceId={raceId} />}
       </main>
 
       <BottomNav active={view} />

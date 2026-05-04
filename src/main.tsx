@@ -40,6 +40,10 @@ const routes = createBrowserRouter(
       element: withOptionalGAPageTracking(<Index />),
     },
     {
+      path: 'mls/:id',
+      element: withOptionalGAPageTracking(<Index />),
+    },
+    {
       path: 'summary',
       element: withOptionalGAPageTracking(<HomePage />),
     },

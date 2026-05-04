@@ -9,6 +9,14 @@ on:
     branches:
       - master
     paths:
+      - .github/workflows/run_data_sync.yml
+      - assets/**
+      - public/**
+      - src/**
+      - index.html
+      - package.json
+      - pnpm-lock.yaml
+      - vite.config.ts
       - run_page/nike_sync.py
       - run_page/nike_to_strava_sync.py
       - run_page/strava_sync.py
@@ -213,7 +221,7 @@ jobs:
         if: env.RUN_TYPE == 'tulipsport'
         run: |
           python run_page/tulipsport_sync.py ${{ secrets.TULIPSPORT_TOKEN }} --with-gpx
- 
+
       - name: Run sync Oppo heytap script, note currently this script is not worked
         if: env.RUN_TYPE == 'oppo'
         run: |
@@ -337,6 +345,10 @@ jobs:
           rm -rf homepage/running
           mkdir -p homepage/running
           cp -R dist/. homepage/running/
+          for route in routes heatmap running_life mls; do
+            mkdir -p "homepage/running/$route"
+            cp dist/index.html "homepage/running/$route/index.html"
+          done
           find homepage/running -maxdepth 2 -type f | head -50
           git -C homepage config user.email 'action@github.com'
           git -C homepage config user.name 'GitHub Action'
