@@ -378,6 +378,52 @@ const ActivityCard = ({
   </button>
 );
 
+const ActivityTable = ({
+  runs,
+  onSelect,
+}: {
+  runs: Activity[];
+  onSelect: (_run: Activity) => void;
+}) => (
+  <div className="runlog-activity-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Distance</th>
+          <th>Duration</th>
+          <th>Pace</th>
+          <th>HR</th>
+        </tr>
+      </thead>
+      <tbody>
+        {runs.map((run) => (
+          <tr key={run.run_id} onClick={() => onSelect(run)}>
+            <td>
+              <time>{run.start_date_local.slice(0, 10)}</time>
+              <span>{run.start_date_local.slice(11, 16)}</span>
+            </td>
+            <td>
+              <b>{titleForRun(run)}</b>
+              <span>{monthLabel(monthKey(run.start_date_local))}</span>
+            </td>
+            <td>
+              <strong>
+                {formatDistance(run.distance)}
+                <em>{DIST_UNIT}</em>
+              </strong>
+            </td>
+            <td>{formatRunTime(run.moving_time)}</td>
+            <td>{run.average_speed ? formatPace(run.average_speed) : '-'}</td>
+            <td>{run.average_heartrate?.toFixed(0) || '-'} bpm</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
 const distanceByDate = (runs: Activity[]) => {
   const result = new Map<string, number>();
   runs.forEach((run) => {
@@ -487,6 +533,7 @@ const ActivityLog = ({
           <ActivityCard key={run.run_id} run={run} onSelect={onSelect} />
         ))}
       </div>
+      <ActivityTable runs={pageRuns} onSelect={onSelect} />
       {pageCount > 1 && (
         <div className="runlog-pager">
           <button
@@ -986,6 +1033,47 @@ const MonthPanel = ({
   </section>
 );
 
+const MonthlySummary = ({
+  monthRuns,
+  monthlyDistance,
+  monthlySeconds,
+}: {
+  monthRuns: Activity[];
+  monthlyDistance: number;
+  monthlySeconds: number;
+}) => {
+  const stats = [
+    { label: 'Runs', value: monthRuns.length.toString() },
+    { label: 'Distance', value: `${monthlyDistance.toFixed(1)} ${DIST_UNIT}` },
+    { label: 'Time', value: formatDuration(monthlySeconds) },
+    { label: 'Avg Pace', value: paceForRuns(monthRuns) },
+    {
+      label: 'Longest',
+      value: `${maxRunDistance(monthRuns).toFixed(1)} ${DIST_UNIT}`,
+    },
+    { label: 'Avg HR', value: averageHeartRate(monthRuns) },
+  ];
+
+  return (
+    <section className="runlog-month-summary">
+      <div className="runlog-summary-head">
+        <h3>Monthly Summary</h3>
+        <span>
+          {monthRuns.length ? monthKey(monthRuns[0].start_date_local) : '-'}
+        </span>
+      </div>
+      <div className="runlog-summary-grid">
+        {stats.map((item) => (
+          <div key={item.label}>
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const Index = () => {
   const { activities } = useActivities();
   const { theme } = useTheme();
@@ -1159,6 +1247,11 @@ const Index = () => {
                 setDisplayMode={setDisplayMode}
                 selectDate={selectDate}
                 selectRun={selectRun}
+              />
+              <MonthlySummary
+                monthRuns={monthRuns}
+                monthlyDistance={monthlyDistance}
+                monthlySeconds={monthlySeconds}
               />
             </div>
           </div>
