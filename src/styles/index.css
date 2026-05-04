@@ -1244,11 +1244,46 @@ hr {
     BlinkMacSystemFont,
     'Segoe UI',
     sans-serif;
+  overflow-x: hidden;
 }
 
 .runlog-app-shell {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: min(100%, 1184px);
   padding: 1.5rem 1rem 0;
+}
+
+.runlog-desktop-nav {
+  display: none;
+}
+
+.runlog-home-grid,
+.runlog-home-left,
+.runlog-home-right {
+  display: contents;
+}
+
+.runlog-view-log .runlog-goals {
+  order: 1;
+}
+
+.runlog-view-log .runlog-map-card {
+  order: 2;
+}
+
+.runlog-view-log .runlog-panel {
+  order: 3;
+}
+
+.runlog-view-log .runlog-activity-log {
+  order: 4;
+}
+
+.runlog-marathon-teaser,
+.runlog-total-card {
+  display: none;
 }
 
 .runlog-goals {
@@ -1780,6 +1815,426 @@ hr {
 .runlog-bottom-nav em {
   font-size: 0.66rem;
   font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .runlog-page {
+    padding-bottom: 2rem;
+  }
+
+  .runlog-desktop-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+    background: rgb(0 0 0 / 0.5);
+    padding: 0 1.5rem;
+    backdrop-filter: blur(14px);
+  }
+
+  .runlog-desktop-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: 0 auto;
+    width: min(100%, 1280px);
+    pointer-events: none;
+  }
+
+  .runlog-brand,
+  .runlog-desktop-nav button {
+    border: 0;
+    background: transparent;
+    color: #d4d4d8;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .runlog-brand {
+    font-size: 1.55rem;
+    font-weight: 950;
+    letter-spacing: -0.06em;
+  }
+
+  .runlog-brand span {
+    color: #fff;
+  }
+
+  .runlog-brand b {
+    color: #e31937;
+  }
+
+  .runlog-desktop-nav > div {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.84rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+
+  .runlog-desktop-nav > div button {
+    text-transform: uppercase;
+    transition: color 0.16s ease;
+  }
+
+  .runlog-desktop-nav > div button:hover {
+    color: #fff;
+  }
+
+  .runlog-desktop-nav em {
+    color: #71717a;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .runlog-bottom-nav {
+    display: none;
+  }
+
+  .runlog-app-shell {
+    width: min(100%, 1280px);
+    padding: 6rem 1.5rem 0;
+  }
+
+  .runlog-home-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: 2rem;
+  }
+
+  .runlog-home-left,
+  .runlog-home-right {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .runlog-goals {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 0;
+  }
+
+  .runlog-total-card {
+    display: flex;
+    min-height: 154px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .runlog-total-card::after {
+    content: '点击打开轨迹墙';
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgb(0 0 0 / 0.6);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    backdrop-filter: blur(1px);
+  }
+
+  .runlog-total-card:hover::after {
+    opacity: 1;
+  }
+
+  .runlog-total-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: #a1a1aa;
+    font-size: 0.88rem;
+  }
+
+  .runlog-goal-card {
+    min-height: 154px;
+    padding: 1.25rem;
+  }
+
+  .runlog-goal-value {
+    font-size: 1.5rem;
+  }
+
+  .runlog-view-log .runlog-map-card {
+    height: 300px;
+    margin-bottom: 0;
+  }
+
+  .runlog-marathon-teaser {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 124px;
+    overflow: hidden;
+    border: 1px solid #27272f;
+    border-radius: 16px;
+    background: #18181b;
+    color: inherit;
+    cursor: pointer;
+    padding: 1.5rem;
+    text-align: left;
+  }
+
+  .runlog-marathon-teaser::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16rem;
+    height: 100%;
+    background: linear-gradient(270deg, rgb(227 25 55 / 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.22s ease;
+  }
+
+  .runlog-marathon-teaser:hover {
+    border-color: rgb(227 25 55 / 0.45);
+  }
+
+  .runlog-marathon-teaser:hover::after {
+    opacity: 1;
+  }
+
+  .runlog-marathon-teaser > div {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .runlog-marathon-teaser strong {
+    color: #e31937;
+    font-size: 3.5rem;
+    font-weight: 950;
+    line-height: 1;
+    letter-spacing: -0.08em;
+  }
+
+  .runlog-marathon-teaser span {
+    display: block;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .runlog-marathon-teaser em {
+    display: block;
+    margin-top: 0.35rem;
+    color: #a1a1aa;
+    font-size: 0.82rem;
+    font-style: normal;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .runlog-marathon-teaser p {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    margin: 0;
+    border-left: 1px solid rgb(255 255 255 / 0.1);
+    padding-left: 1.5rem;
+    text-align: right;
+  }
+
+  .runlog-marathon-teaser p span {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    border-radius: 999px;
+    background: rgb(227 25 55 / 0.1);
+    color: #e31937;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    padding: 0.18rem 0.45rem;
+    text-transform: uppercase;
+  }
+
+  .runlog-marathon-teaser p b {
+    display: block;
+    max-width: 220px;
+    overflow: hidden;
+    color: #fff;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .runlog-marathon-teaser time {
+    color: #71717a;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      monospace;
+    font-size: 0.75rem;
+  }
+
+  .runlog-panel {
+    min-height: 430px;
+    padding: 1.5rem;
+  }
+
+  .runlog-calendar-grid {
+    gap: 0.95rem;
+  }
+
+  .runlog-calendar-grid button,
+  .runlog-calendar-grid > span {
+    min-height: 58px;
+  }
+
+  .runlog-calendar-grid button.has-run {
+    background: #27272a;
+    color: #d4d4d8;
+  }
+
+  .runlog-calendar-grid button.has-run::after {
+    display: none;
+  }
+
+  .runlog-calendar-grid button em {
+    display: block;
+    color: inherit;
+    font-size: 0.66rem;
+    opacity: 0.78;
+  }
+
+  .runlog-activity-log {
+    min-height: 500px;
+    margin-top: 0;
+    border: 1px solid #27272f;
+    border-radius: 16px;
+    background: #18181b;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .runlog-subhead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgb(63 63 70 / 0.5);
+    background: rgb(24 24 27 / 0.88);
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .runlog-activity-list {
+    gap: 0;
+  }
+
+  .runlog-activity-card {
+    grid-template-columns: minmax(10rem, 1fr) minmax(0, 1fr) auto;
+    align-items: center;
+    border: 0;
+    border-bottom: 1px solid rgb(63 63 70 / 0.5);
+    border-radius: 0;
+    background: transparent;
+    padding: 1rem 1.5rem;
+  }
+
+  .runlog-activity-card .runlog-route-sketch,
+  .runlog-activity-card .runlog-route-empty {
+    display: none;
+  }
+
+  .runlog-activity-main {
+    grid-column: 1;
+  }
+
+  .runlog-activity-distance {
+    grid-column: 3;
+  }
+
+  .runlog-activity-meta {
+    grid-column: 2;
+    align-self: center;
+  }
+
+  .runlog-pager {
+    border-top: 1px solid rgb(63 63 70 / 0.5);
+    margin: 0;
+    padding: 0.65rem 1rem;
+  }
+
+  .runlog-routes-view,
+  .runlog-heatmap-view,
+  .runlog-races-view,
+  .runlog-race-detail {
+    padding-top: 1rem;
+  }
+
+  .runlog-routes-view {
+    gap: 4rem;
+  }
+
+  .runlog-poster-canvas {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0.9rem 1.1rem;
+    min-height: 620px;
+    padding: 5rem 2.4rem 2.4rem;
+  }
+
+  .runlog-poster-canvas svg {
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .runlog-route-stats {
+    padding: 1.5rem;
+  }
+
+  .runlog-heatmap-view {
+    padding-top: 1rem;
+  }
+
+  .runlog-year-heatmap {
+    width: fit-content;
+    padding: 1.5rem 1.5rem 1.6rem 1rem;
+  }
+
+  .runlog-heatmap-grid {
+    grid-template-columns: repeat(7, 22px);
+    gap: 2px;
+  }
+
+  .runlog-heatmap-grid i {
+    width: 22px;
+    height: 22px;
+  }
+
+  .runlog-life-view h1,
+  .runlog-life-view p,
+  .runlog-life-actions {
+    display: flex;
+  }
+
+  .runlog-life-view {
+    justify-content: center;
+    min-height: calc(100vh - 8rem);
+  }
+
+  .runlog-life-grid {
+    grid-template-columns: repeat(42, 7px);
+  }
 }
 
 @media (max-width: 640px) {

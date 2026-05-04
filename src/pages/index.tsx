@@ -245,15 +245,17 @@ const ProgressCard = ({
   label,
   value,
   goal,
+  className = '',
 }: {
   label: string;
   value: number;
   goal: number;
+  className?: string;
 }) => {
   const percent = Math.max(0, Math.min(100, (value / goal) * 100));
 
   return (
-    <section className="runlog-goal-card">
+    <section className={`runlog-goal-card ${className}`}>
       <div className="runlog-goal-label">{label}</div>
       <div className="runlog-goal-value">
         {value.toFixed(2)}
@@ -266,6 +268,86 @@ const ProgressCard = ({
         />
       </div>
     </section>
+  );
+};
+
+const TotalCard = ({
+  distance,
+  runs,
+  seconds,
+}: {
+  distance: number;
+  runs: number;
+  seconds: number;
+}) => (
+  <section className="runlog-goal-card runlog-total-card">
+    <div>
+      <div className="runlog-goal-label">Total Distance</div>
+      <div className="runlog-goal-value">
+        {distance.toFixed(2)}
+        <span>km</span>
+      </div>
+    </div>
+    <div className="runlog-total-meta">
+      <span>{runs} runs</span>
+      <span>{formatDuration(seconds)}</span>
+    </div>
+  </section>
+);
+
+const DesktopNav = ({ runnerName }: { runnerName: string }) => {
+  const navigate = useNavigate();
+  const items = [
+    { path: '/', label: '首页' },
+    { path: '/routes', label: '轨迹墙' },
+    { path: '/heatmap', label: '热力图' },
+    { path: '/running_life', label: '奔跑人生' },
+    { path: '/mls', label: '赛事记录' },
+  ];
+
+  return (
+    <nav className="runlog-desktop-nav">
+      <button className="runlog-brand" onClick={() => navigate('/')}>
+        <span>RUN</span>
+        <b>.LOG</b>
+      </button>
+      <div>
+        {items.map((item) => (
+          <button key={item.path} onClick={() => navigate(item.path)}>
+            {item.label}
+          </button>
+        ))}
+        <em>{runnerName}</em>
+      </div>
+    </nav>
+  );
+};
+
+const MarathonTeaser = ({ races }: { races: RaceRecord[] }) => {
+  const navigate = useNavigate();
+  const currentYear = String(new Date().getFullYear());
+  const yearRaces = races.filter((race) => race.year === currentYear);
+  const latest = races[0];
+
+  return (
+    <button
+      className="runlog-marathon-teaser"
+      type="button"
+      onClick={() => navigate('/mls')}
+    >
+      <div>
+        <strong>{yearRaces.length}</strong>
+        <span>MARATHON EVENTS</span>
+        <em>
+          in <b>{currentYear}</b>
+        </em>
+      </div>
+      <p>
+        <span>Latest Finish</span>
+        <b>{latest?.name || 'No race yet'}</b>
+        <time>{latest?.date || currentYear}</time>
+      </p>
+    </button>
   );
 };
 
@@ -823,6 +905,87 @@ const BottomNav = ({ active }: { active: ViewMode }) => {
   );
 };
 
+const MonthPanel = ({
+  selectedMonth,
+  monthlyDistance,
+  monthlySeconds,
+  monthRuns,
+  monthIndex,
+  availableMonths,
+  displayMode,
+  setSelectedMonth,
+  setDisplayMode,
+  selectDate,
+  selectRun,
+}: {
+  selectedMonth: string;
+  monthlyDistance: number;
+  monthlySeconds: number;
+  monthRuns: Activity[];
+  monthIndex: number;
+  availableMonths: string[];
+  displayMode: DisplayMode;
+  setSelectedMonth: (_month: string) => void;
+  setDisplayMode: (_mode: DisplayMode) => void;
+  selectDate: (_date: string) => void;
+  selectRun: (_run: Activity) => void;
+}) => (
+  <section className="runlog-panel">
+    <div className="runlog-panel-head">
+      <div>
+        <h2>
+          {selectedMonth ? monthLabel(selectedMonth) : '-'}{' '}
+          <span>{monthlyDistance.toFixed(0)} km</span>
+        </h2>
+        <span>
+          {monthlyDistance.toFixed(1)} {DIST_UNIT} ·{' '}
+          {formatDuration(monthlySeconds)} · {paceForRuns(monthRuns)}
+        </span>
+      </div>
+      <div className="runlog-month-controls">
+        <button
+          disabled={monthIndex <= 0}
+          onClick={() => setSelectedMonth(availableMonths[monthIndex - 1])}
+        >
+          <span aria-hidden="true">‹</span>
+        </button>
+        <button
+          disabled={monthIndex >= availableMonths.length - 1}
+          onClick={() => setSelectedMonth(availableMonths[monthIndex + 1])}
+        >
+          <span aria-hidden="true">›</span>
+        </button>
+        <button
+          className={displayMode === 'calendar' ? 'active' : ''}
+          onClick={() => setDisplayMode('calendar')}
+          aria-label="Calendar View"
+          title="Calendar View"
+        >
+          <span aria-hidden="true">▦</span>
+        </button>
+        <button
+          className={displayMode === 'routes' ? 'active' : ''}
+          onClick={() => setDisplayMode('routes')}
+          aria-label="Route View"
+          title="Route View"
+        >
+          <span aria-hidden="true">♢</span>
+        </button>
+      </div>
+    </div>
+
+    {displayMode === 'calendar' ? (
+      <MonthCalendar
+        month={selectedMonth}
+        runs={monthRuns}
+        onSelectDate={selectDate}
+      />
+    ) : (
+      <MonthRouteView runs={monthRuns} onSelect={selectRun} />
+    )}
+  </section>
+);
+
 const Index = () => {
   const { activities } = useActivities();
   const { theme } = useTheme();
@@ -911,6 +1074,8 @@ const Index = () => {
     (sum, run) => sum + toKm(run.distance),
     0
   );
+  const totalDistance = runs.reduce((sum, run) => sum + toKm(run.distance), 0);
+  const totalSeconds = runs.reduce((sum, run) => sum + runSeconds(run), 0);
   const monthlyDistance = monthRuns.reduce(
     (sum, run) => sum + toKm(run.distance),
     0
@@ -928,110 +1093,75 @@ const Index = () => {
     setSelectedRunIds(ids);
   };
 
-  const showChrome = view === 'log';
-
   return (
-    <div className="runlog-page">
+    <div className={`runlog-page runlog-view-${view}`}>
       <Helmet>
         <html lang="en" data-theme="dark" />
         <title>RUN.LOG</title>
       </Helmet>
 
+      <DesktopNav runnerName={RUNNER_NAME} />
+
       <main className="runlog-app-shell">
-        {showChrome && (
-          <>
-            <section className="runlog-goals">
-              <ProgressCard
-                label="Yearly Goal"
-                value={yearlyDistance}
-                goal={YEARLY_GOAL_KM}
-              />
-              <ProgressCard
-                label="Monthly Goal"
-                value={monthlyDistance}
-                goal={MONTHLY_GOAL_KM}
-              />
-            </section>
-
-            <section className="runlog-map-card" id="map-container">
-              <RunMap
-                title=""
-                viewState={viewState}
-                geoData={geoData}
-                setViewState={setViewState}
-                changeYear={() => setSelectedRunIds([])}
-                thisYear={latestYear}
-              />
-            </section>
-          </>
-        )}
-
         {view === 'log' && (
-          <section className="runlog-panel">
-            <div className="runlog-panel-head">
-              <div>
-                <h2>
-                  {selectedMonth ? monthLabel(selectedMonth) : '-'}{' '}
-                  <span>{monthlyDistance.toFixed(0)} km</span>
-                </h2>
-                <span>
-                  {monthlyDistance.toFixed(1)} {DIST_UNIT} ·{' '}
-                  {formatDuration(monthlySeconds)} · {paceForRuns(monthRuns)}
-                </span>
-              </div>
-              <div className="runlog-month-controls">
-                <button
-                  disabled={monthIndex <= 0}
-                  onClick={() =>
-                    setSelectedMonth(availableMonths[monthIndex - 1])
-                  }
-                >
-                  <span aria-hidden="true">‹</span>
-                </button>
-                <button
-                  disabled={monthIndex >= availableMonths.length - 1}
-                  onClick={() =>
-                    setSelectedMonth(availableMonths[monthIndex + 1])
-                  }
-                >
-                  <span aria-hidden="true">›</span>
-                </button>
-                <button
-                  className={displayMode === 'calendar' ? 'active' : ''}
-                  onClick={() => setDisplayMode('calendar')}
-                  aria-label="Calendar View"
-                  title="Calendar View"
-                >
-                  <span aria-hidden="true">▦</span>
-                </button>
-                <button
-                  className={displayMode === 'routes' ? 'active' : ''}
-                  onClick={() => setDisplayMode('routes')}
-                  aria-label="Route View"
-                  title="Route View"
-                >
-                  <span aria-hidden="true">♢</span>
-                </button>
-              </div>
+          <div className="runlog-home-grid">
+            <div className="runlog-home-left">
+              <section className="runlog-goals">
+                <TotalCard
+                  distance={totalDistance}
+                  runs={runs.length}
+                  seconds={totalSeconds}
+                />
+                <ProgressCard
+                  label="Yearly Goal"
+                  value={yearlyDistance}
+                  goal={YEARLY_GOAL_KM}
+                  className="runlog-yearly-card"
+                />
+                <ProgressCard
+                  label="Monthly Goal"
+                  value={monthlyDistance}
+                  goal={MONTHLY_GOAL_KM}
+                  className="runlog-monthly-card"
+                />
+              </section>
+
+              <ActivityLog
+                runs={monthRuns}
+                page={activityPage}
+                onPageChange={setActivityPage}
+                onSelect={selectRun}
+              />
             </div>
 
-            {displayMode === 'calendar' ? (
-              <MonthCalendar
-                month={selectedMonth}
-                runs={monthRuns}
-                onSelectDate={selectDate}
-              />
-            ) : (
-              <MonthRouteView runs={monthRuns} onSelect={selectRun} />
-            )}
+            <div className="runlog-home-right">
+              <MarathonTeaser races={races} />
+              <section className="runlog-map-card" id="map-container">
+                <RunMap
+                  title=""
+                  viewState={viewState}
+                  geoData={geoData}
+                  setViewState={setViewState}
+                  changeYear={() => setSelectedRunIds([])}
+                  thisYear={latestYear}
+                />
+              </section>
 
-            <ActivityLog
-              runs={monthRuns}
-              page={activityPage}
-              onPageChange={setActivityPage}
-              onSelect={selectRun}
-            />
-          </section>
+              <MonthPanel
+                selectedMonth={selectedMonth}
+                monthlyDistance={monthlyDistance}
+                monthlySeconds={monthlySeconds}
+                monthRuns={monthRuns}
+                monthIndex={monthIndex}
+                availableMonths={availableMonths}
+                displayMode={displayMode}
+                setSelectedMonth={setSelectedMonth}
+                setDisplayMode={setDisplayMode}
+                selectDate={selectDate}
+                selectRun={selectRun}
+              />
+            </div>
+          </div>
         )}
 
         {view === 'routes' && (
