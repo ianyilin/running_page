@@ -1826,7 +1826,7 @@ hr {
   font-weight: 500;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 760px) {
   .runlog-page {
     padding-bottom: 2rem;
   }
@@ -1866,7 +1866,7 @@ hr {
   }
 
   .runlog-brand {
-    font-size: 1.55rem;
+    font-size: clamp(1.15rem, 1.8vw, 1.55rem);
     font-weight: 950;
     letter-spacing: -0.06em;
   }
@@ -1882,8 +1882,8 @@ hr {
   .runlog-desktop-nav > div {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    font-size: 0.84rem;
+    gap: clamp(0.75rem, 1.4vw, 1.5rem);
+    font-size: clamp(0.68rem, 0.95vw, 0.84rem);
     font-weight: 800;
     letter-spacing: 0.03em;
   }
@@ -1910,13 +1910,13 @@ hr {
 
   .runlog-app-shell {
     width: min(100%, 1280px);
-    padding: 6rem 1.5rem 0;
+    padding: 6rem clamp(0.9rem, 1.8vw, 1.5rem) 0;
   }
 
   .runlog-home-grid {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    gap: 2rem;
+    gap: clamp(1rem, 2.4vw, 2rem);
   }
 
   .runlog-home-left,
@@ -1924,18 +1924,18 @@ hr {
     display: flex;
     min-width: 0;
     flex-direction: column;
-    gap: 2rem;
+    gap: clamp(1rem, 2.4vw, 2rem);
   }
 
   .runlog-goals {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: clamp(0.6rem, 1vw, 1rem);
     margin-bottom: 0;
   }
 
   .runlog-total-card {
     display: flex;
-    min-height: 154px;
+    min-height: clamp(118px, 12vw, 154px);
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
@@ -1972,8 +1972,8 @@ hr {
   }
 
   .runlog-goal-card {
-    min-height: 154px;
-    padding: 1.25rem;
+    min-height: clamp(118px, 12vw, 154px);
+    padding: clamp(0.85rem, 1.4vw, 1.25rem);
   }
 
   .runlog-goal-value {
@@ -1992,15 +1992,15 @@ hr {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    min-height: 124px;
+    gap: clamp(0.85rem, 1.5vw, 1.5rem);
+    min-height: clamp(96px, 10vw, 124px);
     overflow: hidden;
     border: 1px solid #27272f;
     border-radius: 16px;
     background: #18181b;
     color: inherit;
     cursor: pointer;
-    padding: 1.5rem;
+    padding: clamp(1rem, 1.6vw, 1.5rem);
     text-align: left;
   }
 
@@ -2027,14 +2027,14 @@ hr {
   .runlog-marathon-teaser > div {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: clamp(0.75rem, 1.3vw, 1.25rem);
     position: relative;
     z-index: 1;
   }
 
   .runlog-marathon-teaser strong {
     color: #e31937;
-    font-size: 3.5rem;
+    font-size: clamp(2.4rem, 4vw, 3.5rem);
     font-weight: 950;
     line-height: 1;
     letter-spacing: -0.08em;
@@ -2043,7 +2043,7 @@ hr {
   .runlog-marathon-teaser span {
     display: block;
     color: #fff;
-    font-size: 1.2rem;
+    font-size: clamp(0.85rem, 1.35vw, 1.2rem);
     font-weight: 800;
     line-height: 1;
   }
@@ -2064,7 +2064,7 @@ hr {
     min-width: 0;
     margin: 0;
     border-left: 1px solid rgb(255 255 255 / 0.1);
-    padding-left: 1.5rem;
+    padding-left: clamp(0.85rem, 1.4vw, 1.5rem);
     text-align: right;
   }
 
@@ -2099,8 +2099,8 @@ hr {
 
   .runlog-panel {
     order: 3;
-    min-height: 430px;
-    padding: 1.5rem;
+    min-height: clamp(360px, 34vw, 430px);
+    padding: clamp(1rem, 1.5vw, 1.5rem);
   }
 
   .runlog-month-summary {
@@ -2135,7 +2135,7 @@ hr {
 
   .runlog-summary-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
     gap: 0.85rem;
   }
 
@@ -2168,12 +2168,12 @@ hr {
   }
 
   .runlog-calendar-grid {
-    gap: 0.95rem;
+    gap: clamp(0.45rem, 1vw, 0.95rem);
   }
 
   .runlog-calendar-grid button,
   .runlog-calendar-grid > span {
-    min-height: 58px;
+    min-height: clamp(42px, 4.8vw, 58px);
   }
 
   .runlog-calendar-grid button.has-run {
@@ -2209,7 +2209,7 @@ hr {
     margin-bottom: 0;
     border-bottom: 1px solid rgb(63 63 70 / 0.5);
     background: rgb(24 24 27 / 0.88);
-    padding: 1.5rem;
+    padding: clamp(1rem, 1.5vw, 1.5rem);
     backdrop-filter: blur(8px);
   }
 
@@ -2225,7 +2225,7 @@ hr {
   .runlog-activity-table table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 680px;
+    min-width: 520px;
   }
 
   .runlog-activity-table th {
@@ -2234,7 +2234,7 @@ hr {
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.13em;
-    padding: 0.75rem 1.1rem;
+    padding: 0.75rem clamp(0.7rem, 1vw, 1.1rem);
     text-align: left;
     text-transform: uppercase;
   }
@@ -2245,7 +2245,7 @@ hr {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       monospace;
     font-size: 0.8rem;
-    padding: 1rem 1.1rem;
+    padding: 1rem clamp(0.7rem, 1vw, 1.1rem);
     vertical-align: middle;
   }
 
@@ -2373,6 +2373,52 @@ hr {
 
   .runlog-life-grid {
     grid-template-columns: repeat(42, 7px);
+  }
+}
+
+@media (min-width: 760px) and (max-width: 940px) {
+  .runlog-desktop-nav {
+    padding-inline: 1rem;
+  }
+
+  .runlog-desktop-nav > div {
+    gap: 0.65rem;
+    font-size: 0.66rem;
+  }
+
+  .runlog-desktop-nav em {
+    display: none;
+  }
+
+  .runlog-panel-head {
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .runlog-panel-head h2 span {
+    display: inline-block;
+    margin-left: 0.35rem;
+  }
+
+  .runlog-month-controls {
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+  }
+
+  .runlog-month-controls button,
+  .runlog-month-controls button:nth-child(1),
+  .runlog-month-controls button:nth-child(2),
+  .runlog-month-controls button:nth-child(3),
+  .runlog-month-controls button:nth-child(4) {
+    width: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0;
+  }
+
+  .runlog-month-controls button:nth-child(3),
+  .runlog-month-controls button:nth-child(4) {
+    font-size: 0.92rem;
   }
 }
 

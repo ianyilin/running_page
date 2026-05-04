@@ -390,7 +390,6 @@ const ActivityTable = ({
       <thead>
         <tr>
           <th>Date</th>
-          <th>Activity</th>
           <th>Distance</th>
           <th>Duration</th>
           <th>Pace</th>
@@ -403,10 +402,6 @@ const ActivityTable = ({
             <td>
               <time>{run.start_date_local.slice(0, 10)}</time>
               <span>{run.start_date_local.slice(11, 16)}</span>
-            </td>
-            <td>
-              <b>{titleForRun(run)}</b>
-              <span>{monthLabel(monthKey(run.start_date_local))}</span>
             </td>
             <td>
               <strong>
