@@ -349,15 +349,6 @@ const MonthCalendar = ({
 
   return (
     <section className="runlog-calendar-card">
-      <div className="runlog-calendar-head">
-        <div>
-          <strong>{monthLabel(month)}</strong>
-          <span>
-            {runs.reduce((sum, run) => sum + toKm(run.distance), 0).toFixed(1)}{' '}
-            {DIST_UNIT}
-          </span>
-        </div>
-      </div>
       <div className="runlog-weekdays">
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
           <span key={day}>{day}</span>
@@ -536,15 +527,38 @@ const RoutePoster = ({ runs, year }: { runs: Activity[]; year: string }) => {
 
 const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
   const dateMap = distanceByDate(runs);
-  const start = startOfCalendarYear(Number(year));
-  const days = Array.from({ length: 371 }, (_, index) => {
-    const date = new Date(start);
-    date.setDate(start.getDate() + index);
-    const key = isoDate(date);
+  const months = Array.from({ length: 12 }, (_, monthIndex) => {
+    const firstDay = new Date(Number(year), monthIndex, 1);
+    const daysInMonth = new Date(Number(year), monthIndex + 1, 0).getDate();
+    const cells = [
+      ...Array.from({ length: firstDay.getDay() }, (_, index) => ({
+        key: `blank-${monthIndex}-${index}`,
+      })),
+      ...Array.from({ length: daysInMonth }, (_, index) => {
+        const date = new Date(Number(year), monthIndex, index + 1);
+        const key = isoDate(date);
+        return {
+          key,
+          distance: dateMap.get(key) || 0,
+        };
+      }),
+    ];
     return {
-      key,
-      inYear: date.getFullYear().toString() === year,
-      distance: dateMap.get(key) || 0,
+      label: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ][monthIndex],
+      cells,
     };
   });
 
@@ -560,40 +574,30 @@ const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
           Download Year Heatmap
         </button>
       </div>
-      <div className="runlog-month-labels">
-        {[
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ].map((month) => (
-          <span key={month}>{month}</span>
+      <div className="runlog-heatmap-weekdays top">
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+          <span key={day}>{day}</span>
         ))}
       </div>
       <div className="runlog-heatmap-body">
-        <div className="runlog-heatmap-weekdays">
-          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
-            <span key={day}>{day}</span>
-          ))}
-        </div>
-        <div className="runlog-heatmap-grid">
-          {days.map((day) => (
-            <span
-              key={day.key}
-              data-level={day.inYear ? distanceLevel(day.distance) : 0}
-              data-outside={!day.inYear}
-              title={`${day.key}: ${day.distance.toFixed(2)}km`}
-            />
-          ))}
-        </div>
+        {months.map((month) => (
+          <div className="runlog-heatmap-month" key={month.label}>
+            <span>{month.label}</span>
+            <div className="runlog-heatmap-grid">
+              {month.cells.map((day) =>
+                'distance' in day ? (
+                  <i
+                    key={day.key}
+                    data-level={distanceLevel(day.distance)}
+                    title={`${day.key}: ${day.distance.toFixed(2)}km`}
+                  />
+                ) : (
+                  <i key={day.key} data-outside="true" />
+                )
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -924,7 +928,7 @@ const Index = () => {
     setSelectedRunIds(ids);
   };
 
-  const showChrome = view !== 'life' && view !== 'races';
+  const showChrome = view === 'log';
 
   return (
     <div className="runlog-page">
@@ -936,14 +940,6 @@ const Index = () => {
       <main className="runlog-app-shell">
         {showChrome && (
           <>
-            <header className="runlog-topbar">
-              <div>
-                <span>RUN.LOG</span>
-                <strong>{RUNNER_NAME}</strong>
-              </div>
-              <button onClick={() => setSelectedRunIds([])}>RESET</button>
-            </header>
-
             <section className="runlog-goals">
               <ProgressCard
                 label="Yearly Goal"
@@ -990,7 +986,7 @@ const Index = () => {
                     setSelectedMonth(availableMonths[monthIndex - 1])
                   }
                 >
-                  ‹
+                  <span aria-hidden="true">‹</span>
                 </button>
                 <button
                   disabled={monthIndex >= availableMonths.length - 1}
@@ -998,19 +994,23 @@ const Index = () => {
                     setSelectedMonth(availableMonths[monthIndex + 1])
                   }
                 >
-                  ›
+                  <span aria-hidden="true">›</span>
                 </button>
                 <button
                   className={displayMode === 'calendar' ? 'active' : ''}
                   onClick={() => setDisplayMode('calendar')}
+                  aria-label="Calendar View"
+                  title="Calendar View"
                 >
-                  Calendar View
+                  <span aria-hidden="true">▦</span>
                 </button>
                 <button
                   className={displayMode === 'routes' ? 'active' : ''}
                   onClick={() => setDisplayMode('routes')}
+                  aria-label="Route View"
+                  title="Route View"
                 >
-                  Route View
+                  <span aria-hidden="true">♢</span>
                 </button>
               </div>
             </div>
