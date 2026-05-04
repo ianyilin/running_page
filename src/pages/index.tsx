@@ -1123,33 +1123,44 @@ const Index = () => {
   }, [selectedMonth]);
 
   const monthIndex = Math.max(0, availableMonths.indexOf(selectedMonth));
-  const monthRuns = runs.filter(
-    (run) => monthKey(run.start_date_local) === selectedMonth
+  const monthRuns = useMemo(
+    () =>
+      runs.filter((run) => monthKey(run.start_date_local) === selectedMonth),
+    [runs, selectedMonth]
   );
-  const yearRuns = runs.filter((run) =>
-    run.start_date_local.startsWith(latestYear)
+  const yearRuns = useMemo(
+    () => runs.filter((run) => run.start_date_local.startsWith(latestYear)),
+    [runs, latestYear]
   );
-  const routeRuns =
-    routeYear === 'all'
-      ? runs
-      : runs.filter((run) => yearKey(run.start_date_local) === routeYear);
-  const heatmapRuns = runs.filter((run) =>
-    run.start_date_local.startsWith(heatmapYear)
+  const routeRuns = useMemo(
+    () =>
+      routeYear === 'all'
+        ? runs
+        : runs.filter((run) => yearKey(run.start_date_local) === routeYear),
+    [runs, routeYear]
+  );
+  const heatmapRuns = useMemo(
+    () => runs.filter((run) => run.start_date_local.startsWith(heatmapYear)),
+    [runs, heatmapYear]
   );
   const races = useMemo(() => inferRaces(runs), [runs]);
   const raceId = location.pathname.startsWith('/mls/')
     ? location.pathname.split('/').filter(Boolean).at(-1)
     : undefined;
 
-  const mapRuns = selectedRunIds.length
-    ? runs.filter((run) => selectedRunIds.includes(run.run_id))
-    : view === 'routes'
-      ? routeRuns
-      : view === 'heatmap'
-        ? heatmapRuns
-        : monthRuns.length
-          ? monthRuns
-          : runs;
+  const mapRuns = useMemo(
+    () =>
+      selectedRunIds.length
+        ? runs.filter((run) => selectedRunIds.includes(run.run_id))
+        : view === 'routes'
+          ? routeRuns
+          : view === 'heatmap'
+            ? heatmapRuns
+            : monthRuns.length
+              ? monthRuns
+              : runs,
+    [heatmapRuns, monthRuns, routeRuns, runs, selectedRunIds, view]
+  );
   const geoData = useMemo(() => geoJsonForRuns(mapRuns), [mapRuns]);
   const bounds = useMemo(() => getBoundsForGeoData(geoData), [geoData]);
   const [viewState, setViewState] = useState(bounds);

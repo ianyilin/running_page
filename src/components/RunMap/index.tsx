@@ -21,7 +21,6 @@ import {
   COUNTRY_FILL_COLOR,
   USE_DASH_LINE,
   LINE_OPACITY,
-  MAP_HEIGHT,
   PRIVACY_MODE,
   LIGHTS_ON,
   MAP_TILE_VENDOR,
@@ -230,39 +229,37 @@ const RunMap = ({
 
   const mapRefCallback = useCallback(
     (ref: MapRef) => {
-      if (ref !== null) {
-        const map = ref.getMap();
-        // all style resources have been downloaded
-        // and the first visually complete rendering of the base style has occurred.
-        // it's odd. when use style other than mapbox, the style.load event is not triggered.Add commentMore actions
-        // so I use data event instead of style.load event and make sure we handle it only once.
-        map.on('data', (event) => {
-          if (event.dataType !== 'style' || mapRef.current) {
-            return;
-          }
-          if (!ROAD_LABEL_DISPLAY) {
-            const layers = map.getStyle().layers;
-            const labelLayerNames = layers
-              .filter(
-                (layer: any) =>
-                  (layer.type === 'symbol' || layer.type === 'composite') &&
-                  layer.layout.text_field !== null
-              )
-              .map((layer: any) => layer.id);
-            labelLayerNames.forEach((layerId) => {
-              map.removeLayer(layerId);
-            });
-          }
-          mapRef.current = ref;
-          switchLayerVisibility(map, lights);
-        });
-      }
-      if (mapRef.current) {
-        const map = mapRef.current.getMap();
+      if (ref === null) return;
+
+      const map = ref.getMap();
+      mapRef.current = ref;
+
+      const initializeMapLayers = () => {
+        if (!ROAD_LABEL_DISPLAY) {
+          const layers = map.getStyle().layers || [];
+          const labelLayerNames = layers
+            .filter(
+              (layer: any) =>
+                layer.type === 'symbol' &&
+                layer.layout &&
+                layer.layout['text-field']
+            )
+            .map((layer: any) => layer.id);
+          labelLayerNames.forEach((layerId) => {
+            if (map.getLayer(layerId)) map.removeLayer(layerId);
+          });
+        }
         switchLayerVisibility(map, lights);
+        map.resize();
+      };
+
+      if (map.isStyleLoaded()) {
+        initializeMapLayers();
+      } else {
+        map.once('style.load', initializeMapLayers);
       }
     },
-    [mapRef, lights]
+    [lights]
   );
 
   const initGeoDataLength = geoData.features.length;
@@ -337,7 +334,7 @@ const RunMap = ({
   const style: React.CSSProperties = useMemo(
     () => ({
       width: '100%',
-      height: MAP_HEIGHT,
+      height: '100%',
       maxWidth: '100%', // Prevent overflow on mobile
     }),
     []
