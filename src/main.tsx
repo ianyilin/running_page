@@ -13,10 +13,6 @@ const routes = createBrowserRouter(
       element: <Index />,
     },
     {
-      path: 'routes',
-      element: <Index />,
-    },
-    {
       path: 'heatmap',
       element: <Index />,
     },

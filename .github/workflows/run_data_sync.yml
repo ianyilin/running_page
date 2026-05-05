@@ -109,7 +109,7 @@ jobs:
           rm -rf homepage/running
           mkdir -p homepage/running
           cp -R dist/. homepage/running/
-          for route in routes heatmap running_life mls; do
+          for route in heatmap running_life mls; do
             mkdir -p "homepage/running/$route"
             cp dist/index.html "homepage/running/$route/index.html"
           done

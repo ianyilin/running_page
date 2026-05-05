@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import Map, {
+  AttributionControl,
   FullscreenControl,
   Layer,
   MapRef,
@@ -217,6 +218,7 @@ const RunMap = ({ viewState, setViewState, geoData }: IRunMapProps) => {
       mapStyle={mapStyle}
       ref={mapRefCallback}
       cooperativeGestures={isTouchDevice()}
+      attributionControl={false}
     >
       {mapError && (
         <div className={styles.mapErrorNotification}>
@@ -305,6 +307,11 @@ const RunMap = ({ viewState, setViewState, geoData }: IRunMapProps) => {
         showCompass={false}
         position="bottom-right"
         style={{ opacity: 0.3 }}
+      />
+      <AttributionControl
+        compact
+        position="bottom-left"
+        customAttribution="© CARTO © OpenStreetMap contributors"
       />
     </Map>
   );

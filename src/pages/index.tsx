@@ -17,7 +17,7 @@ import {
   titleForRun,
 } from '@/utils/utils';
 
-type ViewMode = 'log' | 'routes' | 'heatmap' | 'life' | 'races';
+type ViewMode = 'log' | 'heatmap' | 'races';
 type DisplayMode = 'calendar' | 'routes';
 
 type RaceRecord = {
@@ -30,7 +30,6 @@ type RaceRecord = {
   year: string;
 };
 
-const RUNNER_NAME = 'Lin Yi';
 const YEARLY_GOAL_KM = 1000;
 const MONTHLY_GOAL_KM = 120;
 const RUNNING_LIFE_BIRTH_MONTH = '1989-03';
@@ -39,9 +38,8 @@ const ACTIVITY_PAGE_SIZE = 8;
 const ACTIVITIES = activitiesData as Activity[];
 
 const viewForPath = (pathname: string): ViewMode => {
-  if (pathname.startsWith('/routes')) return 'routes';
   if (pathname.startsWith('/heatmap')) return 'heatmap';
-  if (pathname.startsWith('/running_life')) return 'life';
+  if (pathname.startsWith('/running_life')) return 'heatmap';
   if (pathname.startsWith('/mls')) return 'races';
   return 'log';
 };
@@ -167,12 +165,18 @@ const TotalCard = ({
   distance,
   runs,
   seconds,
+  onClick,
 }: {
   distance: number;
   runs: number;
   seconds: number;
+  onClick: () => void;
 }) => (
-  <section className="runlog-goal-card runlog-total-card">
+  <button
+    className="runlog-goal-card runlog-total-card"
+    type="button"
+    onClick={onClick}
+  >
     <div>
       <div className="runlog-goal-label">Total Distance</div>
       <div className="runlog-goal-value">
@@ -184,18 +188,11 @@ const TotalCard = ({
       <span>{runs} runs</span>
       <span>{formatDuration(seconds)}</span>
     </div>
-  </section>
+  </button>
 );
 
-const DesktopNav = ({ runnerName }: { runnerName: string }) => {
+const DesktopNav = () => {
   const navigate = useNavigate();
-  const items = [
-    { path: '/', label: '首页' },
-    { path: '/routes', label: '轨迹墙' },
-    { path: '/heatmap', label: '热力图' },
-    { path: '/running_life', label: '奔跑人生' },
-    { path: '/mls', label: '赛事记录' },
-  ];
 
   return (
     <nav className="runlog-desktop-nav">
@@ -203,14 +200,6 @@ const DesktopNav = ({ runnerName }: { runnerName: string }) => {
         <span>RUN</span>
         <b>.LOG</b>
       </button>
-      <div>
-        {items.map((item) => (
-          <button key={item.path} onClick={() => navigate(item.path)}>
-            {item.label}
-          </button>
-        ))}
-        <em>{runnerName}</em>
-      </div>
     </nav>
   );
 };
@@ -458,76 +447,6 @@ const MonthRouteView = ({
     ))}
   </div>
 );
-
-const YearFilter = ({
-  years,
-  active,
-  onChange,
-}: {
-  years: string[];
-  active: string;
-  onChange: (_year: string) => void;
-}) => (
-  <div className="runlog-year-filter">
-    <button
-      className={active === 'all' ? 'active' : ''}
-      onClick={() => onChange('all')}
-    >
-      All
-    </button>
-    {years.map((year) => (
-      <button
-        key={year}
-        className={active === year ? 'active' : ''}
-        onClick={() => onChange(year)}
-      >
-        {year}
-      </button>
-    ))}
-  </div>
-);
-
-const RoutePoster = ({ runs, year }: { runs: Activity[]; year: string }) => {
-  const totalDistance = runs.reduce((sum, run) => sum + toKm(run.distance), 0);
-  const totalSeconds = runs.reduce((sum, run) => sum + runSeconds(run), 0);
-  const title = `${RUNNER_NAME}'s Run`;
-
-  return (
-    <section className="runlog-route-poster">
-      <div className="runlog-poster-canvas">
-        {runs
-          .filter((run) => run.summary_polyline)
-          .slice(0, 140)
-          .map((run) => (
-            <svg key={run.run_id} viewBox="0 0 120 92">
-              <path d={normalizeRoutePath(run, 120, 92, 12)} />
-            </svg>
-          ))}
-        <div>
-          <span>{title}</span>
-          <h2>{year === 'all' ? 'ALL' : year}</h2>
-        </div>
-      </div>
-      <div className="runlog-route-stats">
-        <span>Statistics</span>
-        <dl>
-          <dt>Runs:</dt>
-          <dd>{runs.length}</dd>
-          <dt>Dist:</dt>
-          <dd>{totalDistance.toFixed(2)} km</dd>
-          <dt>Time:</dt>
-          <dd>{formatDuration(totalSeconds)}</dd>
-          <dt>Max:</dt>
-          <dd>{maxRunDistance(runs).toFixed(2)} km</dd>
-          <dt>Pace:</dt>
-          <dd>{paceForRuns(runs)}</dd>
-          <dt>HR:</dt>
-          <dd>{averageHeartRate(runs)}</dd>
-        </dl>
-      </div>
-    </section>
-  );
-};
 
 const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
   const dateMap = distanceByDate(runs);
@@ -781,8 +700,6 @@ const BottomNav = ({ active }: { active: ViewMode }) => {
   const items: { mode: ViewMode; path: string; icon: string; label: string }[] =
     [
       { mode: 'log', path: '/', icon: '☷', label: '跑步记录' },
-      { mode: 'routes', path: '/routes', icon: '◇', label: '轨迹墙' },
-      { mode: 'life', path: '/running_life', icon: '▦', label: '奔跑人生' },
       { mode: 'heatmap', path: '/heatmap', icon: '♨', label: '热力图' },
       { mode: 'races', path: '/mls', icon: '♕', label: '赛事记录' },
     ];
@@ -928,11 +845,11 @@ const MonthlySummary = ({
 const Index = () => {
   const activities = ACTIVITIES;
   const location = useLocation();
+  const navigate = useNavigate();
   const view = viewForPath(location.pathname);
   const [displayMode, setDisplayMode] = useState<DisplayMode>('calendar');
   const [selectedRunIds, setSelectedRunIds] = useState<number[]>([]);
   const [activityPage, setActivityPage] = useState(0);
-  const [routeYear, setRouteYear] = useState('all');
 
   const runs = useMemo(
     () =>
@@ -978,13 +895,6 @@ const Index = () => {
     () => runs.filter((run) => run.start_date_local.startsWith(latestYear)),
     [runs, latestYear]
   );
-  const routeRuns = useMemo(
-    () =>
-      routeYear === 'all'
-        ? runs
-        : runs.filter((run) => yearKey(run.start_date_local) === routeYear),
-    [runs, routeYear]
-  );
   const heatmapRuns = useMemo(
     () => runs.filter((run) => run.start_date_local.startsWith(heatmapYear)),
     [runs, heatmapYear]
@@ -998,14 +908,12 @@ const Index = () => {
     () =>
       selectedRunIds.length
         ? runs.filter((run) => selectedRunIds.includes(run.run_id))
-        : view === 'routes'
-          ? routeRuns
-          : view === 'heatmap'
-            ? heatmapRuns
-            : monthRuns.length
-              ? monthRuns
-              : runs,
-    [heatmapRuns, monthRuns, routeRuns, runs, selectedRunIds, view]
+        : view === 'heatmap'
+          ? heatmapRuns
+          : monthRuns.length
+            ? monthRuns
+            : runs,
+    [heatmapRuns, monthRuns, runs, selectedRunIds, view]
   );
   const geoData = useMemo(() => geoJsonForRuns(mapRuns), [mapRuns]);
   const bounds = useMemo(() => getBoundsForGeoData(geoData), [geoData]);
@@ -1045,7 +953,7 @@ const Index = () => {
         <title>RUN.LOG</title>
       </Helmet>
 
-      <DesktopNav runnerName={RUNNER_NAME} />
+      <DesktopNav />
 
       <main className="runlog-app-shell">
         {view === 'log' && (
@@ -1056,6 +964,7 @@ const Index = () => {
                   distance={totalDistance}
                   runs={runs.length}
                   seconds={totalSeconds}
+                  onClick={() => navigate('/heatmap')}
                 />
                 <ProgressCard
                   label="Yearly Goal"
@@ -1111,20 +1020,6 @@ const Index = () => {
           </div>
         )}
 
-        {view === 'routes' && (
-          <section className="runlog-routes-view">
-            <YearFilter
-              years={availableYears}
-              active={routeYear}
-              onChange={(year) => {
-                setRouteYear(year);
-                setSelectedRunIds([]);
-              }}
-            />
-            <RoutePoster runs={routeRuns} year={routeYear} />
-          </section>
-        )}
-
         {view === 'heatmap' && (
           <section className="runlog-heatmap-view">
             <div className="runlog-heatmap-toolbar">
@@ -1153,10 +1048,10 @@ const Index = () => {
               </button>
             </div>
             <HeatmapYear year={heatmapYear} runs={heatmapRuns} />
+            <RunningLife activities={runs} />
           </section>
         )}
 
-        {view === 'life' && <RunningLife activities={runs} />}
         {view === 'races' && <RaceList races={races} raceId={raceId} />}
       </main>
 
