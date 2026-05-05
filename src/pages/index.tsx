@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RunMap from '@/components/RunMap';
-import useActivities from '@/hooks/useActivities';
+import activitiesData from '@/static/activities.json';
 import {
   Activity,
   DIST_UNIT,
@@ -16,7 +16,6 @@ import {
   sortDateFunc,
   titleForRun,
 } from '@/utils/utils';
-import { useTheme } from '@/hooks/useTheme';
 
 type ViewMode = 'log' | 'routes' | 'heatmap' | 'life' | 'races';
 type DisplayMode = 'calendar' | 'routes';
@@ -37,7 +36,7 @@ const MONTHLY_GOAL_KM = 120;
 const RUNNING_LIFE_BIRTH_MONTH = '1989-03';
 const RUNNING_LIFE_TOTAL_MONTHS = 1008;
 const ACTIVITY_PAGE_SIZE = 8;
-const RED = '#e31937';
+const ACTIVITIES = activitiesData as Activity[];
 
 const viewForPath = (pathname: string): ViewMode => {
   if (pathname.startsWith('/routes')) return 'routes';
@@ -96,20 +95,6 @@ const averageHeartRate = (runs: Activity[]) => {
   )} bpm`;
 };
 
-const downloadText = (
-  filename: string,
-  text: string,
-  type = 'image/svg+xml'
-) => {
-  const blob = new Blob([text], { type });
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement('a');
-  anchor.href = url;
-  anchor.download = filename;
-  anchor.click();
-  URL.revokeObjectURL(url);
-};
-
 const normalizeRoutePath = (
   run: Activity,
   width: number,
@@ -135,99 +120,6 @@ const normalizeRoutePath = (
       return `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`;
     })
     .join(' ');
-};
-
-const routePosterSvg = (runs: Activity[], title: string) => {
-  const width = 900;
-  const height = 620;
-  const paths = runs
-    .map((run) => normalizeRoutePath(run, 760, 430, 22))
-    .filter(Boolean)
-    .map(
-      (d, index) =>
-        `<path d="${d}" transform="translate(70 118)" fill="none" stroke="${RED}" stroke-width="${index === 0 ? 1.6 : 1.1}" stroke-linecap="round" stroke-linejoin="round" opacity="0.82" />`
-    )
-    .join('');
-
-  const totalDistance = runs.reduce((sum, run) => sum + toKm(run.distance), 0);
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-  <rect width="900" height="620" fill="#09090b"/>
-  <text x="70" y="70" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="34" font-weight="800">${title}</text>
-  <text x="70" y="102" fill="#a1a1aa" font-family="Arial, sans-serif" font-size="15">${runs.length} runs · ${totalDistance.toFixed(2)} km</text>
-  ${paths}
-  <text x="70" y="570" fill="${RED}" font-family="Arial, sans-serif" font-size="18" font-weight="800">RUN.LOG</text>
-</svg>`;
-};
-
-const heatmapSvg = (year: string, runs: Activity[]) => {
-  const width = 980;
-  const height = 210;
-  const start = startOfCalendarYear(Number(year));
-  const dateMap = distanceByDate(runs);
-  const cells = Array.from({ length: 371 }, (_, index) => {
-    const date = new Date(start);
-    date.setDate(start.getDate() + index);
-    const dateKey = isoDate(date);
-    const distance = dateMap.get(dateKey) || 0;
-    const week = Math.floor(index / 7);
-    const day = index % 7;
-    const level = distanceLevel(distance);
-    const color = ['#27272a', '#6f839f', '#facc15', '#f75008', RED][level];
-    return `<rect x="${92 + week * 15}" y="${48 + day * 15}" width="11" height="11" rx="2" fill="${color}"><title>${dateKey}: ${distance.toFixed(2)} km</title></rect>`;
-  }).join('');
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-  <rect width="980" height="210" fill="#09090b"/>
-  <text x="32" y="34" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="24" font-weight="800">${year} Heatmap</text>
-  ${cells}
-  <text x="32" y="188" fill="${RED}" font-family="Arial, sans-serif" font-size="16" font-weight="800">RUN.LOG</text>
-</svg>`;
-};
-
-const runningLifeSvg = (
-  months: { key: string; distance: number; future: boolean }[],
-  elapsed: number,
-  percent: number
-) => {
-  const width = 980;
-  const height = 620;
-  const columns = 42;
-  const cell = 12;
-  const gap = 5;
-  const cells = months
-    .map((item, index) => {
-      const level = item.future
-        ? 5
-        : item.distance > 300
-          ? 4
-          : item.distance > 200
-            ? 3
-            : item.distance > 100
-              ? 2
-              : item.distance > 0
-                ? 1
-                : 0;
-      const color = [
-        '#27272a',
-        '#6f839f',
-        '#facc15',
-        '#f75008',
-        RED,
-        '#111113',
-      ][level];
-      const x = 36 + (index % columns) * (cell + gap);
-      const y = 112 + Math.floor(index / columns) * (cell + gap);
-      return `<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="3" fill="${color}"><title>${item.key}: ${item.distance.toFixed(1)} km</title></rect>`;
-    })
-    .join('');
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-  <rect width="980" height="620" fill="#09090b"/>
-  <text x="36" y="58" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="34" font-weight="800">RUNNING<tspan fill="${RED}">.LIFE</tspan></text>
-  <text x="36" y="88" fill="#a1a1aa" font-family="Arial, sans-serif" font-size="16">${elapsed}/${months.length} months · ${percent.toFixed(1)}%</text>
-  ${cells}
-  <text x="36" y="584" fill="${RED}" font-family="Arial, sans-serif" font-size="16" font-weight="800">RUN.LOG</text>
-</svg>`;
 };
 
 const RouteSketch = ({ run }: { run: Activity }) => {
@@ -430,12 +322,6 @@ const distanceByDate = (runs: Activity[]) => {
 
 const isoDate = (date: Date) => date.toISOString().slice(0, 10);
 
-const startOfCalendarYear = (year: number) => {
-  const start = new Date(year, 0, 1);
-  start.setDate(start.getDate() - start.getDay());
-  return start;
-};
-
 const distanceLevel = (distance: number) => {
   if (distance >= 15) return 4;
   if (distance >= 8) return 3;
@@ -453,13 +339,16 @@ const MonthCalendar = ({
   runs: Activity[];
   onSelectDate: (_date: string) => void;
 }) => {
+  type CalendarCell =
+    | { key: string }
+    | { key: string; day: number; distance: number };
   const [year, monthNumber] = month.split('-').map(Number);
   const firstDay = new Date(year, monthNumber - 1, 1);
   const daysInMonth = new Date(year, monthNumber, 0).getDate();
   const offset = firstDay.getDay();
   const totals = distanceByDate(runs);
 
-  const cells = [
+  const cells: CalendarCell[] = [
     ...Array.from({ length: offset }, (_, index) => ({
       key: `blank-${index}`,
     })),
@@ -604,16 +493,7 @@ const RoutePoster = ({ runs, year }: { runs: Activity[]; year: string }) => {
   const title = `${RUNNER_NAME}'s Run`;
 
   return (
-    <section
-      className="runlog-route-poster"
-      onClick={() =>
-        downloadText(
-          `runlog-routes-${year}.svg`,
-          routePosterSvg(runs, `${title} ${year === 'all' ? 'All' : year}`)
-        )
-      }
-      title="Click to download track map"
-    >
+    <section className="runlog-route-poster">
       <div className="runlog-poster-canvas">
         {runs
           .filter((run) => run.summary_polyline)
@@ -652,9 +532,10 @@ const RoutePoster = ({ runs, year }: { runs: Activity[]; year: string }) => {
 const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
   const dateMap = distanceByDate(runs);
   const months = Array.from({ length: 12 }, (_, monthIndex) => {
+    type HeatmapCell = { key: string } | { key: string; distance: number };
     const firstDay = new Date(Number(year), monthIndex, 1);
     const daysInMonth = new Date(Number(year), monthIndex + 1, 0).getDate();
-    const cells = [
+    const cells: HeatmapCell[] = [
       ...Array.from({ length: firstDay.getDay() }, (_, index) => ({
         key: `blank-${monthIndex}-${index}`,
       })),
@@ -690,13 +571,6 @@ const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
     <section className="runlog-year-heatmap">
       <div className="runlog-heatmap-head">
         <h3>{year}</h3>
-        <button
-          onClick={() =>
-            downloadText(`runlog-heatmap-${year}.svg`, heatmapSvg(year, runs))
-          }
-        >
-          Download Year Heatmap
-        </button>
       </div>
       <div className="runlog-heatmap-weekdays top">
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
@@ -728,7 +602,6 @@ const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
 };
 
 const RunningLife = ({ activities }: { activities: Activity[] }) => {
-  const [layout, setLayout] = useState<'wide' | 'compact'>('wide');
   const months = useMemo(() => {
     const byMonth = new Map<string, number>();
     activities.forEach((run) => {
@@ -765,24 +638,7 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
       <p>
         {elapsed}/{months.length} months · {percent.toFixed(1)}%
       </p>
-      <div className="runlog-life-actions">
-        <button
-          onClick={() =>
-            downloadText(
-              'running-life.svg',
-              runningLifeSvg(months, elapsed, percent)
-            )
-          }
-        >
-          Save Image
-        </button>
-        <button
-          onClick={() => setLayout(layout === 'wide' ? 'compact' : 'wide')}
-        >
-          Toggle Layout
-        </button>
-      </div>
-      <div className={`runlog-life-grid ${layout}`}>
+      <div className="runlog-life-grid">
         {months.map((item) => {
           const level = item.future
             ? 5
@@ -1070,18 +926,13 @@ const MonthlySummary = ({
 };
 
 const Index = () => {
-  const { activities } = useActivities();
-  const { theme } = useTheme();
+  const activities = ACTIVITIES;
   const location = useLocation();
   const view = viewForPath(location.pathname);
   const [displayMode, setDisplayMode] = useState<DisplayMode>('calendar');
   const [selectedRunIds, setSelectedRunIds] = useState<number[]>([]);
   const [activityPage, setActivityPage] = useState(0);
   const [routeYear, setRouteYear] = useState('all');
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
 
   const runs = useMemo(
     () =>
@@ -1232,12 +1083,9 @@ const Index = () => {
               <MarathonTeaser races={races} />
               <section className="runlog-map-card" id="map-container">
                 <RunMap
-                  title=""
                   viewState={viewState}
                   geoData={geoData}
                   setViewState={setViewState}
-                  changeYear={() => setSelectedRunIds([])}
-                  thisYear={latestYear}
                 />
               </section>
 
@@ -1302,16 +1150,6 @@ const Index = () => {
                 }
               >
                 Older years
-              </button>
-              <button
-                onClick={() =>
-                  downloadText(
-                    `runlog-heatmap-${heatmapYear}.svg`,
-                    heatmapSvg(heatmapYear, heatmapRuns)
-                  )
-                }
-              >
-                Download Heatmap
               </button>
             </div>
             <HeatmapYear year={heatmapYear} runs={heatmapRuns} />

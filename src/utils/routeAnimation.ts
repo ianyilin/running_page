@@ -129,7 +129,6 @@ export interface RouteAnimationState {
 }
 
 export class RouteAnimator {
-  private points: Coordinate[];
   private simplified: Coordinate[];
   private segLens: number[];
   private total: number;
@@ -156,7 +155,6 @@ export class RouteAnimator {
       ...config,
     };
 
-    this.points = points;
     this.simplified = simplifyRoute(points, this.config.minDistance);
 
     const { segLens, total, cum } = calculateSegmentLengths(this.simplified);

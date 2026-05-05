@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 @import 'tailwindcss';
-@import './mobile.css';
 
 :root {
   /* global */
@@ -19,8 +18,6 @@
   --color-run-row-hover-background: var(--color-run-row-hover-background);
   /* activity-card */
   --color-activity-card: var(--color-activity-card);
-  /* svg */
-  --svg-color-active-cell: var(--svg-color-inactive-cell);
   /* fonts */
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
@@ -39,10 +36,6 @@
     --color-run-table-thead: #20232a;
     --color-run-row-hover-background: rgba(214, 63, 76, 0.08);
     --color-activity-card: rgba(255, 255, 255, 0.78);
-    --svg-color-inactive-cell: #d8d2c8;
-    --svg-color-active-cell: #d63f4c;
-    --svg-special-color: #287f89;
-    --svg-special-color2: #e1a53b;
     --color-panel: rgba(255, 255, 255, 0.76);
     --color-panel-strong: #ffffff;
     --color-border-soft: rgba(35, 38, 45, 0.12);
@@ -64,10 +57,6 @@
     --color-run-table-thead: #e7e1d8;
     --color-run-row-hover-background: rgba(230, 71, 85, 0.12);
     --color-activity-card: rgba(255, 255, 255, 0.06);
-    --svg-color-inactive-cell: #2b2d33;
-    --svg-color-active-cell: #e64755;
-    --svg-special-color: #f0b74a;
-    --svg-special-color2: #44a6a6;
     --color-panel: rgba(22, 23, 28, 0.82);
     --color-panel-strong: #17181d;
     --color-border-soft: rgba(255, 255, 255, 0.1);
@@ -89,10 +78,6 @@
   --color-run-table-thead: #20232a;
   --color-run-row-hover-background: rgba(214, 63, 76, 0.08);
   --color-activity-card: rgba(255, 255, 255, 0.78);
-  --svg-color-inactive-cell: #d8d2c8;
-  --svg-color-active-cell: #d63f4c;
-  --svg-special-color: #287f89;
-  --svg-special-color2: #e1a53b;
   --color-panel: rgba(255, 255, 255, 0.76);
   --color-panel-strong: #ffffff;
   --color-border-soft: rgba(35, 38, 45, 0.12);
@@ -109,13 +94,9 @@
   --color-hr: rgba(244, 239, 231, 0.1);
   --color-selected: #ff5a67;
   --color-run-date: #a8abb4;
-  --color-run-table-thead: #e7e1d8;
+  --color-run-table-thead: #cfd2d9;
   --color-run-row-hover-background: rgba(230, 71, 85, 0.12);
   --color-activity-card: rgba(255, 255, 255, 0.06);
-  --svg-color-inactive-cell: #2b2d33;
-  --svg-color-active-cell: #e64755;
-  --svg-special-color: #f0b74a;
-  --svg-special-color2: #44a6a6;
   --color-panel: rgba(22, 23, 28, 0.82);
   --color-panel-strong: #17181d;
   --color-border-soft: rgba(255, 255, 255, 0.1);
@@ -474,8 +455,7 @@ hr {
 .runlog-year-filter button,
 .runlog-pager button,
 .runlog-heatmap-toolbar button,
-.runlog-heatmap-head button,
-.runlog-life-actions button {
+.runlog-heatmap-head button {
   border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: 8px;
   background: #18181b;
@@ -502,8 +482,7 @@ hr {
 }
 
 .runlog-month-controls,
-.runlog-heatmap-toolbar,
-.runlog-life-actions {
+.runlog-heatmap-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
@@ -1219,59 +1198,6 @@ hr {
   }
 }
 
-.github-svg text,
-.grid-svg text,
-.year-svg text {
-  fill: var(--color-run-date);
-}
-
-.svg-color-bg {
-  fill: var(--color-run-row-hover-background);
-}
-
-.svg-color-inactive-cell {
-  fill: var(--color-activity-card);
-}
-
-.svg-color-active-cell {
-  fill: var(--svg-color-active-cell);
-}
-
-.svg-special-color {
-  fill: var(--svg-special-color);
-}
-
-.svg-special-color2 {
-  fill: var(--svg-special-color2);
-}
-
-.grid-svg .svg-color-active-cell {
-  fill: none;
-  stroke: var(--svg-color-active-cell);
-}
-
-.grid-svg .svg-special-color {
-  fill: none;
-  stroke: var(--svg-special-color);
-}
-
-.grid-svg .svg-special-color2 {
-  fill: none;
-  stroke: var(--svg-special-color2);
-}
-
-/* Mobile-specific improvements */
-@media only screen and (max-width: 768px) {
-  .mobile-map-container {
-    margin-bottom: 1rem;
-  }
-
-  /* Ensure mobile layout doesn't require min-width */
-  body {
-    overflow-x: hidden;
-  }
-}
-
 /* RUN.LOG reference layout pass */
 .runlog-page {
   background: #000;
@@ -1388,14 +1314,6 @@ hr {
   overflow: hidden;
 }
 
-.runlog-map-card ul[class*='buttons'] {
-  display: none;
-}
-
-.runlog-map-card div[class*='lights'] {
-  display: none;
-}
-
 .runlog-map-card .mapboxgl-map,
 .runlog-map-card .maplibregl-map {
   border-radius: 11px;
@@ -1442,8 +1360,7 @@ hr {
 .runlog-year-filter button,
 .runlog-pager button,
 .runlog-heatmap-toolbar button,
-.runlog-heatmap-head button,
-.runlog-life-actions button {
+.runlog-heatmap-head button {
   min-width: 38px;
   min-height: 38px;
   border: 1px solid #27272f;
@@ -1781,8 +1698,7 @@ hr {
 }
 
 .runlog-life-view h1,
-.runlog-life-view p,
-.runlog-life-actions {
+.runlog-life-view p {
   display: none;
 }
 
@@ -2395,8 +2311,7 @@ hr {
   }
 
   .runlog-life-view h1,
-  .runlog-life-view p,
-  .runlog-life-actions {
+  .runlog-life-view p {
     display: flex;
   }
 
