@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import RunMap from '@/components/RunMap';
 import activitiesData from '@/static/activities.json';
 import racesData from '@/static/races.json';
@@ -881,9 +881,9 @@ const RaceList = ({
                   const coverImage = item.photos[0] || item.medalImage;
 
                   return (
-                    <a
+                    <Link
                       key={item.id}
-                      href={`${import.meta.env.BASE_URL}mls/${item.id}`}
+                      to={`/mls/${item.id}`}
                       className={`runlog-race-list-item${
                         coverImage ? ' has-media' : ''
                       }`}
@@ -919,7 +919,7 @@ const RaceList = ({
                           />
                         </div>
                       )}
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

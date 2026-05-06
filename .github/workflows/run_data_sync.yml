@@ -113,10 +113,7 @@ jobs:
           rm -rf homepage/running
           mkdir -p homepage/running
           cp -R dist/. homepage/running/
-          for route in heatmap running_life mls; do
-            mkdir -p "homepage/running/$route"
-            cp dist/index.html "homepage/running/$route/index.html"
-          done
+          node scripts/create-static-routes.mjs homepage/running dist/index.html
           git -C homepage config user.email 'action@github.com'
           git -C homepage config user.name 'GitHub Action'
           git -C homepage add -A running

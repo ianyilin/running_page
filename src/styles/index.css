@@ -950,7 +950,7 @@ button:disabled {
 .runlog-race-list {
   display: grid;
   gap: 0.8rem;
-  max-width: 720px;      /* 新增，控制卡片最大宽度 */
+  max-width: 720px; /* 新增，控制卡片最大宽度 */
 }
 
 .runlog-race-list a,
