@@ -25,6 +25,8 @@
   "scripts": {
     "data:clean": "rm -f run_page/data.db src/static/activities.json",
     "data:download:strava": ".venv/bin/python run_page/strava_env_sync.py",
+    "coach:dry-run": ".venv/bin/python run_page/coach/daily_coach.py --dry-run",
+    "coach:send": ".venv/bin/python run_page/coach/daily_coach.py --send-email",
     "build": "vite build",
     "develop": "vite dev",
     "dev": "vite dev",

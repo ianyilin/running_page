@@ -18,6 +18,7 @@ on:
       - vite.config.ts
       - run_page/config.py
       - run_page/generator/**
+      - run_page/coach/**
       - run_page/strava_sync.py
       - run_page/strava_env_sync.py
       - run_page/polyline_processor.py
@@ -59,11 +60,27 @@ jobs:
             "${{ secrets.STRAVA_CLIENT_REFRESH_TOKEN }}" \
             --only-run
 
+      - name: Generate and email daily coach plan
+        if: github.event_name != 'push'
+        env:
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
+          AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
+          COACH_EMAIL_TO: ${{ secrets.COACH_EMAIL_TO }}
+          COACH_EMAIL_FROM: ${{ secrets.COACH_EMAIL_FROM }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: python run_page/coach/daily_coach.py --send-email
+
       - name: Commit synced data
         run: |
           git config --local user.email 'action@github.com'
           git config --local user.name 'GitHub Action'
           git add run_page/data.db src/static/activities.json
+          test ! -d run_page/coach_output || git add run_page/coach_output
           git commit -m 'update new runs' || echo 'nothing to commit'
           git push || echo 'nothing to push'
 

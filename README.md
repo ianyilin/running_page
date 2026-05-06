@@ -31,6 +31,8 @@ STRAVA_ONLY_RUN=1
 
 ```bash
 pnpm data:download:strava   # update run_page/data.db and src/static/activities.json
+pnpm coach:dry-run          # generate run_page/coach_output/*.json without Azure/email
+pnpm coach:send             # call Azure OpenAI and email the next-day plan
 pnpm dev                    # local preview at http://localhost:5173/
 PATH_PREFIX=/running/ pnpm build
 pnpm check
@@ -45,7 +47,40 @@ pnpm lint
 - `src/utils/const.ts`: map provider and route color settings
 - `run_page/strava_sync.py`: GitHub Actions Strava sync entrypoint
 - `run_page/strava_env_sync.py`: local `.env` sync entrypoint
+- `run_page/coach/`: daily AI coach context, Azure OpenAI call, and SMTP email
+- `run_page/coach_output/`: latest generated coach input and plan JSON
 - `.github/workflows/run_data_sync.yml`: daily cloud sync and `/running/` deployment
+
+## Daily AI Coach
+
+The daily workflow can generate a next-day running plan after Strava sync. It
+uses the latest `src/static/activities.json`, writes:
+
+```text
+run_page/coach_output/coach_input.json
+run_page/coach_output/latest_plan.json
+```
+
+For local testing, first run:
+
+```bash
+pnpm coach:dry-run
+```
+
+To call Azure OpenAI and send email, fill `.env` or GitHub Actions secrets with:
+
+```text
+AZURE_OPENAI_ENDPOINT
+AZURE_OPENAI_API_KEY
+AZURE_OPENAI_DEPLOYMENT
+AZURE_OPENAI_API_VERSION
+COACH_EMAIL_TO
+COACH_EMAIL_FROM
+SMTP_HOST
+SMTP_PORT
+SMTP_USER
+SMTP_PASSWORD
+```
 
 ## Race Records
 
