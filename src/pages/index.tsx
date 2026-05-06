@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RunMap from '@/components/RunMap';
 import activitiesData from '@/static/activities.json';
+import racesData from '@/static/races.json';
 import {
   Activity,
   DIST_UNIT,
@@ -28,14 +29,81 @@ type RaceRecord = {
   category: string;
   chipTime: string;
   year: string;
+  location?: string;
+  officialTime?: string;
+  result?: string;
+  medal?: string;
+  medalImage?: string;
+  photos: string[];
+  pb: boolean;
+  distanceKm?: number;
+  activityId?: string;
+  source: 'manual' | 'strava';
 };
 
-const YEARLY_GOAL_KM = 1000;
-const MONTHLY_GOAL_KM = 120;
-const RUNNING_LIFE_BIRTH_MONTH = '1989-03';
-const RUNNING_LIFE_TOTAL_MONTHS = 1008;
-const ACTIVITY_PAGE_SIZE = 8;
 const ACTIVITIES = activitiesData as Activity[];
+
+type ManualRaceRecord = {
+  id?: string;
+  activityId?: string | number;
+  date: string;
+  name: string;
+  subtitle?: string;
+  category?: string;
+  distanceKm?: number;
+  location?: string;
+  officialTime?: string;
+  chipTime?: string;
+  result?: string;
+  medal?: string;
+  medalImage?: string;
+  photos?: string[];
+  pb?: boolean;
+};
+
+const MANUAL_RACES = racesData as ManualRaceRecord[];
+
+const RUNLOG_CONFIG = {
+  brand: {
+    prefix: 'RUN',
+    suffix: '.LOG',
+    // slogan: 'Every mile tells a story · Yi',
+    slogan: 'Every mile counts · Yi',
+  },
+  goals: {
+    yearlyKm: 1000,
+    monthlyKm: 120,
+  },
+  activityPageSize: 8,
+  runningLife: {
+    birthMonth: '1989-03',
+    totalMonths: 1008,
+    legend: [
+      { label: '< 50km', level: 1 },
+      { label: '50-100km', level: 2 },
+      { label: '100-150km', level: 3 },
+      { label: '150-200km', level: 4 },
+      { label: '> 200km', level: 5 },
+    ],
+  },
+} as const;
+
+const ACTIVITY_PAGE_SIZE = RUNLOG_CONFIG.activityPageSize;
+const WEEKDAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const MONTH_LABELS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 const viewForPath = (pathname: string): ViewMode => {
   if (pathname.startsWith('/heatmap')) return 'heatmap';
@@ -60,6 +128,12 @@ const formatDuration = (seconds: number) => {
   const minutes = Math.floor((seconds % 3600) / 60);
   if (hours <= 0) return `${minutes}m`;
   return `${hours}h ${minutes}m`;
+};
+
+const assetUrl = (path?: string) => {
+  if (!path) return '';
+  if (/^(https?:)?\/\//.test(path) || path.startsWith('/')) return path;
+  return `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
 };
 
 const runSeconds = (run: Activity) => convertMovingTime2Sec(run.moving_time);
@@ -135,28 +209,40 @@ const ProgressCard = ({
   label,
   value,
   goal,
+  runs,
+  seconds,
   className = '',
 }: {
   label: string;
   value: number;
   goal: number;
+  runs?: number;
+  seconds?: number;
   className?: string;
 }) => {
   const percent = Math.max(0, Math.min(100, (value / goal) * 100));
 
   return (
-    <section className={`runlog-goal-card ${className}`}>
-      <div className="runlog-goal-label">{label}</div>
-      <div className="runlog-goal-value">
-        {value.toFixed(2)}
-        <span>/{goal}</span>
+    <section className={`runlog-goal-card runlog-progress-card ${className}`}>
+      <div>
+        <div className="runlog-goal-label">{label}</div>
+        <div className="runlog-goal-value">
+          {value.toFixed(2)}
+          <span>/{goal}</span>
+        </div>
+        <div className="runlog-progress-track">
+          <div
+            className="runlog-progress-fill"
+            style={{ width: `${percent}%` }}
+          />
+        </div>
       </div>
-      <div className="runlog-progress-track">
-        <div
-          className="runlog-progress-fill"
-          style={{ width: `${percent}%` }}
-        />
-      </div>
+      {typeof runs === 'number' && typeof seconds === 'number' && (
+        <div className="runlog-total-meta">
+          <span>{runs} runs</span>
+          <span>{formatDuration(seconds)}</span>
+        </div>
+      )}
     </section>
   );
 };
@@ -196,10 +282,15 @@ const DesktopNav = () => {
 
   return (
     <nav className="runlog-desktop-nav">
-      <button className="runlog-brand" onClick={() => navigate('/')}>
-        <span>RUN</span>
-        <b>.LOG</b>
-      </button>
+      <div className="runlog-nav-inner">
+        <button className="runlog-brand" onClick={() => navigate('/')}>
+          <span>{RUNLOG_CONFIG.brand.prefix}</span>
+          <b>{RUNLOG_CONFIG.brand.suffix}</b>
+        </button>
+        <span className="runlog-brand-slogan">
+          {RUNLOG_CONFIG.brand.slogan}
+        </span>
+      </div>
     </nav>
   );
 };
@@ -235,11 +326,16 @@ const MarathonTeaser = ({ races }: { races: RaceRecord[] }) => {
 const ActivityCard = ({
   run,
   onSelect,
+  active = false,
 }: {
   run: Activity;
   onSelect: (_run: Activity) => void;
+  active?: boolean;
 }) => (
-  <button className="runlog-activity-card" onClick={() => onSelect(run)}>
+  <button
+    className={`runlog-activity-card${active ? ' is-selected' : ''}`}
+    onClick={() => onSelect(run)}
+  >
     <RouteSketch run={run} />
     <div className="runlog-activity-main">
       <div>
@@ -262,9 +358,11 @@ const ActivityCard = ({
 const ActivityTable = ({
   runs,
   onSelect,
+  selectedRunIds,
 }: {
   runs: Activity[];
   onSelect: (_run: Activity) => void;
+  selectedRunIds: number[];
 }) => (
   <div className="runlog-activity-table">
     <table>
@@ -279,7 +377,11 @@ const ActivityTable = ({
       </thead>
       <tbody>
         {runs.map((run) => (
-          <tr key={run.run_id} onClick={() => onSelect(run)}>
+          <tr
+            key={run.run_id}
+            className={selectedRunIds.includes(run.run_id) ? 'is-selected' : ''}
+            onClick={() => onSelect(run)}
+          >
             <td>
               <time>{run.start_date_local.slice(0, 10)}</time>
               <span>{run.start_date_local.slice(11, 16)}</span>
@@ -322,10 +424,12 @@ const distanceLevel = (distance: number) => {
 const MonthCalendar = ({
   month,
   runs,
+  selectedDate,
   onSelectDate,
 }: {
   month: string;
   runs: Activity[];
+  selectedDate: string;
   onSelectDate: (_date: string) => void;
 }) => {
   type CalendarCell =
@@ -351,7 +455,7 @@ const MonthCalendar = ({
   return (
     <section className="runlog-calendar-card">
       <div className="runlog-weekdays">
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+        {WEEKDAY_LABELS.map((day, index) => (
           <span key={`${day}-${index}`}>{day}</span>
         ))}
       </div>
@@ -360,7 +464,19 @@ const MonthCalendar = ({
           'day' in cell ? (
             <button
               key={cell.key}
-              className={cell.distance ? 'has-run' : ''}
+              className={[
+                cell.distance ? 'has-run' : '',
+                cell.key === selectedDate ? 'is-selected' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              data-distance-band={
+                cell.distance >= 10
+                  ? 'high'
+                  : cell.distance > 0
+                    ? 'low'
+                    : 'none'
+              }
               onClick={() => onSelectDate(cell.key)}
               title={`${cell.key}: ${cell.distance.toFixed(2)} ${DIST_UNIT}`}
             >
@@ -381,11 +497,13 @@ const ActivityLog = ({
   page,
   onPageChange,
   onSelect,
+  selectedRunIds,
 }: {
   runs: Activity[];
   page: number;
   onPageChange: (_page: number) => void;
   onSelect: (_run: Activity) => void;
+  selectedRunIds: number[];
 }) => {
   const pageCount = Math.max(1, Math.ceil(runs.length / ACTIVITY_PAGE_SIZE));
   const safePage = Math.min(page, pageCount - 1);
@@ -403,10 +521,19 @@ const ActivityLog = ({
       </div>
       <div className="runlog-activity-list">
         {pageRuns.map((run) => (
-          <ActivityCard key={run.run_id} run={run} onSelect={onSelect} />
+          <ActivityCard
+            key={run.run_id}
+            run={run}
+            active={selectedRunIds.includes(run.run_id)}
+            onSelect={onSelect}
+          />
         ))}
       </div>
-      <ActivityTable runs={pageRuns} onSelect={onSelect} />
+      <ActivityTable
+        runs={pageRuns}
+        selectedRunIds={selectedRunIds}
+        onSelect={onSelect}
+      />
       {pageCount > 1 && (
         <div className="runlog-pager">
           <button
@@ -468,20 +595,7 @@ const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
       }),
     ];
     return {
-      label: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ][monthIndex],
+      label: MONTH_LABELS[monthIndex],
       cells,
     };
   });
@@ -492,7 +606,7 @@ const HeatmapYear = ({ year, runs }: { year: string; runs: Activity[] }) => {
         <h3>{year}</h3>
       </div>
       <div className="runlog-heatmap-weekdays top">
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+        {WEEKDAY_LABELS.map((day) => (
           <span key={day}>{day}</span>
         ))}
       </div>
@@ -528,13 +642,14 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
       byMonth.set(key, (byMonth.get(key) || 0) + toKm(run.distance));
     });
 
-    const [startYear, startMonth] =
-      RUNNING_LIFE_BIRTH_MONTH.split('-').map(Number);
+    const [startYear, startMonth] = RUNLOG_CONFIG.runningLife.birthMonth
+      .split('-')
+      .map(Number);
     const today = new Date();
     const currentKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
     const cursor = new Date(startYear, startMonth - 1, 1);
 
-    return Array.from({ length: RUNNING_LIFE_TOTAL_MONTHS }, () => {
+    return Array.from({ length: RUNLOG_CONFIG.runningLife.totalMonths }, () => {
       const key = `${cursor.getFullYear()}-${String(cursor.getMonth() + 1).padStart(2, '0')}`;
       const item = {
         key,
@@ -551,25 +666,29 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
 
   return (
     <section className="runlog-life-view">
-      <h1>
-        RUNNING<span>.LIFE</span>
-      </h1>
-      <p>
-        {elapsed}/{months.length} months · {percent.toFixed(1)}%
-      </p>
+      <div className="runlog-life-head">
+        <h1>
+          RUNNING<span>.LIFE</span>
+        </h1>
+        <p>
+          {elapsed}/{months.length} months · {percent.toFixed(1)}%
+        </p>
+      </div>
       <div className="runlog-life-grid">
         {months.map((item) => {
           const level = item.future
-            ? 5
-            : item.distance > 300
-              ? 4
-              : item.distance > 200
-                ? 3
-                : item.distance > 100
-                  ? 2
-                  : item.distance > 0
-                    ? 1
-                    : 0;
+            ? 'future'
+            : item.distance >= 200
+              ? 5
+              : item.distance >= 150
+                ? 4
+                : item.distance >= 100
+                  ? 3
+                  : item.distance >= 50
+                    ? 2
+                    : item.distance > 0
+                      ? 1
+                      : 0;
           return (
             <span
               key={item.key}
@@ -578,6 +697,14 @@ const RunningLife = ({ activities }: { activities: Activity[] }) => {
             />
           );
         })}
+      </div>
+      <div className="runlog-life-legend" aria-label="Running life legend">
+        {RUNLOG_CONFIG.runningLife.legend.map((item) => (
+          <span key={item.label}>
+            <i data-level={item.level} />
+            {item.label}
+          </span>
+        ))}
       </div>
     </section>
   );
@@ -598,7 +725,7 @@ const inferRaceCategory = (run: Activity) => {
 
 const inferRaces = (runs: Activity[]): RaceRecord[] =>
   runs
-    .map((run) => {
+    .map((run): RaceRecord | null => {
       const category = inferRaceCategory(run);
       const raceLike =
         category &&
@@ -606,15 +733,73 @@ const inferRaces = (runs: Activity[]): RaceRecord[] =>
       if (!raceLike) return null;
       return {
         id: String(run.run_id),
+        activityId: String(run.run_id),
         date: run.start_date_local.slice(0, 10),
-        name: titleForRun(run),
+        name: run.name || titleForRun(run),
         subtitle: '',
         category,
         chipTime: formatRunTime(run.moving_time),
         year: yearKey(run.start_date_local),
+        photos: [],
+        pb: false,
+        source: 'strava',
       };
     })
     .filter((race): race is RaceRecord => Boolean(race));
+
+const raceCategoryForManual = (race: ManualRaceRecord) => {
+  if (race.category) return race.category;
+  if (race.distanceKm) return `${race.distanceKm}K`;
+  return 'Race';
+};
+
+const normalizeManualRaces = (records: ManualRaceRecord[]): RaceRecord[] =>
+  records
+    .filter((race) => race.date && race.name)
+    .map((race, index) => ({
+      id: race.id || `manual-${race.date}-${index}`,
+      activityId:
+        race.activityId === undefined ? undefined : String(race.activityId),
+      date: race.date,
+      name: race.name,
+      subtitle: race.subtitle || race.location || '',
+      category: raceCategoryForManual(race),
+      chipTime: race.chipTime || race.officialTime || race.result || '-',
+      officialTime: race.officialTime,
+      year: yearKey(race.date),
+      location: race.location,
+      result: race.result,
+      medal: race.medal,
+      medalImage: race.medalImage,
+      photos: race.photos || [],
+      pb: Boolean(race.pb),
+      distanceKm: race.distanceKm,
+      source: 'manual',
+    }));
+
+const combineRaceRecords = (
+  manualRecords: ManualRaceRecord[],
+  inferredRecords: RaceRecord[]
+) => {
+  const manual = normalizeManualRaces(manualRecords);
+  const manualActivityIds = new Set(
+    manual
+      .map((race) => race.activityId)
+      .filter((activityId): activityId is string => Boolean(activityId))
+  );
+  const manualDateNames = new Set(
+    manual.map((race) => `${race.date}-${race.name.toLowerCase()}`)
+  );
+
+  const inferred = inferredRecords.filter((race) => {
+    if (race.activityId && manualActivityIds.has(race.activityId)) return false;
+    return !manualDateNames.has(`${race.date}-${race.name.toLowerCase()}`);
+  });
+
+  return [...manual, ...inferred].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+};
 
 const RaceList = ({
   races,
@@ -631,18 +816,45 @@ const RaceList = ({
   }, {});
 
   if (race) {
+    const detailFields = [
+      { label: 'Category', value: race.category },
+      {
+        label: 'Distance',
+        value: race.distanceKm ? `${race.distanceKm.toFixed(2)} km` : '',
+      },
+      { label: 'Location', value: race.location },
+      { label: 'Official Time', value: race.officialTime },
+      { label: 'Chip Time', value: race.chipTime },
+      { label: 'Medal', value: race.medal },
+      { label: 'Result', value: race.result || (race.pb ? 'PB' : '') },
+    ].filter((item) => item.value);
+
     return (
       <section className="runlog-race-detail">
         <span>{race.date}</span>
         <h1>{race.name}</h1>
         <p>{race.subtitle || 'RUN.LOG Race Record'}</p>
+        {(race.medalImage || race.photos.length > 0) && (
+          <div className="runlog-race-detail-media">
+            {race.medalImage && (
+              <img
+                className="runlog-race-medal"
+                src={assetUrl(race.medalImage)}
+                alt={`${race.name} medal`}
+              />
+            )}
+            {race.photos.map((photo) => (
+              <img key={photo} src={assetUrl(photo)} alt={race.name} />
+            ))}
+          </div>
+        )}
         <dl>
-          <dt>Category</dt>
-          <dd>{race.category}</dd>
-          <dt>Chip Time</dt>
-          <dd>{race.chipTime}</dd>
-          <dt>Result</dt>
-          <dd>PB</dd>
+          {detailFields.map((item) => (
+            <div key={item.label}>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
         </dl>
       </section>
     );
@@ -651,9 +863,9 @@ const RaceList = ({
   return (
     <section className="runlog-races-view">
       <h1>
-        奔跑 <span>MARATHON LIFE</span>
+        Go! <span>MARATHON LIFE</span>
       </h1>
-      <p>记录每一次心跳，每一公里，每一块奖牌的故事。</p>
+      <p>Every heartbeat, every kilometer, every medal tells a story.</p>
       {races.length ? (
         Object.keys(grouped)
           .sort((a, b) => Number(b) - Number(a))
@@ -661,27 +873,55 @@ const RaceList = ({
             <div className="runlog-race-year" key={year}>
               <div className="runlog-race-year-head">
                 <h2>{year}</h2>
-                <span>年度汇总</span>
-                <strong>{grouped[year].length} 场赛事</strong>
+                <span>Yearly Summary</span>
+                <strong>{grouped[year].length} Races</strong>
               </div>
               <div className="runlog-race-list">
-                {grouped[year].map((item) => (
-                  <a
-                    key={item.id}
-                    href={`${import.meta.env.BASE_URL}mls/${item.id}`}
-                  >
-                    <span>{item.date}</span>
-                    <h3>{item.name}</h3>
-                    <p>{item.subtitle}</p>
-                    <div>
-                      <em>Category</em>
-                      <strong>{item.category}</strong>
-                      <em>Chip Time</em>
-                      <strong>{item.chipTime}</strong>
-                      <b>PB</b>
-                    </div>
-                  </a>
-                ))}
+                {grouped[year].map((item) => {
+                  const coverImage = item.photos[0] || item.medalImage;
+
+                  return (
+                    <a
+                      key={item.id}
+                      href={`${import.meta.env.BASE_URL}mls/${item.id}`}
+                      className={`runlog-race-list-item${
+                        coverImage ? ' has-media' : ''
+                      }`}
+                    >
+                      <div className="runlog-race-card-copy">
+                        <span>{item.date}</span>
+                        <h3>{item.name}</h3>
+                        <p>{item.subtitle || item.location}</p>
+                        <div className="runlog-race-meta-grid">
+                          <em>Category</em>
+                          <strong>{item.category}</strong>
+                          <em>Time</em>
+                          <strong>{item.chipTime}</strong>
+                          {item.location && (
+                            <>
+                              <em>Location</em>
+                              <strong>{item.location}</strong>
+                            </>
+                          )}
+                        </div>
+                        <div className="runlog-race-tags">
+                          {item.pb && <b>PB</b>}
+                          {item.medal && <b>{item.medal}</b>}
+                          {item.source === 'strava' && <span>Strava</span>}
+                        </div>
+                      </div>
+                      {coverImage && (
+                        <div className="runlog-race-card-media-wrap">
+                          <img
+                            className="runlog-race-card-media"
+                            src={assetUrl(coverImage)}
+                            alt={item.name}
+                          />
+                        </div>
+                      )}
+                    </a>
+                  );
+                })}
               </div>
             </div>
           ))
@@ -722,6 +962,7 @@ const BottomNav = ({ active }: { active: ViewMode }) => {
 
 const MonthPanel = ({
   selectedMonth,
+  selectedDate,
   monthlyDistance,
   monthlySeconds,
   monthRuns,
@@ -734,6 +975,7 @@ const MonthPanel = ({
   selectRun,
 }: {
   selectedMonth: string;
+  selectedDate: string;
   monthlyDistance: number;
   monthlySeconds: number;
   monthRuns: Activity[];
@@ -759,14 +1001,14 @@ const MonthPanel = ({
       </div>
       <div className="runlog-month-controls">
         <button
-          disabled={monthIndex <= 0}
-          onClick={() => setSelectedMonth(availableMonths[monthIndex - 1])}
+          disabled={monthIndex >= availableMonths.length - 1}
+          onClick={() => setSelectedMonth(availableMonths[monthIndex + 1])}
         >
           <span aria-hidden="true">‹</span>
         </button>
         <button
-          disabled={monthIndex >= availableMonths.length - 1}
-          onClick={() => setSelectedMonth(availableMonths[monthIndex + 1])}
+          disabled={monthIndex <= 0}
+          onClick={() => setSelectedMonth(availableMonths[monthIndex - 1])}
         >
           <span aria-hidden="true">›</span>
         </button>
@@ -793,6 +1035,7 @@ const MonthPanel = ({
       <MonthCalendar
         month={selectedMonth}
         runs={monthRuns}
+        selectedDate={selectedDate}
         onSelectDate={selectDate}
       />
     ) : (
@@ -811,15 +1054,20 @@ const MonthlySummary = ({
   monthlySeconds: number;
 }) => {
   const stats = [
-    { label: 'Runs', value: monthRuns.length.toString() },
-    { label: 'Distance', value: `${monthlyDistance.toFixed(1)} ${DIST_UNIT}` },
-    { label: 'Time', value: formatDuration(monthlySeconds) },
-    { label: 'Avg Pace', value: paceForRuns(monthRuns) },
+    { key: 'runs', label: 'Runs', value: monthRuns.length.toString() },
     {
+      key: 'distance',
+      label: 'Distance',
+      value: `${monthlyDistance.toFixed(1)} ${DIST_UNIT}`,
+    },
+    { key: 'time', label: 'Time', value: formatDuration(monthlySeconds) },
+    { key: 'pace', label: 'Avg Pace', value: paceForRuns(monthRuns) },
+    {
+      key: 'longest',
       label: 'Longest',
       value: `${maxRunDistance(monthRuns).toFixed(1)} ${DIST_UNIT}`,
     },
-    { label: 'Avg HR', value: averageHeartRate(monthRuns) },
+    { key: 'hr', label: 'Avg HR', value: averageHeartRate(monthRuns) },
   ];
 
   return (
@@ -832,7 +1080,10 @@ const MonthlySummary = ({
       </div>
       <div className="runlog-summary-grid">
         {stats.map((item) => (
-          <div key={item.label}>
+          <div
+            className={`runlog-summary-item runlog-summary-${item.key}`}
+            key={item.label}
+          >
             <span>{item.label}</span>
             <strong>{item.value}</strong>
           </div>
@@ -849,6 +1100,7 @@ const Index = () => {
   const view = viewForPath(location.pathname);
   const [displayMode, setDisplayMode] = useState<DisplayMode>('calendar');
   const [selectedRunIds, setSelectedRunIds] = useState<number[]>([]);
+  const [selectedDate, setSelectedDate] = useState('');
   const [activityPage, setActivityPage] = useState(0);
 
   const runs = useMemo(
@@ -885,6 +1137,11 @@ const Index = () => {
     setActivityPage(0);
   }, [selectedMonth]);
 
+  useEffect(() => {
+    setSelectedDate('');
+    setSelectedRunIds([]);
+  }, [selectedMonth]);
+
   const monthIndex = Math.max(0, availableMonths.indexOf(selectedMonth));
   const monthRuns = useMemo(
     () =>
@@ -899,7 +1156,17 @@ const Index = () => {
     () => runs.filter((run) => run.start_date_local.startsWith(heatmapYear)),
     [runs, heatmapYear]
   );
-  const races = useMemo(() => inferRaces(runs), [runs]);
+  const selectedDateRuns = useMemo(
+    () =>
+      selectedDate
+        ? runs.filter((run) => run.start_date_local.startsWith(selectedDate))
+        : [],
+    [runs, selectedDate]
+  );
+  const races = useMemo(
+    () => combineRaceRecords(MANUAL_RACES, inferRaces(runs)),
+    [runs]
+  );
   const raceId = location.pathname.startsWith('/mls/')
     ? location.pathname.split('/').filter(Boolean).at(-1)
     : undefined;
@@ -908,12 +1175,22 @@ const Index = () => {
     () =>
       selectedRunIds.length
         ? runs.filter((run) => selectedRunIds.includes(run.run_id))
-        : view === 'heatmap'
-          ? heatmapRuns
-          : monthRuns.length
-            ? monthRuns
-            : runs,
-    [heatmapRuns, monthRuns, runs, selectedRunIds, view]
+        : selectedDate
+          ? selectedDateRuns
+          : view === 'heatmap'
+            ? heatmapRuns
+            : monthRuns.length
+              ? monthRuns
+              : runs,
+    [
+      heatmapRuns,
+      monthRuns,
+      runs,
+      selectedDate,
+      selectedDateRuns,
+      selectedRunIds,
+      view,
+    ]
   );
   const geoData = useMemo(() => geoJsonForRuns(mapRuns), [mapRuns]);
   const bounds = useMemo(() => getBoundsForGeoData(geoData), [geoData]);
@@ -927,6 +1204,7 @@ const Index = () => {
     (sum, run) => sum + toKm(run.distance),
     0
   );
+  const yearlySeconds = yearRuns.reduce((sum, run) => sum + runSeconds(run), 0);
   const totalDistance = runs.reduce((sum, run) => sum + toKm(run.distance), 0);
   const totalSeconds = runs.reduce((sum, run) => sum + runSeconds(run), 0);
   const monthlyDistance = monthRuns.reduce(
@@ -938,12 +1216,22 @@ const Index = () => {
     0
   );
 
-  const selectRun = (run: Activity) => setSelectedRunIds([run.run_id]);
+  const selectRun = (run: Activity) => {
+    setSelectedDate(run.start_date_local.slice(0, 10));
+    setSelectedRunIds([run.run_id]);
+  };
   const selectDate = (date: string) => {
     const ids = runs
       .filter((run) => run.start_date_local.startsWith(date))
       .map((run) => run.run_id);
+    const firstIndex = ids.length
+      ? monthRuns.findIndex((run) => ids.includes(run.run_id))
+      : -1;
+    setSelectedDate(date);
     setSelectedRunIds(ids);
+    setActivityPage(
+      firstIndex >= 0 ? Math.floor(firstIndex / ACTIVITY_PAGE_SIZE) : 0
+    );
   };
 
   return (
@@ -969,22 +1257,33 @@ const Index = () => {
                 <ProgressCard
                   label="Yearly Goal"
                   value={yearlyDistance}
-                  goal={YEARLY_GOAL_KM}
+                  goal={RUNLOG_CONFIG.goals.yearlyKm}
+                  runs={yearRuns.length}
+                  seconds={yearlySeconds}
                   className="runlog-yearly-card"
                 />
                 <ProgressCard
                   label="Monthly Goal"
                   value={monthlyDistance}
-                  goal={MONTHLY_GOAL_KM}
+                  goal={RUNLOG_CONFIG.goals.monthlyKm}
+                  runs={monthRuns.length}
+                  seconds={monthlySeconds}
                   className="runlog-monthly-card"
                 />
               </section>
+
+              <MonthlySummary
+                monthRuns={monthRuns}
+                monthlyDistance={monthlyDistance}
+                monthlySeconds={monthlySeconds}
+              />
 
               <ActivityLog
                 runs={monthRuns}
                 page={activityPage}
                 onPageChange={setActivityPage}
                 onSelect={selectRun}
+                selectedRunIds={selectedRunIds}
               />
             </div>
 
@@ -1000,6 +1299,7 @@ const Index = () => {
 
               <MonthPanel
                 selectedMonth={selectedMonth}
+                selectedDate={selectedDate}
                 monthlyDistance={monthlyDistance}
                 monthlySeconds={monthlySeconds}
                 monthRuns={monthRuns}
@@ -1010,11 +1310,6 @@ const Index = () => {
                 setDisplayMode={setDisplayMode}
                 selectDate={selectDate}
                 selectRun={selectRun}
-              />
-              <MonthlySummary
-                monthRuns={monthRuns}
-                monthlyDistance={monthlyDistance}
-                monthlySeconds={monthlySeconds}
               />
             </div>
           </div>
@@ -1047,8 +1342,10 @@ const Index = () => {
                 Older years
               </button>
             </div>
-            <HeatmapYear year={heatmapYear} runs={heatmapRuns} />
-            <RunningLife activities={runs} />
+            <div className="runlog-heatmap-pair">
+              <RunningLife activities={runs} />
+              <HeatmapYear year={heatmapYear} runs={heatmapRuns} />
+            </div>
           </section>
         )}
 

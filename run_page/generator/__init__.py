@@ -6,11 +6,9 @@ import sys
 import arrow
 import polyline as polyline_codec
 import stravalib
-from gpxtrackposter import track_loader
 from sqlalchemy import func
 
 from polyline_processor import filter_out
-from synced_data_file_logger import save_synced_data_file_list
 
 from .db import Activity, init_db, update_or_create_activity
 
@@ -187,51 +185,6 @@ class Generator:
             sys.stdout.flush()
         self.session.commit()
 
-    def sync_from_data_dir(self, data_dir, file_suffix="gpx", activity_title_dict={}):
-        loader = track_loader.TrackLoader()
-        tracks = loader.load_tracks(
-            data_dir, file_suffix=file_suffix, activity_title_dict=activity_title_dict
-        )
-        print(f"load {len(tracks)} tracks")
-        if not tracks:
-            print("No tracks found.")
-            return
-
-        synced_files = []
-
-        for t in tracks:
-            created = update_or_create_activity(
-                self.session, t.to_namedtuple(run_from=file_suffix)
-            )
-            if created:
-                sys.stdout.write("+")
-            else:
-                sys.stdout.write(".")
-            synced_files.extend(t.file_names)
-            sys.stdout.flush()
-
-        save_synced_data_file_list(synced_files)
-
-        self.session.commit()
-
-    def sync_from_app(self, app_tracks):
-        if not app_tracks:
-            print("No tracks found.")
-            return
-        print("Syncing tracks '+' means new track '.' means update tracks")
-        synced_files = []
-        for t in app_tracks:
-            created = update_or_create_activity(self.session, t)
-            if created:
-                sys.stdout.write("+")
-            else:
-                sys.stdout.write(".")
-            if "file_names" in t:
-                synced_files.extend(t.file_names)
-            sys.stdout.flush()
-
-        self.session.commit()
-
     def load(self):
         # if sub_type is not in the db, just add an empty string to it
         query = self.session.query(Activity).filter(Activity.distance > 0.1)
@@ -365,25 +318,3 @@ class Generator:
             )
 
         return activity_list
-
-    def get_old_tracks_ids(self):
-        try:
-            activities = self.session.query(Activity).all()
-            return [str(a.run_id) for a in activities]
-        except Exception as e:
-            # pass the error
-            print(f"something wrong with {str(e)}")
-            return []
-
-    def get_old_tracks_dates(self):
-        try:
-            activities = (
-                self.session.query(Activity)
-                .order_by(Activity.start_date_local.desc())
-                .all()
-            )
-            return [str(a.start_date_local) for a in activities]
-        except Exception as e:
-            # pass the error
-            print(f"something wrong with {str(e)}")
-            return []

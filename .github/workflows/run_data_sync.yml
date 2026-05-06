@@ -19,11 +19,15 @@ on:
       - run_page/config.py
       - run_page/generator/**
       - run_page/strava_sync.py
-      - run_page/utils.py
+      - run_page/strava_env_sync.py
+      - run_page/polyline_processor.py
       - requirements.txt
 
 permissions:
   contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   sync:
@@ -64,9 +68,9 @@ jobs:
           git push || echo 'nothing to push'
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Enable pnpm
         run: npm install -g corepack@latest && corepack enable pnpm

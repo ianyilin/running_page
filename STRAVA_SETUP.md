@@ -62,7 +62,6 @@ pnpm dev
 
 - `run_page/data.db`
 - `src/static/activities.json`
-- `activities/` 和 `GPX_OUT/` 等备份目录
 
 ## 4. GitHub Actions
 
@@ -71,5 +70,14 @@ pnpm dev
 - `STRAVA_CLIENT_ID`
 - `STRAVA_CLIENT_SECRET`
 - `STRAVA_CLIENT_REFRESH_TOKEN`
+- `HOMEPAGE_DEPLOY_TOKEN`
 
-然后把 workflow 的 `RUN_TYPE` 设置为 `strava`。当前仓库已有 `.github/workflows/run_data_sync.yml`，不需要重新写同步流程。
+`HOMEPAGE_DEPLOY_TOKEN` 用 GitHub fine-grained PAT，授权
+`ianyilin/ianyilin.github.io` 的 `Contents: Read and write`。
+
+当前仓库已有 `.github/workflows/run_data_sync.yml`：
+
+- 每天纽约时间 23:00 同步 Strava
+- 只同步跑步
+- 构建时使用 `/running/` 路径前缀
+- 将构建结果发布到 `ianyilin/ianyilin.github.io/running/`

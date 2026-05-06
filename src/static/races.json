@@ -1,0 +1,19 @@
+[
+  {
+    "id": "nycruns-marathon-2026",
+    "activityId": 123456789,
+    "date": "2026-04-26",
+    "name": "NYCRUNS Brooklyn Experience Half Marathon",
+    "subtitle": "My first Half Marathon",
+    "category": "Half Marathon",
+    "distanceKm": 21.0975,
+    "location": "Brooklyn, NY",
+    "officialTime": "02:12:52",
+    "chipTime": "02:12:52",
+    "result": "Finished",
+    "medal": "Finisher Medal",
+    "medalImage": "images/races/brooklyn-2026-medal.png",
+    "photos": ["images/races/brooklyn-2026-run.png"],
+    "pb": true
+  }
+]

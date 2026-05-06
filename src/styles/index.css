@@ -1,1009 +1,172 @@
-/* IBM Plex Sans and IBM Plex Mono fonts */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-
 @import 'tailwindcss';
 
+/* Manual visual knobs */
 :root {
-  /* global */
-  --color-primary: var(--color-brand);
-  --color-secondary: var(--color-secondary);
-  --color-background: var(--color-bg);
-  --color-text-primary: var(--color-tx);
-  --color-hr-primary: var(--color-hr);
-  --color-selected: var(--color-selected);
-  /* table */
-  --color-run-date: var(--color-run-date);
-  --color-run-table-thead: var(--color-run-table-thead);
-  --color-run-row-hover-background: var(--color-run-row-hover-background);
-  /* activity-card */
-  --color-activity-card: var(--color-activity-card);
-  /* fonts */
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --run-bg: #000;
+  --run-surface: #18181b;
+  --run-surface-soft: #27272a;
+  --run-surface-hover: #3f3f46;
+  --run-border: #27272a;
+  --run-text: #fff;
+  --run-muted: #a1a1aa;
+  --run-dim: #71717a;
+  --run-accent: #e31937;
+  --run-accent-soft: rgb(227 25 55 / 0.16);
+  --run-radius: 16px;
+  --run-radius-sm: 8px;
+  --run-font: -apple-system, BlinkMacSystemFont, 'San Francisco',
+    'Helvetica Neue', Arial, sans-serif;
+  --run-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
-/* 1. System Theme (Base) */
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-brand: #d63f4c;
-    --color-secondary: #a23d4d;
-    --color-bg: #f5f1ea;
-    --color-tx: #1e2026;
-    --color-hr: rgba(35, 38, 45, 0.12);
-    --color-selected: #d63f4c;
-    --color-run-date: #626772;
-    --color-run-table-thead: #20232a;
-    --color-run-row-hover-background: rgba(214, 63, 76, 0.08);
-    --color-activity-card: rgba(255, 255, 255, 0.78);
-    --color-panel: rgba(255, 255, 255, 0.76);
-    --color-panel-strong: #ffffff;
-    --color-border-soft: rgba(35, 38, 45, 0.12);
-    --color-muted: #777d88;
-    --font-sans: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
-  }
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-brand: #e64755;
-    --color-secondary: #f0b74a;
-    --color-bg: #0a0b0d;
-    --color-tx: #f4efe7;
-    --color-hr: rgba(244, 239, 231, 0.1);
-    --color-selected: #ff5a67;
-    --color-run-date: #a8abb4;
-    --color-run-table-thead: #e7e1d8;
-    --color-run-row-hover-background: rgba(230, 71, 85, 0.12);
-    --color-activity-card: rgba(255, 255, 255, 0.06);
-    --color-panel: rgba(22, 23, 28, 0.82);
-    --color-panel-strong: #17181d;
-    --color-border-soft: rgba(255, 255, 255, 0.1);
-    --color-muted: #8c919e;
-    --font-sans: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
-  }
-}
-
-/* 2. Manual Override (Higher Priority) */
-[data-theme='light'] {
-  --color-brand: #d63f4c;
-  --color-secondary: #a23d4d;
-  --color-bg: #f5f1ea;
-  --color-tx: #1e2026;
-  --color-hr: rgba(35, 38, 45, 0.12);
-  --color-selected: #d63f4c;
-  --color-run-date: #626772;
-  --color-run-table-thead: #20232a;
-  --color-run-row-hover-background: rgba(214, 63, 76, 0.08);
-  --color-activity-card: rgba(255, 255, 255, 0.78);
-  --color-panel: rgba(255, 255, 255, 0.76);
-  --color-panel-strong: #ffffff;
-  --color-border-soft: rgba(35, 38, 45, 0.12);
-  --color-muted: #777d88;
-  --font-sans: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-}
-
-[data-theme='dark'] {
-  --color-brand: #e64755;
-  --color-secondary: #f0b74a;
-  --color-bg: #0a0b0d;
-  --color-tx: #f4efe7;
-  --color-hr: rgba(244, 239, 231, 0.1);
-  --color-selected: #ff5a67;
-  --color-run-date: #a8abb4;
-  --color-run-table-thead: #cfd2d9;
-  --color-run-row-hover-background: rgba(230, 71, 85, 0.12);
-  --color-activity-card: rgba(255, 255, 255, 0.06);
-  --color-panel: rgba(22, 23, 28, 0.82);
-  --color-panel-strong: #17181d;
-  --color-border-soft: rgba(255, 255, 255, 0.1);
-  --color-muted: #8c919e;
-  --font-sans: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-}
-
-@layer base {
-  html,
-  body {
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.02),
-        transparent 320px
-      ),
-      var(--color-background);
-    color: var(--color-text-primary);
-    transition:
-      background-color 0.1s ease,
-      color 0.1s ease;
-    font-family: var(--font-sans);
-  }
-}
-
-img::selection {
-  background: transparent;
-}
-
-img::-moz-selection {
-  background: transparent;
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+  background: var(--run-bg);
 }
 
 body {
+  color: var(--run-text);
+  font-family: var(--run-font);
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-iframe {
-  border: none;
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
-hr {
-  border-top: none;
-  border-bottom: 1px solid;
-  border-color: var(--color-hr-primary);
-  margin: 1.25rem 0;
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 ::selection {
-  color: white;
-  background: var(--color-brand);
+  background: var(--run-accent);
+  color: #fff;
 }
 
-.rp-header {
-  position: sticky;
-  top: 1rem;
-  z-index: 20;
-  margin-top: 1rem;
-  border: 1px solid var(--color-border-soft);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--color-panel-strong) 82%, transparent);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(16px);
-}
-
-.rp-logo {
-  border: 1px solid var(--color-border-soft);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-}
-
-.rp-header-title {
-  color: var(--color-text-primary);
-}
-
-.rp-nav-link {
-  color: var(--color-run-date);
-  border-radius: 999px;
-  padding: 0.42rem 0.68rem;
-  transition:
-    color 0.16s ease,
-    background-color 0.16s ease;
-}
-
-.rp-nav-link:hover {
-  color: var(--color-text-primary);
-  background: var(--color-run-row-hover-background);
-}
-
-.rp-shell {
-  gap: 1.5rem;
-}
-
-.rp-sidebar {
-  border: 1px solid var(--color-border-soft);
-  border-radius: 8px;
-  background: var(--color-panel);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
-  padding: 1.25rem;
-  align-self: flex-start;
-}
-
-.rp-main-panel {
-  min-width: 0;
-}
-
-.rp-page-title {
-  color: var(--color-text-primary);
-  line-height: 0.95;
-}
-
-.rp-page-title a {
-  text-decoration: none;
-}
-
-.rp-page-title a:hover {
-  color: var(--color-brand);
-}
-
-.rp-intro-copy {
-  color: var(--color-run-date);
-  font-size: 0.95rem;
-}
-
-.rp-stats-stack {
-  padding-right: 0;
-}
-
-.rp-year-block {
-  color: var(--color-text-primary);
-}
-
-.rp-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-
-.rp-stat-card {
-  min-height: 5.25rem;
-  border: 1px solid var(--color-border-soft);
-  border-radius: 8px;
-  background: var(--color-activity-card);
-  padding: 0.85rem 0.95rem;
-  transition:
-    transform 0.16s ease,
-    border-color 0.16s ease,
-    background-color 0.16s ease;
-}
-
-.rp-stat-card:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--color-brand) 44%, transparent);
-  background: var(--color-run-row-hover-background);
-}
-
-.rp-stat-value {
-  display: block;
-  color: var(--color-text-primary);
-  font-size: clamp(1.65rem, 4vw, 2.45rem);
-  line-height: 1;
-}
-
-.rp-stat-label {
-  display: block;
-  margin-top: 0.35rem;
-  color: var(--color-muted);
-  font-size: 0.78rem;
-  font-style: normal;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.rp-map-card,
-.rp-data-card {
-  border: 1px solid var(--color-border-soft);
-  border-radius: 8px;
-  background: var(--color-panel-strong);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
-  overflow: hidden;
-}
-
-.rp-map-card {
-  margin-bottom: 1.25rem;
-}
-
-.rp-map-card .mapboxgl-map,
-.rp-map-card .maplibregl-map {
-  border-radius: 8px;
-}
-
-.rp-data-card {
-  padding: 0 1rem 1rem;
-}
-
+/* Shared surfaces */
 .runlog-page {
   min-height: 100vh;
-  background: #000;
-  color: #fff;
-  font-family: Inter, var(--font-sans), system-ui, sans-serif;
-  padding-bottom: 6rem;
+  background: var(--run-bg);
+  color: var(--run-text);
+  overflow-x: hidden;
+  padding-bottom: 5.75rem;
 }
 
 .runlog-app-shell {
-  width: min(100%, 1180px);
-  margin: 0 auto;
-  padding: 1.5rem 1rem 0;
-}
-
-.runlog-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.runlog-topbar div {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-}
-
-.runlog-topbar span {
-  color: #e31937;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.22em;
-}
-
-.runlog-topbar strong {
-  color: #fafafa;
-  font-size: 1rem;
-}
-
-.runlog-topbar button,
-.runlog-toggle button {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 8px;
-  background: #18181b;
-  color: #a1a1aa;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  padding: 0.5rem 0.7rem;
-}
-
-.runlog-goals {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  width: min(100%, 80rem);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0;
 }
 
 .runlog-goal-card,
 .runlog-panel,
 .runlog-map-card,
 .runlog-calendar-card,
-.runlog-activity-card {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 8px;
-  background: #18181b;
+.runlog-activity-log,
+.runlog-month-summary,
+.runlog-year-heatmap,
+.runlog-life-view,
+.runlog-race-list a,
+.runlog-race-detail dl,
+.runlog-empty-races {
+  border: 1px solid var(--run-border);
+  border-radius: var(--run-radius);
+  background: var(--run-surface);
 }
 
-.runlog-goal-card {
-  padding: 1rem;
-}
-
-.runlog-goal-label {
-  color: #a1a1aa;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-}
-
-.runlog-goal-value {
-  margin-top: 0.45rem;
-  color: white;
-  font-size: clamp(1.35rem, 5vw, 2.15rem);
-  font-weight: 800;
-  line-height: 1;
-}
-
-.runlog-goal-value span {
-  color: #71717a;
-  font-size: 0.78rem;
-  font-weight: 500;
-  margin-left: 0.15rem;
-}
-
-.runlog-progress-track {
-  height: 0.36rem;
-  margin-top: 0.8rem;
-  border-radius: 999px;
-  background: #27272a;
-  overflow: hidden;
-}
-
-.runlog-progress-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: #e31937;
-}
-
-.runlog-map-card {
-  height: clamp(13rem, 42vw, 24rem);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-}
-
-.runlog-map-card .mapboxgl-map,
-.runlog-map-card .maplibregl-map {
-  border-radius: 8px;
-}
-
-.runlog-panel {
-  padding: 1rem;
-}
-
-.runlog-panel-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.runlog-panel-head h2 {
-  color: white;
-  font-size: 1.35rem;
-  font-weight: 900;
-  margin: 0;
-}
-
-.runlog-panel-head h2 span {
-  color: #a1a1aa;
-  display: inline;
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-left: 0.25rem;
-}
-
-.runlog-panel-head span {
-  color: #71717a;
-  display: block;
-  font-size: 0.78rem;
-  margin-top: 0.3rem;
-}
-
-.runlog-toggle {
-  display: flex;
-  gap: 0.35rem;
-}
-
-.runlog-toggle button,
 .runlog-month-controls button,
 .runlog-pager button,
-.runlog-heatmap-toolbar button,
-.runlog-heatmap-head button {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 8px;
-  background: #18181b;
-  color: #a1a1aa;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  min-height: 2.2rem;
-  padding: 0.5rem 0.7rem;
+.runlog-heatmap-toolbar button {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  border: 0;
+  border-radius: var(--run-radius-sm);
+  background: rgb(39 39 42 / 0.5);
+  color: var(--run-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.375rem 0.625rem;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
 }
 
-.runlog-toggle button {
-  width: 2.2rem;
-  height: 2.2rem;
-  padding: 0;
+.runlog-month-controls button:hover,
+.runlog-pager button:hover,
+.runlog-heatmap-toolbar button:hover {
+  background: var(--run-surface-hover);
+  color: #e4e4e7;
 }
 
-.runlog-toggle button.active,
 .runlog-month-controls button.active,
-.runlog-bottom-nav button.active,
-.runlog-topbar button:hover {
-  color: #e31937;
-}
-
-.runlog-month-controls,
-.runlog-heatmap-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  justify-content: flex-end;
+.runlog-bottom-nav button.active {
+  background: var(--run-accent);
+  color: #fff;
 }
 
 .runlog-month-controls button:disabled,
 .runlog-pager button:disabled,
 .runlog-heatmap-toolbar button:disabled {
-  cursor: not-allowed;
-  opacity: 0.38;
+  opacity: 0.45;
 }
 
-.runlog-activity-list {
-  display: grid;
-  gap: 0.7rem;
-}
-
-.runlog-activity-table {
+/* Navigation */
+.runlog-desktop-nav {
   display: none;
 }
 
-.runlog-activity-card {
-  display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: 0.8rem;
-  width: 100%;
-  color: inherit;
-  cursor: pointer;
-  padding: 0.65rem;
-  text-align: left;
-  transition:
-    border-color 0.16s ease,
-    background-color 0.16s ease,
-    transform 0.16s ease;
-}
-
-.runlog-activity-card:hover {
-  border-color: rgb(227 25 55 / 0.55);
-  background: rgb(127 29 29 / 0.2);
-  transform: translateY(-1px);
-}
-
-.runlog-activity-main {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.8rem;
-  min-width: 0;
-}
-
-.runlog-activity-main h3 {
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.runlog-activity-main p {
-  color: #71717a;
-  font-size: 0.74rem;
-  margin: 0.25rem 0 0;
-}
-
-.runlog-activity-distance {
-  color: white;
-  font-family: var(--font-mono);
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.runlog-activity-distance span {
-  color: #71717a;
-  font-size: 0.68rem;
-  margin-left: 0.2rem;
-}
-
-.runlog-activity-meta {
-  align-self: end;
-  color: #a1a1aa;
-  display: flex;
-  flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  gap: 0.6rem;
-  grid-column: 2;
-}
-
-.runlog-route-sketch {
-  width: 100%;
-  min-height: 5.75rem;
-  border-radius: 8px;
-  background: #09090b;
-}
-
-.runlog-route-sketch path {
-  fill: none;
-  stroke: #e31937;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2.4;
-}
-
-.runlog-route-empty {
-  min-height: 5.75rem;
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgb(255 255 255 / 0.04), transparent),
-    #09090b;
-}
-
-.runlog-calendar-card {
-  padding: 1rem;
-}
-
-.runlog-calendar-head {
-  margin-bottom: 1rem;
-}
-
-.runlog-calendar-head div {
+.runlog-nav-inner {
   display: flex;
   align-items: baseline;
-  gap: 0.8rem;
+  gap: 1rem;
+  width: min(100%, 80rem);
+  margin: 0 auto;
 }
 
-.runlog-calendar-head strong {
-  color: white;
-  font-size: 1.4rem;
-  font-weight: 900;
-}
-
-.runlog-calendar-head span,
-.runlog-weekdays span {
-  color: #71717a;
-  font-size: 0.78rem;
-}
-
-.runlog-weekdays,
-.runlog-calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.45rem;
-}
-
-.runlog-weekdays {
-  margin-bottom: 0.6rem;
-  text-align: center;
-}
-
-.runlog-calendar-grid button,
-.runlog-calendar-grid > span {
-  aspect-ratio: 1;
+.runlog-brand {
   border: 0;
-  border-radius: 8px;
   background: transparent;
-  color: #52525b;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-}
-
-.runlog-calendar-grid button.has-run {
-  color: white;
-  background: rgb(227 25 55 / 0.12);
-  box-shadow: inset 0 0 0 1px rgb(227 25 55 / 0.28);
-}
-
-.runlog-calendar-grid button em {
-  color: #e31937;
-  font-size: 0.58rem;
-  font-style: normal;
-  margin-top: 0.12rem;
-}
-
-.runlog-activity-log {
-  margin-top: 1rem;
-}
-
-.runlog-subhead,
-.runlog-heatmap-head,
-.runlog-race-year-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.9rem;
-}
-
-.runlog-subhead h3,
-.runlog-heatmap-head h3 {
-  color: white;
-  font-size: 1rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-.runlog-subhead span {
-  color: #71717a;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-}
-
-.runlog-pager {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 0.9rem;
-}
-
-.runlog-pager span {
-  color: #71717a;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-}
-
-.runlog-month-routes {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
-  gap: 0.7rem;
-}
-
-.runlog-month-routes button {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 8px;
-  background: #09090b;
-  color: white;
-  cursor: pointer;
-  padding: 0.55rem;
-  text-align: left;
-}
-
-.runlog-month-routes span,
-.runlog-month-routes strong {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  margin-top: 0.35rem;
-}
-
-.runlog-month-routes span {
-  color: #71717a;
-}
-
-.runlog-month-routes strong {
-  color: #e4e4e7;
-}
-
-.runlog-heatmap-view,
-.runlog-races-view,
-.runlog-race-detail {
-  display: grid;
-  gap: 1rem;
-}
-
-.runlog-year-heatmap {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 8px;
-  background: #18181b;
-  overflow-x: auto;
-  padding: 1rem;
-}
-
-.runlog-month-labels {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  color: #71717a;
-  font-size: 0.7rem;
-  margin: 0 0 0.5rem 2rem;
-  min-width: 48rem;
-}
-
-.runlog-heatmap-body {
-  display: grid;
-  grid-template-columns: 1.3rem minmax(48rem, 1fr);
-  gap: 0.45rem;
-}
-
-.runlog-heatmap-weekdays {
-  display: grid;
-  grid-template-rows: repeat(7, 0.75rem);
-  gap: 0.25rem;
-}
-
-.runlog-heatmap-weekdays span {
-  color: #71717a;
-  font-size: 0.56rem;
-  line-height: 0.75rem;
-}
-
-.runlog-heatmap-grid {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(7, 0.75rem);
-  gap: 0.25rem;
-}
-
-.runlog-heatmap-grid span,
-.runlog-life-grid span {
-  border-radius: 2px;
-  background: #27272a;
-}
-
-.runlog-heatmap-grid span[data-outside='true'] {
-  opacity: 0.25;
-}
-
-.runlog-heatmap-grid span[data-level='1'],
-.runlog-life-grid span[data-level='1'] {
-  background: #6f839f;
-}
-
-.runlog-heatmap-grid span[data-level='2'],
-.runlog-life-grid span[data-level='2'] {
-  background: #facc15;
-}
-
-.runlog-heatmap-grid span[data-level='3'],
-.runlog-life-grid span[data-level='3'] {
-  background: #f75008;
-}
-
-.runlog-heatmap-grid span[data-level='4'],
-.runlog-life-grid span[data-level='4'] {
-  background: #e31937;
-}
-
-.runlog-life-view {
-  min-height: calc(100vh - 8rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 0;
-}
-
-.runlog-life-view h1 {
-  color: white;
-  font-size: clamp(2.2rem, 10vw, 4.4rem);
-  font-weight: 950;
+  color: var(--run-text);
+  font-size: 1.35rem;
+  font-weight: 900;
   line-height: 1;
-  margin: 0;
+  letter-spacing: 0;
+  padding: 0;
 }
 
-.runlog-life-view h1 span {
-  color: #e31937;
+.runlog-brand span {
+  color: var(--run-text);
 }
 
-.runlog-life-view p {
-  color: #71717a;
-  font-family: var(--font-mono);
-  margin: 0.75rem 0 1rem;
+.runlog-brand b {
+  color: var(--run-accent);
 }
 
-.runlog-not-found {
-  display: grid;
-  min-height: 100vh;
-  place-content: center;
-  gap: 0.75rem;
-  padding: 2rem;
-  background: #000;
-  color: #fafafa;
-  text-align: center;
-}
-
-.runlog-not-found h1 {
-  margin: 0;
-  color: #e31937;
-  font-size: clamp(4rem, 16vw, 9rem);
-  font-weight: 950;
-  line-height: 0.9;
-}
-
-.runlog-not-found p {
-  margin: 0;
-  color: #a1a1aa;
-}
-
-.runlog-not-found a {
-  color: #fafafa;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.runlog-not-found a:hover {
-  color: #e31937;
-}
-
-.runlog-life-grid {
-  display: grid;
-  grid-template-columns: repeat(24, 0.5rem);
-  gap: 0.55rem;
-  justify-content: center;
-  max-width: min(100%, 38rem);
-  overflow: hidden;
-}
-
-.runlog-life-grid.compact {
-  grid-template-columns: repeat(12, 0.66rem);
-}
-
-.runlog-life-grid span {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-
-.runlog-life-grid.compact span {
-  width: 0.66rem;
-  height: 0.66rem;
-}
-
-.runlog-life-grid span[data-level='5'] {
-  background: #18181b;
-}
-
-.runlog-races-view,
-.runlog-race-detail {
-  padding: 2rem 0 0;
-}
-
-.runlog-races-view > h1,
-.runlog-race-detail h1 {
-  color: white;
-  font-size: clamp(2rem, 10vw, 4.5rem);
-  font-weight: 950;
-  line-height: 0.95;
-  margin: 0;
-}
-
-.runlog-races-view > h1 span,
-.runlog-race-detail > span {
-  background: #e31937;
-  color: white;
-  display: inline-block;
-  padding: 0.05rem 0.35rem;
-}
-
-.runlog-races-view > p,
-.runlog-race-detail p,
-.runlog-empty-races p {
-  color: #71717a;
-  margin: 0;
-}
-
-.runlog-race-year {
-  display: grid;
-  gap: 0.8rem;
-  margin-top: 1.2rem;
-}
-
-.runlog-race-year-head h2 {
-  color: white;
-  font-size: 2rem;
-  margin: 0;
-}
-
-.runlog-race-year-head span {
-  color: #71717a;
-}
-
-.runlog-race-year-head strong {
-  color: #e31937;
-  font-family: var(--font-mono);
-}
-
-.runlog-race-list {
-  display: grid;
-  gap: 0.8rem;
-}
-
-.runlog-race-list a,
-.runlog-empty-races,
-.runlog-race-detail dl {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 8px;
-  background: #18181b;
-  color: inherit;
-  padding: 1rem;
-  text-decoration: none;
-}
-
-.runlog-race-list a > span {
-  color: #a1a1aa;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-.runlog-race-list h3,
-.runlog-empty-races h2 {
-  color: white;
-  margin: 0.35rem 0;
-}
-
-.runlog-race-list p {
-  color: #71717a;
-  min-height: 1rem;
-}
-
-.runlog-race-list div,
-.runlog-race-detail dl {
-  display: grid;
-  grid-template-columns: repeat(2, auto) 1fr;
-  gap: 0.45rem 0.75rem;
-  margin-top: 0.9rem;
-}
-
-.runlog-race-list em,
-.runlog-race-detail dt {
-  color: #71717a;
-  font-style: normal;
-  font-size: 0.7rem;
-}
-
-.runlog-race-list strong,
-.runlog-race-detail dd {
-  color: white;
-  font-family: var(--font-mono);
-  margin: 0;
-}
-
-.runlog-race-list b {
-  color: #e31937;
+.runlog-brand-slogan {
+  color: var(--run-dim);
+  font-size: 0.78rem;
 }
 
 .runlog-bottom-nav {
@@ -1016,96 +179,36 @@ hr {
   justify-content: space-around;
   border-top: 1px solid rgb(255 255 255 / 0.1);
   background: rgb(9 9 11 / 0.92);
-  padding: 0.75rem 1rem 0.9rem;
+  padding: 0.85rem 0.5rem;
   backdrop-filter: blur(12px);
 }
 
 .runlog-bottom-nav button {
+  min-width: 3.5rem;
   border: 0;
   background: transparent;
-  color: #71717a;
+  color: var(--run-dim);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
-  min-width: 3.5rem;
+  gap: 0.22rem;
+  padding: 0.1rem 0.3rem;
 }
 
 .runlog-bottom-nav span {
   font-size: 1.15rem;
-  line-height: 1;
+  line-height: 1.15rem;
 }
 
 .runlog-bottom-nav em {
-  font-size: 0.62rem;
+  font-size: 0.625rem;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 1rem;
   white-space: nowrap;
 }
 
-@media (min-width: 820px) {
-  .runlog-app-shell {
-    padding-top: 2.5rem;
-  }
-
-  .runlog-goals {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .runlog-panel {
-    padding: 1.4rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .runlog-app-shell {
-    padding-top: 1rem;
-  }
-
-  .runlog-goal-card {
-    padding: 0.95rem;
-  }
-
-  .runlog-activity-card {
-    grid-template-columns: 6rem minmax(0, 1fr);
-  }
-
-  .runlog-activity-meta {
-    grid-column: 1 / -1;
-  }
-
-  .runlog-bottom-nav {
-    padding-inline: 0.4rem;
-  }
-}
-
-/* RUN.LOG reference layout pass */
-.runlog-page {
-  background: #000;
-  color: #fafafa;
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  overflow-x: hidden;
-}
-
-.runlog-app-shell {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  width: min(100%, 1184px);
-  padding: 1.5rem 1rem 0;
-}
-
-.runlog-desktop-nav {
-  display: none;
-}
-
+/* Home layout */
 .runlog-home-grid,
 .runlog-home-left,
 .runlog-home-right {
@@ -1124,492 +227,1137 @@ hr {
   order: 3;
 }
 
-.runlog-view-log .runlog-activity-log {
+.runlog-view-log .runlog-month-summary {
   order: 4;
 }
 
-.runlog-marathon-teaser,
-.runlog-total-card,
-.runlog-month-summary {
+.runlog-view-log .runlog-activity-log {
+  order: 5;
+}
+
+.runlog-marathon-teaser {
   display: none;
 }
 
+/* Goal cards */
 .runlog-goals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
-.runlog-goal-card,
-.runlog-panel,
-.runlog-map-card,
-.runlog-year-heatmap,
-.runlog-empty-races,
-.runlog-race-list a,
-.runlog-race-detail dl {
-  border: 1px solid #2a2a30;
-  border-radius: 11px;
-  background: #18181b;
-  box-shadow: none;
-}
-
 .runlog-goal-card {
-  min-height: 95px;
-  padding: 1.12rem 1rem;
-}
-
-.runlog-total-card {
+  min-height: 7rem;
   color: inherit;
-  font: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
   text-align: left;
 }
 
+.runlog-total-card {
+  grid-column: 1 / -1;
+  border-color: rgb(227 25 55 / 0.32);
+}
+
+.runlog-total-card:hover,
+.runlog-marathon-teaser:hover,
+.runlog-activity-card:hover,
+.runlog-month-routes button:hover,
+.runlog-race-list a:hover {
+  border-color: rgb(227 25 55 / 0.55);
+  background: var(--run-accent-soft);
+}
+
 .runlog-goal-label {
-  color: #a1a1aa;
-  font-size: 0.62rem;
+  color: var(--run-muted);
+  font-size: 0.625rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.05em;
+  line-height: 1rem;
   text-transform: uppercase;
 }
 
 .runlog-goal-value {
-  margin-top: 0.45rem;
-  font-size: 1.45rem;
-  font-weight: 800;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  color: var(--run-text);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.75rem;
   letter-spacing: 0;
 }
 
 .runlog-goal-value span {
-  color: #71717a;
-  font-size: 0.78rem;
+  color: var(--run-dim);
+  font-size: 0.75rem;
   font-weight: 400;
+  line-height: 1rem;
+}
+
+.runlog-total-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .runlog-progress-track {
-  height: 5px;
-  margin-top: 0.8rem;
-  background: #2e2e33;
+  height: 0.375rem;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+  background: var(--run-surface-soft);
+  overflow: hidden;
 }
 
 .runlog-progress-fill {
-  background: #e31937;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--run-accent), #ef4444);
 }
 
+/* Map */
 .runlog-map-card {
-  height: 202px;
+  height: 13.25rem;
   margin-bottom: 1.5rem;
   overflow: hidden;
 }
 
 .runlog-map-card .mapboxgl-map,
 .runlog-map-card .maplibregl-map {
-  border-radius: 11px;
+  border-radius: var(--run-radius);
+}
+
+.runlog-map-card .mapboxgl-ctrl-group,
+.runlog-map-card .maplibregl-ctrl-group {
+  background: rgb(24 24 27 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow: none;
+}
+
+.runlog-map-card .mapboxgl-ctrl-group button,
+.runlog-map-card .maplibregl-ctrl-group button {
+  filter: invert(1);
+  opacity: 0.72;
 }
 
 .runlog-map-card .mapboxgl-ctrl-bottom-right,
 .runlog-map-card .maplibregl-ctrl-bottom-right {
-  top: 45px;
   right: 0;
-  bottom: auto;
+  bottom: 0;
 }
 
-.runlog-panel {
-  padding: 1.5rem;
+.runlog-map-card .maplibregl-ctrl-attrib.maplibregl-compact,
+.runlog-map-card .mapboxgl-ctrl-attrib.mapboxgl-compact {
+  overflow: hidden;
+  max-width: 24px;
+  min-height: 24px;
+  margin: 0 0 8px 8px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 999px;
+  background: rgb(24 24 27 / 0.78);
+  padding: 0;
+  transition:
+    max-width 0.15s ease,
+    background-color 0.15s ease;
 }
 
-.runlog-panel-head {
-  margin-bottom: 1.65rem;
+.runlog-map-card .maplibregl-ctrl-attrib.maplibregl-compact-show:not(:hover),
+.runlog-map-card .mapboxgl-ctrl-attrib.mapboxgl-compact-show:not(:hover) {
+  max-width: 24px;
+  padding: 0;
 }
 
-.runlog-panel-head h2 {
-  font-size: 1.32rem;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.runlog-panel-head h2 span {
-  color: #8a8a93;
-  font-size: 0.82rem;
-  font-weight: 500;
-  margin-left: 0.55rem;
-}
-
-.runlog-panel-head > div > span {
+.runlog-map-card
+  .maplibregl-ctrl-attrib.maplibregl-compact-show:not(:hover)
+  .maplibregl-ctrl-attrib-inner,
+.runlog-map-card
+  .mapboxgl-ctrl-attrib.mapboxgl-compact-show:not(:hover)
+  .mapboxgl-ctrl-attrib-inner {
   display: none;
 }
 
+.runlog-map-card .maplibregl-ctrl-attrib.maplibregl-compact-show:hover,
+.runlog-map-card .mapboxgl-ctrl-attrib.mapboxgl-compact-show:hover {
+  max-width: calc(100% - 24px);
+  background: rgb(24 24 27 / 0.92);
+  padding: 2px 8px 2px 28px;
+}
+
+.runlog-map-card .maplibregl-ctrl-attrib .maplibregl-ctrl-attrib-inner,
+.runlog-map-card .mapboxgl-ctrl-attrib .mapboxgl-ctrl-attrib-inner,
+.runlog-map-card .maplibregl-ctrl-attrib a,
+.runlog-map-card .mapboxgl-ctrl-attrib a {
+  color: var(--run-muted);
+  font-size: 10px;
+  line-height: 20px;
+}
+
+.runlog-map-card .maplibregl-ctrl-attrib-button,
+.runlog-map-card .mapboxgl-ctrl-attrib-button {
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  filter: invert(1);
+  opacity: 0.62;
+}
+
+/* Month panel and calendar */
+.runlog-panel {
+  padding: 1.25rem;
+}
+
+.runlog-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.runlog-panel-head h2 {
+  margin: 0;
+  color: var(--run-text);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.75rem;
+}
+
+.runlog-panel-head h2 span {
+  color: var(--run-dim);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-left: 0.4rem;
+}
+
+.runlog-panel-head > div > span {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.72rem;
+}
+
 .runlog-month-controls {
-  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 0.35rem;
 }
 
-.runlog-month-controls button,
-.runlog-pager button,
-.runlog-heatmap-toolbar button,
-.runlog-heatmap-head button {
-  min-width: 38px;
-  min-height: 38px;
-  border: 1px solid #27272f;
-  border-radius: 8px;
-  background: #202024;
-  color: #9ca3af;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.82rem;
-  padding: 0 0.8rem;
-  transition:
-    border-color 0.18s ease,
-    color 0.18s ease,
-    background-color 0.18s ease;
-}
-
-.runlog-month-controls button:nth-child(1),
-.runlog-month-controls button:nth-child(2),
-.runlog-month-controls button:nth-child(3),
-.runlog-month-controls button:nth-child(4) {
-  width: 38px;
+.runlog-month-controls button {
+  width: 2.25rem;
   padding: 0;
-}
-
-.runlog-month-controls button:nth-child(3),
-.runlog-month-controls button:nth-child(4) {
-  font-size: 1.05rem;
-}
-
-.runlog-month-controls button.active,
-.runlog-bottom-nav button.active {
-  border-color: #e31937;
-  background: #e31937;
-  color: #fff;
-}
-
-.runlog-month-controls button:nth-child(-n + 2) {
-  border-color: transparent;
-  background: #202024;
 }
 
 .runlog-calendar-card {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
+  padding: 1rem;
+  background: #111114;
+}
+
+.runlog-weekdays,
+.runlog-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.45rem;
 }
 
 .runlog-weekdays {
-  margin-bottom: 1.35rem;
+  margin-bottom: 0.6rem;
+  text-align: center;
 }
 
 .runlog-weekdays span {
-  color: #595963;
-  font-size: 0.8rem;
-}
-
-.runlog-calendar-grid {
-  gap: 1.55rem 0.95rem;
+  color: var(--run-dim);
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .runlog-calendar-grid button,
 .runlog-calendar-grid > span {
-  min-height: 44px;
-  border-radius: 10px;
-  color: #4f4f58;
-  font-size: 0.82rem;
-}
-
-.runlog-calendar-grid button.has-run {
+  aspect-ratio: 1;
+  min-width: 0;
+  border: 0;
+  border-radius: var(--run-radius-sm);
   background: transparent;
-  box-shadow: none;
-  color: #73737e;
+  color: #52525b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
-.runlog-calendar-grid button.has-run::after {
-  content: '';
-  width: 22px;
-  height: 26px;
-  margin-top: 0.35rem;
-  border-right: 3px solid #e31937;
-  border-bottom: 3px solid #e31937;
-  transform: skew(-18deg) rotate(18deg);
+.runlog-calendar-grid button[data-distance-band='low'] {
+  background: #3f3f46;
+  color: #d4d4d8;
+}
+
+.runlog-calendar-grid button[data-distance-band='high'] {
+  background: #52525b;
+  color: #f4f4f5;
+}
+
+.runlog-calendar-grid button:hover,
+.runlog-calendar-grid button.is-selected {
+  background: var(--run-accent);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .runlog-calendar-grid button em {
-  display: none;
+  color: inherit;
+  font-size: 0.58rem;
+  font-style: normal;
+  margin-top: 0.12rem;
 }
 
-.runlog-activity-log {
-  margin-top: 2rem;
-  border-top: 1px solid #26262c;
-  padding-top: 1.25rem;
+.runlog-month-routes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 0.7rem;
 }
 
-.runlog-subhead h3 {
-  font-size: 1rem;
-  font-weight: 700;
+.runlog-month-routes button {
+  border: 1px solid var(--run-border);
+  border-radius: var(--run-radius-sm);
+  background: #09090b;
+  color: var(--run-text);
+  cursor: pointer;
+  padding: 0.55rem;
+  text-align: left;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
-.runlog-subhead span,
-.runlog-pager span {
-  color: #71717a;
+.runlog-month-routes span,
+.runlog-month-routes strong {
+  display: block;
+  font-family: var(--run-mono);
   font-size: 0.72rem;
+  margin-top: 0.35rem;
+}
+
+.runlog-month-routes span {
+  color: var(--run-dim);
+}
+
+.runlog-month-routes strong {
+  color: #e4e4e7;
+}
+
+/* Monthly summary */
+.runlog-month-summary {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+}
+
+.runlog-summary-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.runlog-summary-head h3,
+.runlog-subhead h3,
+.runlog-heatmap-head h3 {
+  margin: 0;
+  color: var(--run-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.75rem;
+}
+
+.runlog-summary-head span,
+.runlog-subhead span {
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.runlog-summary-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.25fr;
+  gap: 0.7rem;
+}
+
+.runlog-summary-item {
+  min-width: 0;
+  border-radius: var(--run-radius-sm);
+  background: rgb(39 39 42 / 0.58);
+  padding: 0.75rem;
+}
+
+.runlog-summary-item span {
+  display: block;
+  color: var(--run-dim);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+.runlog-summary-item strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--run-text);
+  font-family: var(--run-mono);
+  font-size: 0.92rem;
+  line-height: 1.2rem;
+  white-space: nowrap;
+}
+
+/* Activity log */
+.runlog-activity-log {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+
+.runlog-subhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgb(63 63 70 / 0.5);
+  background: rgb(24 24 27 / 0.5);
+  padding: 1.25rem;
+}
+
+.runlog-activity-list {
+  display: grid;
+  gap: 0.7rem;
+  padding: 1rem;
 }
 
 .runlog-activity-card {
-  border-color: #24242a;
-  background: #111113;
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.8rem;
+  width: 100%;
+  border: 1px solid var(--run-border);
+  border-radius: var(--run-radius);
+  background: var(--run-surface);
+  color: inherit;
+  padding: 0.65rem;
+  text-align: left;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.runlog-activity-card:hover,
+.runlog-activity-card.is-selected {
+  background: var(--run-accent-soft);
+  transform: translateY(-1px);
+}
+
+.runlog-route-sketch,
+.runlog-route-empty {
+  width: 100%;
+  min-height: 5.75rem;
+  border-radius: var(--run-radius-sm);
+  background: #09090b;
+}
+
+.runlog-route-sketch path {
+  fill: none;
+  stroke: var(--run-accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+.runlog-route-empty {
+  background: linear-gradient(135deg, rgb(255 255 255 / 0.04), transparent),
+    #09090b;
+}
+
+.runlog-activity-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.runlog-activity-main h3 {
+  margin: 0;
+  color: var(--run-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+
+.runlog-activity-main p {
+  margin: 0.25rem 0 0;
+  color: var(--run-dim);
+  font-size: 0.74rem;
+}
+
+.runlog-activity-distance,
+.runlog-activity-meta,
+.runlog-pager span,
+.runlog-activity-table td,
+.runlog-activity-table strong {
+  font-family: var(--run-mono);
+}
+
+.runlog-activity-distance {
+  color: var(--run-text);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.runlog-activity-distance span {
+  color: var(--run-dim);
+  font-size: 0.68rem;
+  margin-left: 0.2rem;
+}
+
+.runlog-activity-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  color: var(--run-muted);
+  font-size: 0.72rem;
+}
+
+.runlog-activity-table {
+  display: none;
+  flex: 0 0 auto;
+  overflow-x: auto;
+}
+
+.runlog-activity-table table {
+  width: 100%;
+  height: auto;
+  border-collapse: collapse;
+}
+
+.runlog-activity-table th,
+.runlog-activity-table td {
+  border-bottom: 1px solid rgb(63 63 70 / 0.46);
+  padding: 0.78rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.runlog-activity-table th {
+  color: var(--run-dim);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+.runlog-activity-table td {
+  color: #d4d4d8;
+  font-size: 0.82rem;
+  line-height: 1.15rem;
+}
+
+.runlog-activity-table td:first-child {
+  min-width: 8rem;
+}
+
+.runlog-activity-table time,
+.runlog-activity-table td:first-child span {
+  display: block;
+}
+
+.runlog-activity-table td:first-child span {
+  color: var(--run-dim);
+  font-size: 0.75rem;
+}
+
+.runlog-activity-table strong {
+  color: var(--run-text);
+  font-weight: 700;
+}
+
+.runlog-activity-table strong em {
+  color: var(--run-dim);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 400;
+  margin-left: 0.2rem;
+}
+
+.runlog-activity-table tr {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.runlog-activity-table tbody tr:hover,
+.runlog-activity-table tbody tr.is-selected {
+  background: var(--run-accent-soft);
+}
+
+.runlog-activity-table tbody tr.is-selected td {
+  color: #fff;
+}
+
+.runlog-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  border-top: 1px solid rgb(63 63 70 / 0.5);
+  background: rgb(24 24 27 / 0.5);
+  padding: 0.55rem;
+}
+
+.runlog-pager span {
+  color: var(--run-dim);
+  font-size: 0.78rem;
+}
+
+/* Race teaser and race page */
+.runlog-marathon-teaser {
+  width: 100%;
+  border: 1px solid var(--run-border);
+  border-radius: var(--run-radius);
+  background: var(--run-surface);
+  color: inherit;
+  padding: 1.25rem;
+  text-align: left;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.runlog-marathon-teaser div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.runlog-marathon-teaser strong {
+  color: var(--run-accent);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.runlog-marathon-teaser span,
+.runlog-marathon-teaser em {
+  color: var(--run-muted);
+  font-size: 0.75rem;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+.runlog-marathon-teaser p {
+  margin: 0.85rem 0 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.runlog-marathon-teaser p b {
+  color: var(--run-text);
+  font-size: 0.95rem;
+}
+
+.runlog-marathon-teaser time {
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.75rem;
+}
+
+.runlog-races-view,
+.runlog-race-detail {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0 0;
+}
+
+.runlog-races-view > h1,
+.runlog-race-detail h1 {
+  margin: 0;
+  color: var(--run-text);
+  font-size: clamp(2rem, 10vw, 4.5rem);
+  font-weight: 950;
+  line-height: 0.95;
+}
+
+.runlog-races-view > h1 span,
+.runlog-race-detail > span {
+  display: inline-block;
+  background: var(--run-accent);
+  color: #fff;
+  padding: 0.05rem 0.35rem;
+}
+
+.runlog-races-view > p,
+.runlog-race-detail p,
+.runlog-empty-races p {
+  margin: 0;
+  color: var(--run-dim);
+}
+
+.runlog-race-year {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+  max-width: 720px;
+}
+
+.runlog-race-year-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.runlog-race-year-head h2 {
+  margin: 0;
+  color: var(--run-text);
+  font-size: 2rem;
+}
+
+.runlog-race-year-head span {
+  color: var(--run-dim);
+}
+
+.runlog-race-year-head strong {
+  color: var(--run-accent);
+  font-family: var(--run-mono);
+}
+
+.runlog-race-list {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 720px;      /* 新增，控制卡片最大宽度 */
+}
+
+.runlog-race-list a,
+.runlog-empty-races,
+.runlog-race-detail dl {
+  color: inherit;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.runlog-race-list-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.8rem;
+  overflow: hidden;
+}
+
+.runlog-race-list-item.has-media {
+  /* grid-template-columns: minmax(0, 1fr) minmax(7.5rem, 32%); */
+  grid-template-columns: minmax(0, 1fr) minmax(7.5rem, 12%);
+  align-items: stretch;
+}
+
+.runlog-race-card-copy {
+  min-width: 0;
+}
+
+.runlog-race-card-media-wrap {
+  min-width: 0;
+  display: flex;
+}
+
+.runlog-race-card-media {
+  /* width: 100%; */
+  height: 100%;
+  min-height: 4.5rem;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--run-radius-sm);
+  object-fit: cover;
+  background: #09090b;
+}
+
+.runlog-race-list a > span {
+  color: var(--run-muted);
+  font-family: var(--run-mono);
+  font-size: 0.75rem;
+}
+
+.runlog-race-list h3,
+.runlog-empty-races h2 {
+  margin: 0.35rem 0;
+  color: var(--run-text);
+}
+
+.runlog-race-list p {
+  margin: 0;
+  min-height: 1rem;
+  color: var(--run-dim);
+}
+
+.runlog-race-meta-grid,
+.runlog-race-detail dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.45rem 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.runlog-race-detail dl {
+  margin-top: 0;
+}
+
+.runlog-race-detail dl div {
+  display: contents;
+}
+
+.runlog-race-list em,
+.runlog-race-detail dt {
+  color: var(--run-dim);
+  font-size: 0.7rem;
+  font-style: normal;
+}
+
+.runlog-race-list strong,
+.runlog-race-detail dd {
+  margin: 0;
+  color: var(--run-text);
+  font-family: var(--run-mono);
+  min-width: 0;
+}
+
+.runlog-race-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+}
+
+.runlog-race-tags b,
+.runlog-race-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.45rem;
+  border-radius: 999px;
+  background: rgb(39 39 42 / 0.74);
+  color: var(--run-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.25rem 0.55rem;
+}
+
+.runlog-race-tags b {
+  background: var(--run-accent);
+  color: #fff;
+}
+
+.runlog-race-detail-media {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem;
+}
+
+.runlog-race-detail-media img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--run-border);
+  border-radius: var(--run-radius);
+  background: #09090b;
+  object-fit: cover;
+}
+
+.runlog-race-detail-media .runlog-race-medal {
+  object-fit: contain;
+  padding: 0.75rem;
+}
+
+/* Heatmap and Running Life */
+.runlog-view-heatmap .runlog-app-shell {
+  /* width: min(100%, 72rem); */
+  width: min(100%, 60rem);
 }
 
 .runlog-heatmap-view {
-  justify-items: center;
-  gap: 2rem;
-  padding-top: 4.5rem;
-}
-
-.runlog-heatmap-view .runlog-life-view {
-  width: 100%;
-  min-height: auto;
-  padding-top: 0;
+  display: grid;
+  gap: 1rem;
 }
 
 .runlog-heatmap-toolbar {
-  display: none;
-}
-
-.runlog-year-heatmap {
-  width: 240px;
-  max-height: none;
-  overflow: hidden;
-  padding: 1.45rem 1.45rem 1.6rem;
-  border-radius: 12px;
-  background: #070708;
-}
-
-.runlog-heatmap-head {
+  display: flex;
   justify-content: flex-end;
-  margin-bottom: 1.35rem;
+  gap: 0.5rem;
 }
 
-.runlog-heatmap-head h3 {
-  color: #3f3f46;
-  font-size: 1.65rem;
-  font-style: italic;
+.runlog-heatmap-pair {
+  display: grid;
+  gap: 1rem;
+}
+
+.runlog-life-view,
+.runlog-year-heatmap {
+  overflow: hidden;
+  padding: 1.25rem;
+}
+
+.runlog-life-head,
+.runlog-heatmap-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.runlog-life-view h1 {
+  margin: 0;
+  color: var(--run-text);
+  /* font-size: 2rem; */
+  font-size: 1.5rem;
   font-weight: 950;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
-.runlog-heatmap-head button {
-  display: none;
+.runlog-life-view h1 span {
+  color: var(--run-accent);
 }
 
-.runlog-heatmap-weekdays.top {
-  display: grid;
-  grid-template-columns: 2rem repeat(7, 1fr);
-  gap: 0.35rem;
-  margin-bottom: 0.6rem;
-  padding-left: 2rem;
-}
-
-.runlog-heatmap-weekdays.top span {
-  color: #25252a;
-  font-size: 0.55rem;
-  text-align: center;
-}
-
-.runlog-heatmap-body {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.45rem;
-}
-
-.runlog-heatmap-month {
-  display: grid;
-  grid-template-columns: 2rem 1fr;
-  gap: 0.35rem;
-  align-items: start;
-}
-
-.runlog-heatmap-month > span {
-  color: #25252a;
-  font-size: 0.66rem;
-  line-height: 14px;
-}
-
-.runlog-heatmap-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 14px);
-  grid-auto-flow: row;
-  grid-template-rows: none;
-  gap: 0.18rem;
-}
-
-.runlog-heatmap-grid i,
-.runlog-heatmap-grid span,
-.runlog-life-grid span {
-  border-radius: 1px;
-  background: #050506;
-}
-
-.runlog-heatmap-grid i {
-  width: 14px;
-  height: 14px;
-}
-
-.runlog-heatmap-grid i[data-level='1'],
-.runlog-heatmap-grid span[data-level='1'],
-.runlog-life-grid span[data-level='1'] {
-  background: #05283a;
-}
-
-.runlog-heatmap-grid i[data-level='2'],
-.runlog-heatmap-grid span[data-level='2'],
-.runlog-life-grid span[data-level='2'] {
-  background: #4f3800;
-}
-
-.runlog-heatmap-grid i[data-level='3'],
-.runlog-heatmap-grid span[data-level='3'],
-.runlog-life-grid span[data-level='3'] {
-  background: #8a6000;
-}
-
-.runlog-heatmap-grid i[data-level='4'],
-.runlog-heatmap-grid span[data-level='4'],
-.runlog-life-grid span[data-level='4'] {
-  background: #0b3c55;
-}
-
-.runlog-life-view {
-  min-height: calc(100vh - 5rem);
-  justify-content: flex-start;
-  padding-top: 1.5rem;
-}
-
-.runlog-life-view h1,
 .runlog-life-view p {
-  display: none;
+  margin: 0;
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.75rem;
 }
 
 .runlog-life-grid {
-  grid-template-columns: repeat(30, 7px);
-  gap: 0.55rem;
-  max-width: min(100%, 560px);
+  display: grid;
+  grid-template-columns: repeat(24, 7px);
+  gap: 7px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.35rem 0;
 }
 
 .runlog-life-grid span {
   width: 7px;
   height: 7px;
+  border-radius: 3px;
+  background: #383840;
+}
+
+.runlog-life-grid span[data-level='future'] {
+  background: #26262d;
+}
+
+.runlog-life-grid span[data-level='0'] {
+  background: #383840;
+}
+
+.runlog-life-grid span[data-level='1'] {
+  background: #575b66;
+}
+
+.runlog-life-grid span[data-level='2'] {
+  background: #9ca3af;
+}
+
+.runlog-life-grid span[data-level='3'] {
+  background: #facc15;
+}
+
+.runlog-life-grid span[data-level='4'] {
+  background: #fb7185;
+}
+
+.runlog-life-grid span[data-level='5'] {
+  background: #ef4444;
+}
+
+.runlog-life-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.runlog-life-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.68rem;
+}
+
+.runlog-life-legend i,
+.runlog-heatmap-grid i {
+  display: block;
   border-radius: 2px;
 }
 
-.runlog-life-grid.compact {
-  grid-template-columns: repeat(24, 7px);
+.runlog-life-legend i {
+  width: 0.65rem;
+  height: 0.65rem;
 }
 
-.runlog-races-view {
-  gap: 3rem;
-  padding-top: 3.5rem;
+.runlog-life-legend i[data-level='1'] {
+  background: #575b66;
 }
 
-.runlog-races-view > h1 {
+.runlog-life-legend i[data-level='2'] {
+  background: #9ca3af;
+}
+
+.runlog-life-legend i[data-level='3'] {
+  background: #facc15;
+}
+
+.runlog-life-legend i[data-level='4'] {
+  background: #fb7185;
+}
+
+.runlog-life-legend i[data-level='5'] {
+  background: #ef4444;
+}
+
+/* .runlog-heatmap-weekdays.top {
+  display: none;
+} */
+.runlog-heatmap-weekdays.top {
+  display: grid;
+  /* grid-template-columns: repeat(7, 1fr); */
+  grid-template-columns: repeat(7, 20px);
+  gap: 3px;
+  margin-bottom: 0.3rem;
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.68rem;
   text-align: center;
-  font-size: clamp(3.1rem, 10vw, 6rem);
-  line-height: 0.8;
 }
 
-.runlog-races-view > h1 span {
+.runlog-heatmap-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+}
+
+.runlog-heatmap-month {
+  min-width: 0;
+}
+
+.runlog-heatmap-month > span {
   display: block;
-  background: linear-gradient(90deg, #e31937, #ff4b55);
-  color: #fff;
-  padding: 0;
-  white-space: nowrap;
+  margin-bottom: 0.4rem;
+  color: var(--run-dim);
+  font-family: var(--run-mono);
+  font-size: 0.68rem;
 }
 
-.runlog-races-view > p {
-  margin-top: -2rem;
-  color: #a1a1aa;
-  text-align: center;
-  font-size: 1.1rem;
+.runlog-heatmap-grid {
+  display: grid;
+  /* grid-auto-flow: column; */
+  /* grid-template-rows: repeat(7, 6px); */
+  grid-template-columns: repeat(7, 20px);
+  justify-content: start;
+  gap: 3px;
 }
 
-.runlog-empty-races {
-  border-radius: 22px;
-  background: #111113;
+.runlog-heatmap-grid i {
+  width: 15px;
+  height: 10px;
+  background: var(--run-surface-soft);
+}
+
+.runlog-heatmap-grid i[data-outside='true'] {
+  opacity: 0.16;
+}
+
+.runlog-heatmap-grid i[data-level='0'] {
+  background: #27272a;
+}
+
+.runlog-heatmap-grid i[data-level='1'] {
+  background: #3f3f46;
+}
+
+.runlog-heatmap-grid i[data-level='2'] {
+  background: #52525b;
+}
+
+.runlog-heatmap-grid i[data-level='3'] {
+  background: #71717a;
+}
+
+.runlog-heatmap-grid i[data-level='4'] {
+  background: var(--run-accent);
+}
+
+/* 404 */
+.runlog-not-found {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  gap: 0.75rem;
   padding: 2rem;
+  background: var(--run-bg);
+  color: var(--run-text);
+  text-align: center;
 }
 
-.runlog-bottom-nav {
-  height: 71px;
-  padding: 0.7rem 1rem 0.85rem;
-  background: rgb(9 9 11 / 0.94);
+.runlog-not-found h1 {
+  margin: 0;
+  color: var(--run-accent);
+  font-size: clamp(4rem, 16vw, 9rem);
+  font-weight: 950;
+  line-height: 0.9;
 }
 
-.runlog-bottom-nav button {
-  color: #757580;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+.runlog-not-found p {
+  margin: 0;
+  color: var(--run-muted);
 }
 
-.runlog-bottom-nav button.active {
-  border-color: transparent;
-  background: transparent;
-  color: #e31937;
+.runlog-not-found a {
+  color: var(--run-text);
+  font-weight: 800;
+  text-decoration: none;
 }
 
-.runlog-bottom-nav span {
-  font-size: 1.25rem;
+.runlog-not-found a:hover {
+  color: var(--run-accent);
 }
 
-.runlog-bottom-nav em {
-  font-size: 0.66rem;
-  font-weight: 500;
-}
-
-@media (min-width: 760px) {
+/* Desktop reference layout starts early so half-width windows stay desktop-like. */
+@media (min-width: 700px) {
   .runlog-page {
-    padding-bottom: 2rem;
+    padding-bottom: 0;
   }
 
   .runlog-desktop-nav {
-    position: fixed;
+    display: block;
+    position: sticky;
     top: 0;
-    right: 0;
-    left: 0;
-    z-index: 60;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    height: 64px;
-    border-bottom: 1px solid rgb(255 255 255 / 0.1);
-    background: rgb(0 0 0 / 0.5);
-    padding-inline: max(1.5rem, calc((100vw - 1280px) / 2 + 1.5rem));
-    backdrop-filter: blur(14px);
-  }
-
-  .runlog-desktop-nav::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    margin: 0 auto;
-    width: min(100%, 1280px);
-    pointer-events: none;
-  }
-
-  .runlog-brand,
-  .runlog-desktop-nav button {
-    border: 0;
-    background: transparent;
-    color: #d4d4d8;
-    cursor: pointer;
-    font: inherit;
-  }
-
-  .runlog-brand {
-    font-size: clamp(1.15rem, 1.8vw, 1.55rem);
-    font-weight: 950;
-    letter-spacing: -0.06em;
-  }
-
-  .runlog-brand span {
-    color: #fff;
-  }
-
-  .runlog-brand b {
-    color: #e31937;
+    z-index: 30;
+    background: linear-gradient(180deg, #000 70%, rgb(0 0 0 / 0));
+    padding: 1.35rem 1.5rem 0.65rem;
   }
 
   .runlog-bottom-nav {
@@ -1617,14 +1365,14 @@ hr {
   }
 
   .runlog-app-shell {
-    width: min(100%, 1280px);
-    padding: 6rem clamp(0.9rem, 1.8vw, 1.5rem) 0;
+    padding: 1.4rem 1.5rem 2.5rem;
   }
 
   .runlog-home-grid {
     display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    gap: clamp(1rem, 2.4vw, 2rem);
+    grid-template-columns: minmax(0, 3fr) minmax(19.5rem, 2fr);
+    gap: 2rem;
+    align-items: stretch;
   }
 
   .runlog-home-left,
@@ -1632,293 +1380,59 @@ hr {
     display: flex;
     min-width: 0;
     flex-direction: column;
-    gap: clamp(1rem, 2.4vw, 2rem);
+    gap: 1.5rem;
+  }
+
+  .runlog-goals,
+  .runlog-map-card,
+  .runlog-panel,
+  .runlog-month-summary,
+  .runlog-activity-log,
+  .runlog-marathon-teaser {
+    order: initial;
+    margin: 0;
   }
 
   .runlog-goals {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(0.6rem, 1vw, 1rem);
-    margin-bottom: 0;
+    grid-template-columns: 1.15fr 0.95fr 0.95fr;
   }
 
   .runlog-total-card {
-    display: flex;
-    min-height: clamp(118px, 12vw, 154px);
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .runlog-total-card::after {
-    content: '点击查看热力图';
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    background: rgb(0 0 0 / 0.6);
-    color: #fff;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    opacity: 0;
-    transition: opacity 0.18s ease;
-    backdrop-filter: blur(1px);
-  }
-
-  .runlog-total-card:hover::after {
-    opacity: 1;
-  }
-
-  .runlog-total-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    color: #a1a1aa;
-    font-size: 0.88rem;
+    grid-column: auto;
   }
 
   .runlog-goal-card {
-    min-height: clamp(118px, 12vw, 154px);
-    padding: clamp(0.85rem, 1.4vw, 1.25rem);
-  }
-
-  .runlog-goal-value {
-    font-size: 1.5rem;
-  }
-
-  .runlog-view-log .runlog-map-card {
-    order: 2;
-    height: 300px;
-    margin-bottom: 0;
+    min-height: 7.35rem;
   }
 
   .runlog-marathon-teaser {
-    position: relative;
-    order: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: clamp(0.85rem, 1.5vw, 1.5rem);
-    min-height: clamp(96px, 10vw, 124px);
-    overflow: hidden;
-    border: 1px solid #27272f;
-    border-radius: 16px;
-    background: #18181b;
-    color: inherit;
-    cursor: pointer;
-    padding: clamp(1rem, 1.6vw, 1.5rem);
-    text-align: left;
-  }
-
-  .runlog-marathon-teaser::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 16rem;
-    height: 100%;
-    background: linear-gradient(270deg, rgb(227 25 55 / 0.1), transparent);
-    opacity: 0;
-    transition: opacity 0.22s ease;
-  }
-
-  .runlog-marathon-teaser:hover {
-    border-color: rgb(227 25 55 / 0.45);
-  }
-
-  .runlog-marathon-teaser:hover::after {
-    opacity: 1;
-  }
-
-  .runlog-marathon-teaser > div {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.75rem, 1.3vw, 1.25rem);
-    position: relative;
-    z-index: 1;
-  }
-
-  .runlog-marathon-teaser strong {
-    color: #e31937;
-    font-size: clamp(2.4rem, 4vw, 3.5rem);
-    font-weight: 950;
-    line-height: 1;
-    letter-spacing: -0.08em;
-  }
-
-  .runlog-marathon-teaser span {
     display: block;
-    color: #fff;
-    font-size: clamp(0.85rem, 1.35vw, 1.2rem);
-    font-weight: 800;
-    line-height: 1;
   }
 
-  .runlog-marathon-teaser em {
-    display: block;
-    margin-top: 0.35rem;
-    color: #a1a1aa;
-    font-size: 0.82rem;
-    font-style: normal;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .runlog-marathon-teaser p {
-    position: relative;
-    z-index: 1;
-    min-width: 0;
-    margin: 0;
-    border-left: 1px solid rgb(255 255 255 / 0.1);
-    padding-left: clamp(0.85rem, 1.4vw, 1.5rem);
-    text-align: right;
-  }
-
-  .runlog-marathon-teaser p span {
-    display: inline-block;
-    margin-bottom: 0.35rem;
-    border-radius: 999px;
-    background: rgb(227 25 55 / 0.1);
-    color: #e31937;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    padding: 0.18rem 0.45rem;
-    text-transform: uppercase;
-  }
-
-  .runlog-marathon-teaser p b {
-    display: block;
-    max-width: 220px;
-    overflow: hidden;
-    color: #fff;
-    font-size: 1rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .runlog-marathon-teaser time {
-    color: #71717a;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      monospace;
-    font-size: 0.75rem;
+  .runlog-map-card {
+    height: 18.25rem;
   }
 
   .runlog-panel {
-    order: 3;
-    min-height: clamp(360px, 34vw, 430px);
-    padding: clamp(1rem, 1.5vw, 1.5rem);
+    flex: 1;
   }
 
-  .runlog-month-summary {
-    order: 4;
-    display: block;
-    border: 1px solid #27272f;
-    border-radius: 16px;
-    background: #18181b;
-    padding: 1.45rem 1.5rem 1.5rem;
-  }
-
-  .runlog-summary-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.15rem;
-  }
-
-  .runlog-summary-head h3 {
-    margin: 0;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 800;
-  }
-
-  .runlog-summary-head span {
-    color: #71717a;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      monospace;
-    font-size: 0.75rem;
-  }
-
-  .runlog-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
-    gap: 0.85rem;
-  }
-
-  .runlog-summary-grid div {
-    min-width: 0;
-    border-radius: 10px;
-    background: #202024;
-    padding: 0.85rem;
-  }
-
-  .runlog-summary-grid span {
-    display: block;
-    margin-bottom: 0.35rem;
-    color: #71717a;
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .runlog-summary-grid strong {
-    display: block;
-    overflow: hidden;
-    color: #fff;
-    font-size: 0.95rem;
-    font-weight: 850;
-    line-height: 1.2;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .runlog-calendar-grid {
-    gap: clamp(0.45rem, 1vw, 0.95rem);
-  }
-
-  .runlog-calendar-grid button,
-  .runlog-calendar-grid > span {
-    min-height: clamp(42px, 4.8vw, 58px);
-  }
-
-  .runlog-calendar-grid button.has-run {
-    background: #27272a;
-    color: #d4d4d8;
-  }
-
-  .runlog-calendar-grid button.has-run::after {
+  .runlog-panel-head > div > span {
     display: none;
   }
 
-  .runlog-calendar-grid button em {
-    display: block;
-    color: inherit;
-    font-size: 0.66rem;
-    opacity: 0.78;
+  .runlog-month-summary {
+    margin-top: 0;
+  }
+
+  .runlog-summary-grid {
+    grid-template-columns: 0.8fr 1.35fr 1fr;
   }
 
   .runlog-activity-log {
-    min-height: 500px;
+    flex: 1;
+    min-height: 34rem;
     margin-top: 0;
-    border: 1px solid #27272f;
-    border-radius: 16px;
-    background: #18181b;
-    overflow: hidden;
-    padding: 0;
-  }
-
-  .runlog-subhead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    margin-bottom: 0;
-    border-bottom: 1px solid rgb(63 63 70 / 0.5);
-    background: rgb(24 24 27 / 0.88);
-    padding: clamp(1rem, 1.5vw, 1.5rem);
-    backdrop-filter: blur(8px);
   }
 
   .runlog-activity-list {
@@ -1927,221 +1441,61 @@ hr {
 
   .runlog-activity-table {
     display: block;
-    overflow-x: auto;
-  }
-
-  .runlog-activity-table table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 520px;
-  }
-
-  .runlog-activity-table th {
-    border-bottom: 1px solid rgb(63 63 70 / 0.55);
-    color: #71717a;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    padding: 0.75rem clamp(0.7rem, 1vw, 1.1rem);
-    text-align: left;
-    text-transform: uppercase;
-  }
-
-  .runlog-activity-table td {
-    border-bottom: 1px solid rgb(63 63 70 / 0.42);
-    color: #a1a1aa;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      monospace;
-    font-size: 0.8rem;
-    padding: 1rem clamp(0.7rem, 1vw, 1.1rem);
-    vertical-align: middle;
   }
 
   .runlog-activity-table tbody tr {
-    cursor: pointer;
-    transition:
-      background-color 0.16s ease,
-      color 0.16s ease;
-  }
-
-  .runlog-activity-table tbody tr:hover {
-    background: rgb(227 25 55 / 0.08);
-  }
-
-  .runlog-activity-table time,
-  .runlog-activity-table b,
-  .runlog-activity-table strong {
-    display: block;
-    color: #fff;
-    font-family:
-      Inter,
-      ui-sans-serif,
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      sans-serif;
-  }
-
-  .runlog-activity-table time {
-    font-weight: 800;
-  }
-
-  .runlog-activity-table b {
-    max-width: 20rem;
-    overflow: hidden;
-    font-size: 0.92rem;
-    font-weight: 800;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .runlog-activity-table td span {
-    display: block;
-    margin-top: 0.28rem;
-    color: #71717a;
-    font-size: 0.72rem;
-  }
-
-  .runlog-activity-table strong {
-    font-size: 1rem;
-    font-weight: 900;
-  }
-
-  .runlog-activity-table strong em {
-    margin-left: 0.22rem;
-    color: #71717a;
-    font-size: 0.68rem;
-    font-style: normal;
-    font-weight: 600;
+    height: 3.9rem;
   }
 
   .runlog-pager {
-    border-top: 1px solid rgb(63 63 70 / 0.5);
-    margin: 0;
-    padding: 0.65rem 1rem;
+    margin-top: auto;
   }
 
-  .runlog-heatmap-view,
-  .runlog-races-view,
-  .runlog-race-detail {
-    padding-top: 1rem;
+  .runlog-heatmap-pair {
+    /* grid-template-columns: minmax(20rem, 0.9fr) minmax(22rem, 1fr); */
+    grid-template-columns: minmax(15rem, 0.5fr) minmax(20rem, 0.4fr);
+    align-items: stretch;
   }
 
-  .runlog-heatmap-view {
-    padding-top: 1rem;
-  }
-
+  .runlog-life-view,
   .runlog-year-heatmap {
-    width: fit-content;
-    padding: 1.5rem 1.5rem 1.6rem 1rem;
+    min-height: 34rem;
   }
 
-  .runlog-heatmap-grid {
-    grid-template-columns: repeat(7, 22px);
-    gap: 2px;
-  }
-
-  .runlog-heatmap-grid i {
-    width: 22px;
-    height: 22px;
-  }
-
-  .runlog-life-view h1,
-  .runlog-life-view p {
-    display: flex;
-  }
-
-  .runlog-life-view {
-    justify-content: center;
-    min-height: calc(100vh - 8rem);
-  }
-
-  .runlog-heatmap-view .runlog-life-view {
-    min-height: auto;
-    padding-top: 0;
-  }
-
-  .runlog-life-grid {
-    grid-template-columns: repeat(42, 7px);
-  }
-}
-
-@media (min-width: 760px) and (max-width: 940px) {
-  .runlog-desktop-nav {
-    padding-inline: 1rem;
-  }
-
-  .runlog-panel-head {
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
-
-  .runlog-panel-head h2 span {
-    display: inline-block;
-    margin-left: 0.35rem;
-  }
-
-  .runlog-month-controls {
-    flex-wrap: nowrap;
-    gap: 0.25rem;
-  }
-
-  .runlog-month-controls button,
-  .runlog-month-controls button:nth-child(1),
-  .runlog-month-controls button:nth-child(2),
-  .runlog-month-controls button:nth-child(3),
-  .runlog-month-controls button:nth-child(4) {
-    width: 32px;
-    min-width: 32px;
-    min-height: 32px;
-    padding: 0;
-  }
-
-  .runlog-month-controls button:nth-child(3),
-  .runlog-month-controls button:nth-child(4) {
-    font-size: 0.92rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .runlog-page,
-  .runlog-app-shell {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-
-  .runlog-app-shell {
-    padding: 1.5rem 1rem 0;
-  }
-
-  .runlog-goals {
-    width: 100%;
+  .runlog-heatmap-body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 1040px) {
+  .runlog-summary-grid {
+    grid-template-columns: 0.85fr 1.35fr repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .runlog-goals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .runlog-goal-card {
-    min-width: 0;
-  }
-
-  .runlog-goal-value {
-    font-size: 1.3rem;
-  }
-
-  .runlog-goal-value span {
-    font-size: 0.68rem;
+  .runlog-activity-card {
+    grid-template-columns: 5.8rem minmax(0, 1fr);
   }
 
   .runlog-panel {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
-  .runlog-panel-head {
-    align-items: flex-start;
+  .runlog-heatmap-body {
+    grid-template-columns: 1fr;
   }
 
-  .runlog-calendar-grid {
-    gap: 1.4rem 0.75rem;
+  .runlog-race-list-item.has-media {
+    grid-template-columns: 1fr;
+  }
+
+  .runlog-race-card-media {
+    min-height: 9rem;
+    aspect-ratio: 3 / 4;
   }
 }

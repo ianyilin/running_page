@@ -15,8 +15,6 @@ import type { FeatureCollection, LineString } from 'geojson';
 
 export type Coordinate = [number, number];
 
-export type RunIds = Array<number> | [];
-
 // Check for units environment variable
 const IS_IMPERIAL = import.meta.env.VITE_USE_IMPERIAL === 'true';
 export const M_TO_DIST = IS_IMPERIAL ? 1609.344 : 1000; // Meters to Mi or Km
@@ -141,7 +139,7 @@ const locationForRun = (
       coordinate = extractCoordinate(location);
     }
     const l = location.split(',');
-    // or to handle keep location format
+    // Some reverse geocoder values come back as comma-separated strings.
     let countryMatch = l[l.length - 1].match(
       /[\u4e00-\u9fa5].*[\u4e00-\u9fa5]/
     );
