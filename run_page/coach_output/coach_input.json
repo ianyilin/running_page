@@ -1,27 +1,12 @@
 {
-  "generated_at": "2026-05-06T16:00:03-04:00",
-  "analysis_date": "2026-05-06",
-  "target_date": "2026-05-07",
+  "generated_at": "2026-05-07T01:56:21-04:00",
+  "analysis_date": "2026-05-07",
+  "target_date": "2026-05-08",
   "source": {
     "activities_file": "src/static/activities.json",
-    "run_count_total": 55
+    "run_count_total": 56
   },
   "recent_runs": [
-    {
-      "run_id": 18138168914,
-      "date": "2026-04-16",
-      "start_time_local": "18:04",
-      "name": "傍晚跑步",
-      "distance_km": 5.15,
-      "moving_time_min": 36.6,
-      "pace_min_per_km": 7.12,
-      "average_heartrate": 155.5,
-      "average_speed_mps": 2.341,
-      "elevation_gain_m": 0.0,
-      "subtype": "indoor",
-      "streak": 2,
-      "inferred_type": "moderate"
-    },
     {
       "run_id": 18151399769,
       "date": "2026-04-17",
@@ -216,18 +201,33 @@
       "subtype": "Run",
       "streak": 1,
       "inferred_type": "interval"
+    },
+    {
+      "run_id": 18405101069,
+      "date": "2026-05-06",
+      "start_time_local": "17:24",
+      "name": "轻松跑",
+      "distance_km": 7.27,
+      "moving_time_min": 48.3,
+      "pace_min_per_km": 6.64,
+      "average_heartrate": 150.0,
+      "average_speed_mps": 2.51,
+      "elevation_gain_m": 25.6,
+      "subtype": "Run",
+      "streak": 2,
+      "inferred_type": "moderate"
     }
   ],
   "summary": {
     "last_7_days": {
       "days": 7,
-      "start_date": "2026-04-30",
-      "end_date": "2026-05-06",
+      "start_date": "2026-05-01",
+      "end_date": "2026-05-07",
       "run_count": 4,
-      "total_distance_km": 33.4,
-      "total_time_min": 227.6,
-      "average_distance_km": 8.35,
-      "average_heartrate": 151.6,
+      "total_distance_km": 34.99,
+      "total_time_min": 234.9,
+      "average_distance_km": 8.75,
+      "average_heartrate": 150.3,
       "hard_run_count": 2,
       "longest_run": {
         "run_id": 18355136293,
@@ -247,13 +247,13 @@
     },
     "last_14_days": {
       "days": 14,
-      "start_date": "2026-04-23",
-      "end_date": "2026-05-06",
+      "start_date": "2026-04-24",
+      "end_date": "2026-05-07",
       "run_count": 8,
-      "total_distance_km": 67.61,
-      "total_time_min": 454.8,
-      "average_distance_km": 8.45,
-      "average_heartrate": 151.0,
+      "total_distance_km": 71.81,
+      "total_time_min": 481.8,
+      "average_distance_km": 8.98,
+      "average_heartrate": 151.7,
       "hard_run_count": 3,
       "longest_run": {
         "run_id": 18355138668,
@@ -273,13 +273,13 @@
     },
     "last_28_days": {
       "days": 28,
-      "start_date": "2026-04-09",
-      "end_date": "2026-05-06",
-      "run_count": 18,
-      "total_distance_km": 136.22,
-      "total_time_min": 912.6,
-      "average_distance_km": 7.57,
-      "average_heartrate": 151.0,
+      "start_date": "2026-04-10",
+      "end_date": "2026-05-07",
+      "run_count": 19,
+      "total_distance_km": 143.49,
+      "total_time_min": 960.9,
+      "average_distance_km": 7.55,
+      "average_heartrate": 150.9,
       "hard_run_count": 6,
       "longest_run": {
         "run_id": 18355138668,
@@ -299,12 +299,10 @@
     }
   },
   "signals": {
-    "fatigue_signal": "medium",
-    "recommended_guardrail": "easy_only",
+    "fatigue_signal": "low",
+    "recommended_guardrail": "normal_training_ok",
     "days_since_last_run": 1,
-    "last_7_vs_previous_7_distance_ratio": 0.98,
-    "reasons": [
-      "last run was interval"
-    ]
+    "last_7_vs_previous_7_distance_ratio": 0.95,
+    "reasons": []
   }
 }
