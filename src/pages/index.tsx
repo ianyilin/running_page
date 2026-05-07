@@ -865,7 +865,7 @@ const RaceList = ({
       <h1>
         Go! <span>MARATHON LIFE</span>
       </h1>
-      <p>Every heartbeat, every kilometer, every medal tells a story.</p>
+      <p>I thought you said Rum.</p>
       {races.length ? (
         Object.keys(grouped)
           .sort((a, b) => Number(b) - Number(a))
