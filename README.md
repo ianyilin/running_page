@@ -48,6 +48,8 @@ pnpm lint
 - `run_page/strava_sync.py`: GitHub Actions Strava sync entrypoint
 - `run_page/strava_env_sync.py`: local `.env` sync entrypoint
 - `run_page/coach/`: daily AI coach context, Azure OpenAI call, and SMTP email
+- `run_page/coach/goals.json`: editable upcoming race or training goals
+- `run_page/coach/profile.json`: editable runner profile and health context
 - `run_page/coach_output/`: latest generated coach input and plan JSON
 - `.github/workflows/run_data_sync.yml`: daily cloud sync and `/running/` deployment
 
@@ -65,6 +67,61 @@ For local testing, first run:
 
 ```bash
 pnpm coach:dry-run
+```
+
+Optional long-term goals live in `run_page/coach/goals.json`. The coach reads
+the nearest active future goal and sends it to Azure OpenAI together with recent
+training load:
+
+```json
+{
+  "goals": [
+    {
+      "name": "Brooklyn Half 2026",
+      "date": "2026-05-17",
+      "distance": "half_marathon",
+      "target_time": "02:00:00",
+      "priority": "A",
+      "notes": "Primary spring race"
+    }
+  ]
+}
+```
+
+Supported distance labels include `5k`, `10k`, `half_marathon`, `full_marathon`,
+`半马`, and `全马`. You can also use `"distance_km": 21.0975` directly.
+
+Personal running and health context lives in `run_page/coach/profile.json`. All
+fields are optional; fill only the data you want the coach to use:
+
+```json
+{
+  "profile": {
+    "age": 35,
+    "sex": "male",
+    "height_cm": 175,
+    "weight_kg": 70
+  },
+  "heart_rate": {
+    "resting_hr_bpm": 55,
+    "max_hr_bpm": 185,
+    "zones": [
+      { "name": "zone 2", "min_bpm": 125, "max_bpm": 145 },
+      { "name": "zone 3", "min_bpm": 146, "max_bpm": 160 }
+    ]
+  },
+  "health": {
+    "injury_notes": ["right Achilles sensitive after hills"],
+    "sleep_notes": "Prefer easier training after short sleep"
+  },
+  "running_preferences": {
+    "preferred_run_days": ["Tue", "Thu", "Sat", "Sun"],
+    "preferred_rest_days": ["Mon"],
+    "available_time_weekday_min": 45,
+    "available_time_weekend_min": 120,
+    "avoid": ["hard workouts on consecutive days"]
+  }
+}
 ```
 
 To call Azure OpenAI and send email, fill `.env` or GitHub Actions secrets with:

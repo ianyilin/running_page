@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-08T01:25:38-04:00",
+  "generated_at": "2026-05-08T17:10:29-04:00",
   "analysis_date": "2026-05-08",
   "target_date": "2026-05-09",
   "source": {
@@ -297,6 +297,60 @@
         "inferred_type": "long"
       }
     }
+  },
+  "profile": {
+    "profile": {
+      "date_of_birth": "1995-01-01",
+      "age": 31,
+      "sex": "male",
+      "height_cm": 170,
+      "weight_kg": 65
+    },
+    "heart_rate": {
+      "resting_hr_bpm": 64,
+      "max_hr_bpm": null,
+      "lactate_threshold_hr_bpm": null,
+      "zones": []
+    },
+    "health": {
+      "injury_notes": [],
+      "medical_notes": [],
+      "sleep_notes": null
+    },
+    "running_preferences": {
+      "preferred_run_days": [],
+      "preferred_rest_days": [],
+      "preferred_training_time": null,
+      "available_time_weekday_min": null,
+      "available_time_weekend_min": null,
+      "preferred_surfaces": [],
+      "avoid": []
+    },
+    "notes": null
+  },
+  "goals": {
+    "primary_goal": {
+      "name": "No competition",
+      "date": "2026-10-01",
+      "days_until": 146,
+      "distance": "half_marathon",
+      "distance_km": 21.0975,
+      "target_time": "02:00:00",
+      "priority": "A",
+      "notes": "Year-long fitness maintenance"
+    },
+    "upcoming_goals": [
+      {
+        "name": "No competition",
+        "date": "2026-10-01",
+        "days_until": 146,
+        "distance": "half_marathon",
+        "distance_km": 21.0975,
+        "target_time": "02:00:00",
+        "priority": "A",
+        "notes": "Year-long fitness maintenance"
+      }
+    ]
   },
   "signals": {
     "fatigue_signal": "low",

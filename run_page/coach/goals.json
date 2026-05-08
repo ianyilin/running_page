@@ -1,0 +1,12 @@
+{
+    "goals": [
+    {
+      "name": "No competition",
+      "date": "2026-10-01",
+      "distance": "half_marathon",
+      "target_time": "02:00:00",
+      "priority": "A",
+      "notes": "Year-long fitness maintenance"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "profile": {
+    "date_of_birth": "1995-01-01",
+    "age": 31,
+    "sex": "male",
+    "height_cm": 170,
+    "weight_kg": 65
+  },
+  "heart_rate": {
+    "resting_hr_bpm": 64,
+    "max_hr_bpm": null,
+    "lactate_threshold_hr_bpm": null,
+    "zones": []
+  },
+  "health": {
+    "injury_notes": [],
+    "medical_notes": [],
+    "sleep_notes": null
+  },
+  "running_preferences": {
+    "preferred_run_days": [],
+    "preferred_rest_days": [],
+    "preferred_training_time": null,
+    "available_time_weekday_min": null,
+    "available_time_weekend_min": null,
+    "preferred_surfaces": [],
+    "avoid": []
+  },
+  "notes": null
+}

@@ -86,6 +86,10 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
 
     system_prompt = (
         "You are a conservative running coach. Generate one safe plan for tomorrow. "
+        "Use the provided running goals as long-term context, including race date, "
+        "race distance, target time, and days remaining. "
+        "Use the runner profile and health data, such as age, height, weight, heart "
+        "rate zones, injury notes, and preferences, when choosing volume and intensity. "
         "Respect the provided guardrail. Do not prescribe a hard workout when the "
         "guardrail says easy_only, easy_comeback, or rest_or_recovery. Return only "
         "valid JSON with the requested keys."
@@ -123,7 +127,6 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
         },
         timeout=60,
     )
-    print("Azure response:", response.text)
     response.raise_for_status()
     content = response.json()["choices"][0]["message"]["content"]
     plan = _extract_json(content)

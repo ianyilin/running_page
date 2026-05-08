@@ -9,7 +9,21 @@ ROOT = Path(__file__).resolve().parents[2]
 ACTIVITIES_FILE = ROOT / "src" / "static" / "activities.json"
 OUTPUT_DIR = ROOT / "run_page" / "coach_output"
 CONTEXT_FILE = OUTPUT_DIR / "coach_input.json"
+GOALS_FILE = ROOT / "run_page" / "coach" / "goals.json"
+PROFILE_FILE = ROOT / "run_page" / "coach" / "profile.json"
 LOCAL_TZ = ZoneInfo("America/New_York")
+
+DISTANCE_KM_BY_LABEL = {
+    "5k": 5.0,
+    "10k": 10.0,
+    "half": 21.0975,
+    "half_marathon": 21.0975,
+    "半马": 21.0975,
+    "full": 42.195,
+    "full_marathon": 42.195,
+    "marathon": 42.195,
+    "全马": 42.195,
+}
 
 
 def _parse_duration(value) -> int:
@@ -39,6 +53,73 @@ def _safe_mean(values: list[float | None]) -> float | None:
     if not filtered:
         return None
     return round(statistics.mean(filtered), 1)
+
+
+def _distance_km(goal: dict) -> float | None:
+    if goal.get("distance_km") is not None:
+        return float(goal["distance_km"])
+
+    label = str(goal.get("distance") or "").strip().lower()
+    if label in DISTANCE_KM_BY_LABEL:
+        return DISTANCE_KM_BY_LABEL[label]
+    return None
+
+
+def _normalize_goal(goal: dict, analysis_date: dt.date) -> dict | None:
+    if goal.get("active") is False:
+        return None
+    if not goal.get("date"):
+        return None
+
+    goal_date = dt.date.fromisoformat(goal["date"])
+    normalized = {
+        "name": goal.get("name") or goal.get("distance") or "Running goal",
+        "date": goal_date.isoformat(),
+        "days_until": (goal_date - analysis_date).days,
+        "distance": goal.get("distance"),
+        "distance_km": _distance_km(goal),
+        "target_time": goal.get("target_time"),
+        "priority": goal.get("priority", "A"),
+        "notes": goal.get("notes"),
+    }
+    return {key: value for key, value in normalized.items() if value is not None}
+
+
+def load_running_goals(
+    goals_file: Path = GOALS_FILE,
+    analysis_date: dt.date | None = None,
+) -> dict:
+    if analysis_date is None:
+        analysis_date = dt.datetime.now(LOCAL_TZ).date()
+    if not goals_file.exists():
+        return {"primary_goal": None, "upcoming_goals": []}
+
+    data = json.loads(goals_file.read_text(encoding="utf-8"))
+    raw_goals = data.get("goals", []) if isinstance(data, dict) else data
+    goals = [
+        normalized
+        for goal in raw_goals
+        if (normalized := _normalize_goal(goal, analysis_date)) is not None
+    ]
+    upcoming_goals = sorted(
+        [goal for goal in goals if goal["days_until"] >= 0],
+        key=lambda goal: (goal["days_until"], goal.get("priority", "Z")),
+    )
+
+    return {
+        "primary_goal": upcoming_goals[0] if upcoming_goals else None,
+        "upcoming_goals": upcoming_goals,
+    }
+
+
+def load_runner_profile(profile_file: Path = PROFILE_FILE) -> dict:
+    if not profile_file.exists():
+        return {}
+
+    profile = json.loads(profile_file.read_text(encoding="utf-8"))
+    if not isinstance(profile, dict):
+        return {}
+    return profile
 
 
 def _run_type(run: dict) -> str:
@@ -194,6 +275,8 @@ def build_context(
             "last_14_days": _summarize(runs, 14, today),
             "last_28_days": _summarize(runs, 28, today),
         },
+        "profile": load_runner_profile(),
+        "goals": load_running_goals(analysis_date=today),
         "signals": _guardrails(runs, today),
     }
 
