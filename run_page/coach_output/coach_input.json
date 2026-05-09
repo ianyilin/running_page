@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-08T17:10:29-04:00",
-  "analysis_date": "2026-05-08",
-  "target_date": "2026-05-09",
+  "generated_at": "2026-05-09T01:43:49-04:00",
+  "analysis_date": "2026-05-09",
+  "target_date": "2026-05-10",
   "source": {
     "activities_file": "src/static/activities.json",
     "run_count_total": 57
@@ -221,34 +221,34 @@
   "summary": {
     "last_7_days": {
       "days": 7,
-      "start_date": "2026-05-02",
-      "end_date": "2026-05-08",
-      "run_count": 5,
-      "total_distance_km": 42.04,
-      "total_time_min": 282.7,
-      "average_distance_km": 8.41,
-      "average_heartrate": 151.1,
-      "hard_run_count": 2,
+      "start_date": "2026-05-03",
+      "end_date": "2026-05-09",
+      "run_count": 4,
+      "total_distance_km": 24.86,
+      "total_time_min": 170.4,
+      "average_distance_km": 6.21,
+      "average_heartrate": 149.8,
+      "hard_run_count": 1,
       "longest_run": {
-        "run_id": 18355136293,
-        "date": "2026-05-02",
-        "start_time_local": "18:09",
-        "name": "傍晚跑步",
-        "distance_km": 17.18,
-        "moving_time_min": 112.3,
-        "pace_min_per_km": 6.54,
-        "average_heartrate": 156.4,
-        "average_speed_mps": 2.55,
-        "elevation_gain_m": 258.4,
+        "run_id": 18405101069,
+        "date": "2026-05-06",
+        "start_time_local": "17:24",
+        "name": "轻松跑",
+        "distance_km": 7.27,
+        "moving_time_min": 48.3,
+        "pace_min_per_km": 6.64,
+        "average_heartrate": 150.0,
+        "average_speed_mps": 2.51,
+        "elevation_gain_m": 25.6,
         "subtype": "Run",
-        "streak": 1,
-        "inferred_type": "long"
+        "streak": 2,
+        "inferred_type": "moderate"
       }
     },
     "last_14_days": {
       "days": 14,
-      "start_date": "2026-04-25",
-      "end_date": "2026-05-08",
+      "start_date": "2026-04-26",
+      "end_date": "2026-05-09",
       "run_count": 9,
       "total_distance_km": 78.86,
       "total_time_min": 529.6,
@@ -273,14 +273,14 @@
     },
     "last_28_days": {
       "days": 28,
-      "start_date": "2026-04-11",
-      "end_date": "2026-05-08",
-      "run_count": 20,
-      "total_distance_km": 150.54,
-      "total_time_min": 1008.7,
-      "average_distance_km": 7.53,
-      "average_heartrate": 151.1,
-      "hard_run_count": 6,
+      "start_date": "2026-04-12",
+      "end_date": "2026-05-09",
+      "run_count": 18,
+      "total_distance_km": 131.95,
+      "total_time_min": 885.9,
+      "average_distance_km": 7.33,
+      "average_heartrate": 150.5,
+      "hard_run_count": 5,
       "longest_run": {
         "run_id": 18355138668,
         "date": "2026-04-26",
@@ -332,7 +332,7 @@
     "primary_goal": {
       "name": "No competition",
       "date": "2026-10-01",
-      "days_until": 146,
+      "days_until": 145,
       "distance": "half_marathon",
       "distance_km": 21.0975,
       "target_time": "02:00:00",
@@ -343,7 +343,7 @@
       {
         "name": "No competition",
         "date": "2026-10-01",
-        "days_until": 146,
+        "days_until": 145,
         "distance": "half_marathon",
         "distance_km": 21.0975,
         "target_time": "02:00:00",
@@ -355,8 +355,8 @@
   "signals": {
     "fatigue_signal": "low",
     "recommended_guardrail": "normal_training_ok",
-    "days_since_last_run": 1,
-    "last_7_vs_previous_7_distance_ratio": 1.14,
+    "days_since_last_run": 2,
+    "last_7_vs_previous_7_distance_ratio": 0.46,
     "reasons": []
   }
 }
