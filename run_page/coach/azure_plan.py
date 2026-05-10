@@ -27,6 +27,16 @@ def _extract_json(text: str) -> dict:
 
 
 def _fallback_plan(context: dict) -> dict:
+    planner = context.get("planner", {})
+    if planner.get("decision"):
+        decision = planner["decision"].copy()
+        decision["rationale"] = "Rule-based planner decision generated without Azure OpenAI."
+        decision["cautions"] = planner.get("reasons") or ["Keep the effort controlled."]
+        decision["email_subject"] = (
+            f"Tomorrow's run: {decision.get('workout_type', 'training').replace('_', ' ')}"
+        )
+        return decision
+
     signals = context.get("signals", {})
     summary = context.get("summary", {}).get("last_7_days", {})
     target_date = context["target_date"]
@@ -85,7 +95,11 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
     )
 
     system_prompt = (
-        "You are a conservative running coach. Generate one safe plan for tomorrow. "
+        "You are a conservative running coach. Explain one safe plan for tomorrow. "
+        "The rule-based planner has already selected the workout. You must follow "
+        "context.planner.decision for run_or_rest, workout_type, duration_min, "
+        "distance_km, and intensity. Do not upgrade the workout or add intensity "
+        "that violates context.planner.constraints. "
         "Use the provided running goals as long-term context, including race date, "
         "race distance, target time, and days remaining. "
         "Use the runner profile and health data, such as age, height, weight, heart "
@@ -95,7 +109,10 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
         "valid JSON with the requested keys."
     )
     user_prompt = {
-        "task": "Generate tomorrow's running plan in Chinese, using the schema below.",
+        "task": (
+            "Return tomorrow's running plan in Chinese. Preserve the planner decision "
+            "fields exactly unless the planner decision is internally inconsistent."
+        ),
         "schema": {
             "date": "YYYY-MM-DD",
             "run_or_rest": "run|rest",

@@ -4,6 +4,8 @@ import statistics
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from coach.planner import build_rule_based_plan
+
 
 ROOT = Path(__file__).resolve().parents[2]
 ACTIVITIES_FILE = ROOT / "src" / "static" / "activities.json"
@@ -279,6 +281,7 @@ def build_context(
         "goals": load_running_goals(analysis_date=today),
         "signals": _guardrails(runs, today),
     }
+    context["planner"] = build_rule_based_plan(context)
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
     output_file.write_text(

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T01:59:03-04:00",
+  "generated_at": "2026-05-10T19:15:13-04:00",
   "analysis_date": "2026-05-10",
   "target_date": "2026-05-11",
   "source": {
@@ -359,6 +359,40 @@
     "last_7_vs_previous_7_distance_ratio": 1.05,
     "reasons": [
       "last run was long"
+    ]
+  },
+  "planner": {
+    "planner_version": "rule_v1",
+    "phase": "base_building",
+    "weekly_target": {
+      "distance_km": 39.6,
+      "long_run_km": 17.9,
+      "quality_sessions": 1
+    },
+    "decision": {
+      "date": "2026-05-11",
+      "run_or_rest": "run",
+      "workout_type": "recovery_run",
+      "duration_min": 30,
+      "distance_km": 4.3,
+      "intensity": "RPE 2-3 / very easy",
+      "warmup": "5-10 min walk or very easy jog",
+      "main_set": "Very easy run. Keep breathing relaxed and effort low.",
+      "cooldown": "5 min walk, then light calf and hip mobility.",
+      "hard_session_allowed": false
+    },
+    "constraints": {
+      "forbidden_workout_types": [
+        "intervals",
+        "long_run",
+        "steady_run",
+        "tempo"
+      ],
+      "guardrail": "easy_only"
+    },
+    "reasons": [
+      "guardrail is easy_only, so no quality workout is allowed",
+      "only a small amount of weekly distance remains"
     ]
   }
 }

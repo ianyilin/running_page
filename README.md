@@ -48,6 +48,8 @@ pnpm lint
 - `run_page/strava_sync.py`: GitHub Actions Strava sync entrypoint
 - `run_page/strava_env_sync.py`: local `.env` sync entrypoint
 - `run_page/coach/`: daily AI coach context, Azure OpenAI call, and SMTP email
+- `run_page/coach/planner.py`: deterministic rule-based training planner
+- `run_page/coach/workout_library.py`: reusable workout templates
 - `run_page/coach/goals.json`: editable upcoming race or training goals
 - `run_page/coach/profile.json`: editable runner profile and health context
 - `run_page/coach_output/`: latest generated coach input and plan JSON
@@ -62,6 +64,14 @@ uses the latest `src/static/activities.json`, writes:
 run_page/coach_output/coach_input.json
 run_page/coach_output/latest_plan.json
 ```
+
+The coach uses a two-layer design:
+
+1. `planner.py` makes the training decision with deterministic rules: phase,
+   weekly target, long-run target, quality-session budget, and tomorrow's
+   workout type/distance/duration.
+2. Azure OpenAI turns that structured decision into a Chinese coaching email.
+   It should explain the planner decision, not invent a harder workout.
 
 For local testing, first run:
 
