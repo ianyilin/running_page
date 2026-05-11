@@ -12,6 +12,32 @@
     "lactate_threshold_hr_bpm": null,
     "zones": []
   },
+  "performance_benchmarks": [
+    {
+      "distance": "5k",
+      "time": null,
+      "date": null,
+      "source": "manual"
+    },
+    {
+      "distance": "10k",
+      "time": 60,
+      "date": null,
+      "source": "manual"
+    },
+    {
+      "distance": "half_marathon",
+      "time": 132,
+      "date": null,
+      "source": "manual"
+    },
+    {
+      "distance": "full_marathon",
+      "time": null,
+      "date": null,
+      "source": "manual"
+    }
+  ],
   "health": {
     "injury_notes": [],
     "medical_notes": [],
@@ -21,8 +47,8 @@
     "preferred_run_days": [],
     "preferred_rest_days": [],
     "preferred_training_time": null,
-    "available_time_weekday_min": null,
-    "available_time_weekend_min": null,
+    "available_time_weekday_min": 120,
+    "available_time_weekend_min": 240,
     "preferred_surfaces": [],
     "avoid": []
   },

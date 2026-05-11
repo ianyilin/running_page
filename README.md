@@ -63,13 +63,15 @@ uses the latest `src/static/activities.json`, writes:
 ```text
 run_page/coach_output/coach_input.json
 run_page/coach_output/latest_plan.json
+run_page/coach_output/week_plan.json
 ```
 
 The coach uses a two-layer design:
 
 1. `planner.py` makes the training decision with deterministic rules: phase,
-   weekly target, long-run target, quality-session budget, and tomorrow's
-   workout type/distance/duration.
+   weekly target, long-run target, quality-session budget, and the target date's
+   workout type/distance/duration. It also writes a 7-day week plan with
+   planned and completed runs.
 2. Azure OpenAI turns that structured decision into a Chinese coaching email.
    It should explain the planner decision, not invent a harder workout.
 
@@ -120,6 +122,12 @@ fields are optional; fill only the data you want the coach to use:
       { "name": "zone 3", "min_bpm": 146, "max_bpm": 160 }
     ]
   },
+  "performance_benchmarks": [
+    { "distance": "5k", "time": "00:25:00", "date": "2026-05-01" },
+    { "distance": "10k", "time": "00:55:00", "date": "2026-05-01" },
+    { "distance": "half_marathon", "time": "02:00:00", "date": "2026-05-01" },
+    { "distance": "full_marathon", "time": null, "date": null }
+  ],
   "health": {
     "injury_notes": ["right Achilles sensitive after hills"],
     "sleep_notes": "Prefer easier training after short sleep"
@@ -133,6 +141,16 @@ fields are optional; fill only the data you want the coach to use:
   }
 }
 ```
+
+If manual benchmarks are blank, the planner estimates 5K/10K/half/full paces
+from recent Strava activity-level pace. Those estimates are intentionally
+conservative because they are not split-level best efforts. For heart-rate
+targets, the email only uses Apple Watch-style zone labels such as `zone 2`,
+`zone 3`, and `zone 4`.
+
+Simple feedback can be added to Strava activity names. Titles containing words
+like `累`, `疲劳`, `酸痛`, `受伤`, `疼痛`, `tired`, `sore`, or `injury` will make
+the next plan more conservative.
 
 To call Azure OpenAI and send email, fill `.env` or GitHub Actions secrets with:
 

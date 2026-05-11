@@ -1,4 +1,5 @@
 import argparse
+import datetime as dt
 import json
 import os
 import sys
@@ -52,10 +53,17 @@ def main() -> None:
         action="store_true",
         help="send the generated plan by SMTP",
     )
+    parser.add_argument(
+        "--target-date",
+        help="target training date in YYYY-MM-DD; defaults to today in America/New_York",
+    )
     args = parser.parse_args()
 
     load_env_file(ENV_FILE)
-    context = build_context()
+    target_date = (
+        dt.date.fromisoformat(args.target_date) if args.target_date else None
+    )
+    context = build_context(target_date=target_date)
     plan = generate_plan(context, dry_run=args.dry_run)
     write_plan(plan)
 

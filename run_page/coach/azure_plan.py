@@ -32,8 +32,12 @@ def _fallback_plan(context: dict) -> dict:
         decision = planner["decision"].copy()
         decision["rationale"] = "Rule-based planner decision generated without Azure OpenAI."
         decision["cautions"] = planner.get("reasons") or ["Keep the effort controlled."]
+        decision["phase"] = planner.get("phase")
+        decision["training_cycle"] = planner.get("training_cycle")
+        decision["weekly_target"] = planner.get("weekly_target")
+        decision["week_plan"] = planner.get("week_plan")
         decision["email_subject"] = (
-            f"Tomorrow's run: {decision.get('workout_type', 'training').replace('_', ' ')}"
+            f"Training plan: {decision.get('workout_type', 'training').replace('_', ' ')}"
         )
         return decision
 
@@ -77,7 +81,7 @@ def _fallback_plan(context: dict) -> dict:
         "cooldown": "5 min walk or very easy jog",
         "rationale": "Rule-based dry run generated from recent Strava load and guardrails.",
         "cautions": signals.get("reasons") or ["Keep the effort comfortable."],
-        "email_subject": f"Tomorrow's run: {workout_type.replace('_', ' ')}",
+        "email_subject": f"Training plan: {workout_type.replace('_', ' ')}",
     }
 
 
@@ -95,7 +99,7 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
     )
 
     system_prompt = (
-        "You are a conservative running coach. Explain one safe plan for tomorrow. "
+        "You are a conservative running coach. Explain one safe plan for the target date. "
         "The rule-based planner has already selected the workout. You must follow "
         "context.planner.decision for run_or_rest, workout_type, duration_min, "
         "distance_km, and intensity. Do not upgrade the workout or add intensity "
@@ -110,7 +114,7 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
     )
     user_prompt = {
         "task": (
-            "Return tomorrow's running plan in Chinese. Preserve the planner decision "
+            "Return the target date running plan in Chinese. Preserve the planner decision "
             "fields exactly unless the planner decision is internally inconsistent."
         ),
         "schema": {
@@ -120,9 +124,12 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
             "duration_min": "number",
             "distance_km": "number",
             "intensity": "short text",
+            "target_hr_zone": "zone 2|zone 3|zone 4 or null",
+            "target_pace_min_per_km": "object with min/max/display, or null",
             "warmup": "short text",
             "main_set": "short text",
             "cooldown": "short text",
+            "structured_workout": "array of executable workout steps from planner decision",
             "rationale": "Chinese explanation",
             "cautions": ["Chinese caution strings"],
             "email_subject": "Chinese email subject",
@@ -147,5 +154,26 @@ def generate_plan(context: dict, dry_run: bool = False) -> dict:
     response.raise_for_status()
     content = response.json()["choices"][0]["message"]["content"]
     plan = _extract_json(content)
+    planner = context.get("planner", {})
+    decision = planner.get("decision", {})
+    for key in [
+        "date",
+        "run_or_rest",
+        "workout_type",
+        "duration_min",
+        "distance_km",
+        "intensity",
+        "target_hr_zone",
+        "target_pace_min_per_km",
+        "structured_workout",
+        "hard_session_allowed",
+    ]:
+        if key in decision:
+            plan[key] = decision[key]
     plan.setdefault("date", context["target_date"])
+    plan["phase"] = planner.get("phase")
+    plan["training_cycle"] = planner.get("training_cycle")
+    plan["weekly_target"] = planner.get("weekly_target")
+    plan["week_plan"] = planner.get("week_plan")
+    plan["performance"] = planner.get("performance")
     return plan

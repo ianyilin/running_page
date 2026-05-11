@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 ACTIVITIES_FILE = ROOT / "src" / "static" / "activities.json"
 OUTPUT_DIR = ROOT / "run_page" / "coach_output"
 CONTEXT_FILE = OUTPUT_DIR / "coach_input.json"
+WEEK_PLAN_FILE = OUTPUT_DIR / "week_plan.json"
 GOALS_FILE = ROOT / "run_page" / "coach" / "goals.json"
 PROFILE_FILE = ROOT / "run_page" / "coach" / "profile.json"
 LOCAL_TZ = ZoneInfo("America/New_York")
@@ -25,6 +26,12 @@ DISTANCE_KM_BY_LABEL = {
     "full_marathon": 42.195,
     "marathon": 42.195,
     "全马": 42.195,
+}
+
+FEEDBACK_TAGS = {
+    "injury": ["injury", "injured", "pain", "hurt", "受伤", "疼", "疼痛", "痛"],
+    "fatigue": ["tired", "fatigue", "exhausted", "累", "疲劳", "疲惫"],
+    "soreness": ["sore", "soreness", "酸", "酸痛"],
 }
 
 
@@ -124,6 +131,15 @@ def load_runner_profile(profile_file: Path = PROFILE_FILE) -> dict:
     return profile
 
 
+def _feedback_tags(name: str | None) -> list[str]:
+    text = (name or "").lower()
+    tags = []
+    for tag, keywords in FEEDBACK_TAGS.items():
+        if any(keyword in text for keyword in keywords):
+            tags.append(tag)
+    return tags
+
+
 def _run_type(run: dict) -> str:
     name = str(run.get("name") or "").lower()
     distance_km = run.get("distance_km") or 0
@@ -150,6 +166,7 @@ def _normalize_activity(activity: dict) -> dict:
         "date": start_local.date().isoformat(),
         "start_time_local": start_local.strftime("%H:%M"),
         "name": activity.get("name"),
+        "feedback_tags": _feedback_tags(activity.get("name")),
         "distance_km": round(distance_m / 1000, 2),
         "moving_time_min": round(moving_seconds / 60, 1),
         "pace_min_per_km": _pace_min_per_km(distance_m, moving_seconds),
@@ -221,6 +238,20 @@ def _guardrails(runs: list[dict], end_date: dt.date) -> dict:
         recommended_guardrail = "easy_only"
         reasons.append(f"last run was {last_run['inferred_type']}")
 
+    recent_feedback = [
+        tag
+        for run in last_3
+        for tag in run.get("feedback_tags", [])
+    ]
+    if "injury" in recent_feedback:
+        fatigue_signal = "high"
+        recommended_guardrail = "rest_or_recovery"
+        reasons.append("recent Strava title feedback includes injury or pain")
+    elif "fatigue" in recent_feedback or "soreness" in recent_feedback:
+        fatigue_signal = "high"
+        recommended_guardrail = "easy_only"
+        reasons.append("recent Strava title feedback includes fatigue or soreness")
+
     if len([run for run in last_3 if run["inferred_type"] in {"interval", "hard", "long"}]) >= 2:
         fatigue_signal = "high"
         recommended_guardrail = "rest_or_recovery"
@@ -248,6 +279,7 @@ def build_context(
     activities_file: Path = ACTIVITIES_FILE,
     output_file: Path = CONTEXT_FILE,
     today: dt.date | None = None,
+    target_date: dt.date | None = None,
 ) -> dict:
     activities = json.loads(activities_file.read_text(encoding="utf-8"))
     runs = [
@@ -262,11 +294,13 @@ def build_context(
         if runs:
             latest_run_date = dt.date.fromisoformat(runs[-1]["date"])
             today = max(today, latest_run_date)
+    if target_date is None:
+        target_date = today
 
     context = {
         "generated_at": dt.datetime.now(LOCAL_TZ).isoformat(timespec="seconds"),
         "analysis_date": today.isoformat(),
-        "target_date": (today + dt.timedelta(days=1)).isoformat(),
+        "target_date": target_date.isoformat(),
         "source": {
             "activities_file": str(activities_file.relative_to(ROOT)),
             "run_count_total": len(runs),
@@ -286,6 +320,10 @@ def build_context(
     output_file.parent.mkdir(parents=True, exist_ok=True)
     output_file.write_text(
         json.dumps(context, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    WEEK_PLAN_FILE.write_text(
+        json.dumps(context["planner"]["week_plan"], ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     return context
