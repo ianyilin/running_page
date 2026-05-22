@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-21T02:48:44-04:00",
-  "analysis_date": "2026-05-21",
-  "target_date": "2026-05-21",
+  "generated_at": "2026-05-22T02:44:34-04:00",
+  "analysis_date": "2026-05-22",
+  "target_date": "2026-05-22",
   "source": {
     "activities_file": "src/static/activities.json",
     "run_count_total": 62
@@ -235,8 +235,8 @@
   "summary": {
     "last_7_days": {
       "days": 7,
-      "start_date": "2026-05-15",
-      "end_date": "2026-05-21",
+      "start_date": "2026-05-16",
+      "end_date": "2026-05-22",
       "run_count": 0,
       "total_distance_km": 0,
       "total_time_min": 0,
@@ -247,8 +247,8 @@
     },
     "last_14_days": {
       "days": 14,
-      "start_date": "2026-05-08",
-      "end_date": "2026-05-21",
+      "start_date": "2026-05-09",
+      "end_date": "2026-05-22",
       "run_count": 5,
       "total_distance_km": 41.29,
       "total_time_min": 300.4,
@@ -274,8 +274,8 @@
     },
     "last_28_days": {
       "days": 28,
-      "start_date": "2026-04-24",
-      "end_date": "2026-05-21",
+      "start_date": "2026-04-25",
+      "end_date": "2026-05-22",
       "run_count": 14,
       "total_distance_km": 120.15,
       "total_time_min": 830.0,
@@ -360,7 +360,7 @@
     "primary_goal": {
       "name": "No competition",
       "date": "2026-10-01",
-      "days_until": 133,
+      "days_until": 132,
       "distance": "half_marathon",
       "distance_km": 21.0975,
       "target_time": "02:00:00",
@@ -371,7 +371,7 @@
       {
         "name": "No competition",
         "date": "2026-10-01",
-        "days_until": 133,
+        "days_until": 132,
         "distance": "half_marathon",
         "distance_km": 21.0975,
         "target_time": "02:00:00",
@@ -383,7 +383,7 @@
   "signals": {
     "fatigue_signal": "low",
     "recommended_guardrail": "easy_comeback",
-    "days_since_last_run": 7,
+    "days_since_last_run": 8,
     "last_7_vs_previous_7_distance_ratio": 0.0,
     "reasons": [
       "several days since last run"
@@ -635,6 +635,34 @@
         "status": "planned",
         "planned": {
           "date": "2026-05-21",
+          "run_or_rest": "rest",
+          "workout_type": "rest",
+          "duration_min": 0,
+          "distance_km": 0,
+          "intensity": "rest",
+          "target_hr_zone": null,
+          "target_pace_min_per_km": null,
+          "warmup": "Optional 5-10 min walk",
+          "main_set": "Rest day. Optional easy walk and light mobility.",
+          "cooldown": "Gentle stretching if it feels good.",
+          "structured_workout": [
+            {
+              "name": "Rest",
+              "type": "rest",
+              "duration_min": 0,
+              "target": "rest"
+            }
+          ],
+          "hard_session_allowed": false
+        },
+        "actual": null
+      },
+      {
+        "date": "2026-05-22",
+        "weekday": "Fri",
+        "status": "planned",
+        "planned": {
+          "date": "2026-05-22",
           "run_or_rest": "run",
           "workout_type": "easy_run",
           "duration_min": 40,
@@ -673,34 +701,6 @@
               "type": "cooldown",
               "duration_min": 5,
               "target": "walk"
-            }
-          ],
-          "hard_session_allowed": false
-        },
-        "actual": null
-      },
-      {
-        "date": "2026-05-22",
-        "weekday": "Fri",
-        "status": "planned",
-        "planned": {
-          "date": "2026-05-22",
-          "run_or_rest": "rest",
-          "workout_type": "rest",
-          "duration_min": 0,
-          "distance_km": 0,
-          "intensity": "rest",
-          "target_hr_zone": null,
-          "target_pace_min_per_km": null,
-          "warmup": "Optional 5-10 min walk",
-          "main_set": "Rest day. Optional easy walk and light mobility.",
-          "cooldown": "Gentle stretching if it feels good.",
-          "structured_workout": [
-            {
-              "name": "Rest",
-              "type": "rest",
-              "duration_min": 0,
-              "target": "rest"
             }
           ],
           "hard_session_allowed": false
@@ -809,7 +809,7 @@
       }
     ],
     "decision": {
-      "date": "2026-05-21",
+      "date": "2026-05-22",
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
