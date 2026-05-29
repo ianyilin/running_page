@@ -1,28 +1,12 @@
 {
-  "generated_at": "2026-05-28T02:49:20-04:00",
-  "analysis_date": "2026-05-28",
-  "target_date": "2026-05-28",
+  "generated_at": "2026-05-29T02:49:26-04:00",
+  "analysis_date": "2026-05-29",
+  "target_date": "2026-05-29",
   "source": {
     "activities_file": "src/static/activities.json",
-    "run_count_total": 66
+    "run_count_total": 67
   },
   "recent_runs": [
-    {
-      "run_id": 18355136293,
-      "date": "2026-05-02",
-      "start_time_local": "18:09",
-      "name": "傍晚跑步",
-      "feedback_tags": [],
-      "distance_km": 17.18,
-      "moving_time_min": 112.3,
-      "pace_min_per_km": 6.54,
-      "average_heartrate": 156.4,
-      "average_speed_mps": 2.55,
-      "elevation_gain_m": 258.4,
-      "subtype": "Run",
-      "streak": 1,
-      "inferred_type": "long"
-    },
     {
       "run_id": 18365272816,
       "date": "2026-05-03",
@@ -230,18 +214,34 @@
       "subtype": "Run",
       "streak": 3,
       "inferred_type": "easy"
+    },
+    {
+      "run_id": 18695326822,
+      "date": "2026-05-28",
+      "start_time_local": "17:43",
+      "name": "午后跑步",
+      "feedback_tags": [],
+      "distance_km": 5.62,
+      "moving_time_min": 42.4,
+      "pace_min_per_km": 7.54,
+      "average_heartrate": 150.2,
+      "average_speed_mps": 2.21,
+      "elevation_gain_m": 13.6,
+      "subtype": "Run",
+      "streak": 1,
+      "inferred_type": "moderate"
     }
   ],
   "summary": {
     "last_7_days": {
       "days": 7,
-      "start_date": "2026-05-22",
-      "end_date": "2026-05-28",
+      "start_date": "2026-05-23",
+      "end_date": "2026-05-29",
       "run_count": 4,
-      "total_distance_km": 29.31,
-      "total_time_min": 197.1,
-      "average_distance_km": 7.33,
-      "average_heartrate": 156.8,
+      "total_distance_km": 29.53,
+      "total_time_min": 200.9,
+      "average_distance_km": 7.38,
+      "average_heartrate": 156.3,
       "hard_run_count": 1,
       "longest_run": {
         "run_id": 18640093530,
@@ -262,13 +262,13 @@
     },
     "last_14_days": {
       "days": 14,
-      "start_date": "2026-05-15",
-      "end_date": "2026-05-28",
-      "run_count": 4,
-      "total_distance_km": 29.31,
-      "total_time_min": 197.1,
-      "average_distance_km": 7.33,
-      "average_heartrate": 156.8,
+      "start_date": "2026-05-16",
+      "end_date": "2026-05-29",
+      "run_count": 5,
+      "total_distance_km": 34.93,
+      "total_time_min": 239.5,
+      "average_distance_km": 6.99,
+      "average_heartrate": 155.5,
       "hard_run_count": 1,
       "longest_run": {
         "run_id": 18640093530,
@@ -289,13 +289,13 @@
     },
     "last_28_days": {
       "days": 28,
-      "start_date": "2026-05-01",
-      "end_date": "2026-05-28",
-      "run_count": 14,
-      "total_distance_km": 112.64,
-      "total_time_min": 780.2,
-      "average_distance_km": 8.05,
-      "average_heartrate": 151.0,
+      "start_date": "2026-05-02",
+      "end_date": "2026-05-29",
+      "run_count": 15,
+      "total_distance_km": 118.26,
+      "total_time_min": 822.6,
+      "average_distance_km": 7.88,
+      "average_heartrate": 150.9,
       "hard_run_count": 4,
       "longest_run": {
         "run_id": 18444920626,
@@ -375,7 +375,7 @@
     "primary_goal": {
       "name": "No competition",
       "date": "2026-10-01",
-      "days_until": 126,
+      "days_until": 125,
       "distance": "half_marathon",
       "distance_km": 21.0975,
       "target_time": "02:00:00",
@@ -386,7 +386,7 @@
       {
         "name": "No competition",
         "date": "2026-10-01",
-        "days_until": 126,
+        "days_until": 125,
         "distance": "half_marathon",
         "distance_km": 21.0975,
         "target_time": "02:00:00",
@@ -396,11 +396,13 @@
     ]
   },
   "signals": {
-    "fatigue_signal": "low",
-    "recommended_guardrail": "normal_training_ok",
-    "days_since_last_run": 2,
-    "last_7_vs_previous_7_distance_ratio": null,
-    "reasons": []
+    "fatigue_signal": "high",
+    "recommended_guardrail": "easy_only",
+    "days_since_last_run": 1,
+    "last_7_vs_previous_7_distance_ratio": 5.47,
+    "reasons": [
+      "7-day distance increased sharply versus previous week"
+    ]
   },
   "planner": {
     "planner_version": "rule_v1",
@@ -521,24 +523,24 @@
       },
       "pace_targets": {
         "recovery_run": {
-          "min": 7.8,
-          "max": 8.4,
-          "display": "7:48/km - 8:24/km"
+          "min": 7.89,
+          "max": 8.49,
+          "display": "7:53/km - 8:29/km"
         },
         "easy_run": {
-          "min": 7.45,
-          "max": 7.9,
-          "display": "7:27/km - 7:54/km"
+          "min": 7.54,
+          "max": 7.99,
+          "display": "7:32/km - 7:59/km"
         },
         "long_run": {
-          "min": 7.55,
-          "max": 8.1,
-          "display": "7:33/km - 8:06/km"
+          "min": 7.64,
+          "max": 8.19,
+          "display": "7:38/km - 8:11/km"
         },
         "steady_run": {
-          "min": 7.15,
-          "max": 7.55,
-          "display": "7:09/km - 7:33/km"
+          "min": 7.24,
+          "max": 7.64,
+          "display": "7:14/km - 7:38/km"
         },
         "tempo": {
           "min": 6.25,
@@ -553,7 +555,7 @@
       }
     },
     "weekly_target": {
-      "distance_km": 29.0,
+      "distance_km": 30.5,
       "long_run_km": 17.9,
       "quality_sessions": 1
     },
@@ -619,9 +621,24 @@
       {
         "date": "2026-05-28",
         "weekday": "Thu",
+        "status": "completed",
+        "planned": null,
+        "actual": {
+          "run_count": 1,
+          "distance_km": 5.6,
+          "duration_min": 42.4,
+          "workout_types": [
+            "moderate"
+          ],
+          "feedback_tags": []
+        }
+      },
+      {
+        "date": "2026-05-29",
+        "weekday": "Fri",
         "status": "planned",
         "planned": {
-          "date": "2026-05-28",
+          "date": "2026-05-29",
           "run_or_rest": "run",
           "workout_type": "easy_run",
           "duration_min": 40,
@@ -629,9 +646,9 @@
           "intensity": "RPE 3-4 / conversational",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 7.45,
-            "max": 7.9,
-            "display": "7:27/km - 7:54/km"
+            "min": 7.54,
+            "max": 7.99,
+            "display": "7:32/km - 7:59/km"
           },
           "warmup": "5-10 min easy jog with light dynamic drills",
           "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
@@ -650,9 +667,9 @@
               "target": "zone 2",
               "target_hr_zone": "zone 2",
               "target_pace_min_per_km": {
-                "min": 7.45,
-                "max": 7.9,
-                "display": "7:27/km - 7:54/km"
+                "min": 7.54,
+                "max": 7.99,
+                "display": "7:32/km - 7:59/km"
               }
             },
             {
@@ -660,34 +677,6 @@
               "type": "cooldown",
               "duration_min": 5,
               "target": "walk"
-            }
-          ],
-          "hard_session_allowed": false
-        },
-        "actual": null
-      },
-      {
-        "date": "2026-05-29",
-        "weekday": "Fri",
-        "status": "planned",
-        "planned": {
-          "date": "2026-05-29",
-          "run_or_rest": "rest",
-          "workout_type": "rest",
-          "duration_min": 0,
-          "distance_km": 0,
-          "intensity": "rest",
-          "target_hr_zone": null,
-          "target_pace_min_per_km": null,
-          "warmup": "Optional 5-10 min walk",
-          "main_set": "Rest day. Optional easy walk and light mobility.",
-          "cooldown": "Gentle stretching if it feels good.",
-          "structured_workout": [
-            {
-              "name": "Rest",
-              "type": "rest",
-              "duration_min": 0,
-              "target": "rest"
             }
           ],
           "hard_session_allowed": false
@@ -707,9 +696,9 @@
           "intensity": "RPE 3-4 / easy endurance",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 7.55,
-            "max": 8.1,
-            "display": "7:33/km - 8:06/km"
+            "min": 7.64,
+            "max": 8.19,
+            "display": "7:38/km - 8:11/km"
           },
           "warmup": "10 min easy jog",
           "main_set": "Long easy run. Keep the first half especially relaxed.",
@@ -728,9 +717,9 @@
               "target": "zone 2",
               "target_hr_zone": "zone 2",
               "target_pace_min_per_km": {
-                "min": 7.55,
-                "max": 8.1,
-                "display": "7:33/km - 8:06/km"
+                "min": 7.64,
+                "max": 8.19,
+                "display": "7:38/km - 8:11/km"
               }
             },
             {
@@ -774,7 +763,7 @@
       }
     ],
     "decision": {
-      "date": "2026-05-28",
+      "date": "2026-05-29",
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
@@ -782,9 +771,9 @@
       "intensity": "RPE 3-4 / conversational",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 7.45,
-        "max": 7.9,
-        "display": "7:27/km - 7:54/km"
+        "min": 7.54,
+        "max": 7.99,
+        "display": "7:32/km - 7:59/km"
       },
       "warmup": "5-10 min easy jog with light dynamic drills",
       "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
@@ -803,9 +792,9 @@
           "target": "zone 2",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 7.45,
-            "max": 7.9,
-            "display": "7:27/km - 7:54/km"
+            "min": 7.54,
+            "max": 7.99,
+            "display": "7:32/km - 7:59/km"
           }
         },
         {
@@ -818,10 +807,16 @@
       "hard_session_allowed": false
     },
     "constraints": {
-      "forbidden_workout_types": [],
-      "guardrail": "normal_training_ok"
+      "forbidden_workout_types": [
+        "intervals",
+        "long_run",
+        "steady_run",
+        "tempo"
+      ],
+      "guardrail": "easy_only"
     },
     "reasons": [
+      "guardrail is easy_only, so no quality workout is allowed",
       "default choice supports aerobic consistency with low injury risk"
     ]
   }
