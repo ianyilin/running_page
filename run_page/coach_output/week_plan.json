@@ -2,52 +2,17 @@
   {
     "date": "2026-06-08",
     "weekday": "Mon",
-    "status": "planned",
-    "planned": {
-      "date": "2026-06-08",
-      "run_or_rest": "run",
-      "workout_type": "easy_run",
-      "duration_min": 40,
-      "distance_km": 4.9,
-      "intensity": "RPE 3-4 / conversational",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 8.15,
-        "max": 8.6,
-        "display": "8:09/km - 8:36/km"
-      },
-      "warmup": "5-10 min easy jog with light dynamic drills",
-      "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-      "cooldown": "5 min easy jog or walk, then light stretching.",
-      "structured_workout": [
-        {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 8,
-          "target": "easy"
-        },
-        {
-          "name": "Easy run",
-          "type": "run",
-          "duration_min": 27,
-          "target": "zone 2",
-          "target_hr_zone": "zone 2",
-          "target_pace_min_per_km": {
-            "min": 8.15,
-            "max": 8.6,
-            "display": "8:09/km - 8:36/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 5,
-          "target": "walk"
-        }
+    "status": "completed",
+    "planned": null,
+    "actual": {
+      "run_count": 1,
+      "distance_km": 5.9,
+      "duration_min": 40.3,
+      "workout_types": [
+        "easy"
       ],
-      "hard_session_allowed": false
-    },
-    "actual": null
+      "feedback_tags": []
+    }
   },
   {
     "date": "2026-06-09",
@@ -58,13 +23,13 @@
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
-      "distance_km": 4.9,
+      "distance_km": 5.4,
       "intensity": "RPE 3-4 / conversational",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 8.15,
-        "max": 8.6,
-        "display": "8:09/km - 8:36/km"
+        "min": 7.94,
+        "max": 8.39,
+        "display": "7:57/km - 8:24/km"
       },
       "warmup": "5-10 min easy jog with light dynamic drills",
       "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
@@ -83,9 +48,9 @@
           "target": "zone 2",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 8.15,
-            "max": 8.6,
-            "display": "8:09/km - 8:36/km"
+            "min": 7.94,
+            "max": 8.39,
+            "display": "7:57/km - 8:24/km"
           }
         },
         {
@@ -136,13 +101,13 @@
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
-      "distance_km": 4.9,
+      "distance_km": 5.4,
       "intensity": "RPE 3-4 / conversational",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 8.15,
-        "max": 8.6,
-        "display": "8:09/km - 8:36/km"
+        "min": 7.94,
+        "max": 8.39,
+        "display": "7:57/km - 8:24/km"
       },
       "warmup": "5-10 min easy jog with light dynamic drills",
       "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
@@ -161,9 +126,9 @@
           "target": "zone 2",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 8.15,
-            "max": 8.6,
-            "display": "8:09/km - 8:36/km"
+            "min": 7.94,
+            "max": 8.39,
+            "display": "7:57/km - 8:24/km"
           }
         },
         {
@@ -218,9 +183,9 @@
       "intensity": "RPE 3-4 / easy endurance",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 8.25,
-        "max": 8.8,
-        "display": "8:15/km - 8:48/km"
+        "min": 8.04,
+        "max": 8.59,
+        "display": "8:03/km - 8:36/km"
       },
       "warmup": "10 min easy jog",
       "main_set": "Long easy run. Keep the first half especially relaxed.",
@@ -239,9 +204,9 @@
           "target": "zone 2",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 8.25,
-            "max": 8.8,
-            "display": "8:15/km - 8:48/km"
+            "min": 8.04,
+            "max": 8.59,
+            "display": "8:03/km - 8:36/km"
           }
         },
         {
