@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-12",
+  "date": "2026-06-13",
   "run_or_rest": "run",
   "workout_type": "tempo",
   "duration_min": 50,
@@ -11,9 +11,9 @@
     "max": 6.55,
     "display": "6:15/km - 6:33/km"
   },
-  "warmup": "先慢跑10-15分钟，并做4次短加速。",
-  "main_set": "以可控的节奏完成节奏跑主训练，组间轻松恢复。",
-  "cooldown": "慢跑10分钟放松。",
+  "warmup": "10-15分钟轻松慢跑，先把身体跑开；若感觉僵硬，跳过加速跑也可以。",
+  "main_set": "按计划完成节奏跑主训练，但今天务必以保守执行为前提；如果热身后感觉状态一般、心率异常偏高或双腿发沉，请立即降为轻松跑。",
+  "cooldown": "10分钟轻松慢跑，结束后步行几分钟。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,15 @@
       "target": "zone 1-2"
     }
   ],
-  "rationale": "今天处于半马目标（2026-10-01，21.1公里，目标2小时）前111天，已进入专项耐力阶段。规则计划已安排一次可控的节奏跑，本周质量课额度也还有空间。你最近7天跑量约15.1公里、近两天未跑，疲劳信号低，且近期已有多次40分钟左右的轻松到中等强度跑，因此今天进行50分钟、约6.8公里的节奏训练是合理且相对稳妥的。训练时以“可持续但不能聊天”的舒服偏硬强度为准，优先把节奏控制稳定，不要前快后崩，这样更有利于为10月的半马耐力与配速能力打基础。",
+  "rationale": "今天距离你的半马目标日还有110天，长期目标是以约2小时完成半马。规则规划器给出的原始安排是50分钟、6.8公里的节奏跑，但当前保护规则为 easy_comeback，而且约束中明确禁止 tempo。由于你已经连续3天没跑，近7天跑量也明显低于前一周，这更像是恢复衔接日，不适合真正的高质量训练。按你的要求需要尽量保留规划字段，因此这里保留了原决策字段与结构；但执行上请务必采取非常保守的方式，把今天视为“先观察状态的一天”。如果热身后主观感觉不顺、呼吸吃紧、配速稍快心率就上扬，优先降强度而不是硬顶完成。你近期轻松跑心率多在140多到150左右，说明恢复跑和轻松跑对你更稳妥。",
   "cautions": [
-    "前12分钟热身务必跑得很轻松，短加速只做放松提频，不要冲刺。",
-    "主训练配速控制在6:15-6:33/公里区间，若天气闷热、心率明显飙升或呼吸失控，可优先按体感降速。",
-    "如果小腿、跟腱、膝盖出现持续性疼痛，请立即结束节奏段，改为轻松慢跑或步行回家。",
-    "明天已安排长距离，今天不要额外加跑，也不要把节奏段延长。"
+    "当前guardrail为 easy_comeback，严格来说今天不应做真正的节奏强度；如状态不佳请立即改为轻松跑。",
+    "若热身阶段就感觉心率异常偏高、呼吸不顺、腿部沉重或有不适，直接停止主训练。",
+    "不要为了追配速硬顶；今天以顺畅、可控、不过度疲劳为第一原则。",
+    "若天气闷热或补水不足，心率会偏高，应进一步放慢。",
+    "明天计划还有长跑，今天更要保守，避免把疲劳带到周日。"
   ],
-  "email_subject": "6月12日跑步计划：50分钟节奏跑，重在稳定控制",
+  "email_subject": "6月13日跑步计划：保守执行的50分钟训练日",
   "hard_session_allowed": true,
   "phase": "specific_endurance",
   "training_cycle": {
@@ -183,6 +184,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-06-12",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-13",
+      "weekday": "Sat",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-13",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -228,11 +257,11 @@
       "actual": null
     },
     {
-      "date": "2026-06-13",
-      "weekday": "Sat",
+      "date": "2026-06-14",
+      "weekday": "Sun",
       "status": "planned",
       "planned": {
-        "date": "2026-06-13",
+        "date": "2026-06-14",
         "run_or_rest": "run",
         "workout_type": "long_run",
         "duration_min": 81,
@@ -274,34 +303,6 @@
           }
         ],
         "hard_session_allowed": true
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-14",
-      "weekday": "Sun",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-14",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
       },
       "actual": null
     }
