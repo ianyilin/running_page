@@ -119,6 +119,34 @@
     "status": "planned",
     "planned": {
       "date": "2026-06-13",
+      "run_or_rest": "rest",
+      "workout_type": "rest",
+      "duration_min": 0,
+      "distance_km": 0,
+      "intensity": "rest",
+      "target_hr_zone": null,
+      "target_pace_min_per_km": null,
+      "warmup": "Optional 5-10 min walk",
+      "main_set": "Rest day. Optional easy walk and light mobility.",
+      "cooldown": "Gentle stretching if it feels good.",
+      "structured_workout": [
+        {
+          "name": "Rest",
+          "type": "rest",
+          "duration_min": 0,
+          "target": "rest"
+        }
+      ],
+      "hard_session_allowed": false
+    },
+    "actual": null
+  },
+  {
+    "date": "2026-06-14",
+    "weekday": "Sun",
+    "status": "planned",
+    "planned": {
+      "date": "2026-06-14",
       "run_or_rest": "run",
       "workout_type": "tempo",
       "duration_min": 50,
@@ -157,56 +185,6 @@
           "type": "cooldown",
           "duration_min": 10,
           "target": "zone 1-2"
-        }
-      ],
-      "hard_session_allowed": true
-    },
-    "actual": null
-  },
-  {
-    "date": "2026-06-14",
-    "weekday": "Sun",
-    "status": "planned",
-    "planned": {
-      "date": "2026-06-14",
-      "run_or_rest": "run",
-      "workout_type": "long_run",
-      "duration_min": 81,
-      "distance_km": 11.6,
-      "intensity": "RPE 3-4 / easy endurance",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 7.42,
-        "max": 7.97,
-        "display": "7:25/km - 7:58/km"
-      },
-      "warmup": "10 min easy jog",
-      "main_set": "Long easy run. Keep the first half especially relaxed.",
-      "cooldown": "5-10 min walk and mobility.",
-      "structured_workout": [
-        {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 10,
-          "target": "zone 2"
-        },
-        {
-          "name": "Long run",
-          "type": "run",
-          "duration_min": 63,
-          "target": "zone 2",
-          "target_hr_zone": "zone 2",
-          "target_pace_min_per_km": {
-            "min": 7.42,
-            "max": 7.97,
-            "display": "7:25/km - 7:58/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 8,
-          "target": "walk"
         }
       ],
       "hard_session_allowed": true
