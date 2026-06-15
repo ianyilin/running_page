@@ -1,54 +1,53 @@
 {
-  "date": "2026-06-14",
+  "date": "2026-06-15",
   "run_or_rest": "run",
-  "workout_type": "tempo",
-  "duration_min": 50,
-  "distance_km": 6.8,
-  "intensity": "RPE 6-7 / comfortably hard",
-  "target_hr_zone": "zone 3-4",
+  "workout_type": "easy_run",
+  "duration_min": 40,
+  "distance_km": 5.4,
+  "intensity": "RPE 3-4 / conversational",
+  "target_hr_zone": "zone 2",
   "target_pace_min_per_km": {
-    "min": 6.25,
-    "max": 6.55,
-    "display": "6:15/km - 6:33/km"
+    "min": 7.32,
+    "max": 7.77,
+    "display": "7:19/km - 7:46/km"
   },
-  "warmup": "先慢跑10-15分钟，随后做4次短加速；如果身体感觉僵硬，可先步行2-3分钟再开始。",
-  "main_set": "今天按回归跑处理：全程以轻松可控的舒适配速完成，不做节奏跑主训练。若状态一般，就把中段保持在轻松有氧强度。",
-  "cooldown": "最后慢跑或步行10分钟放松。",
+  "warmup": "先慢跑5-10分钟，并做轻度动态热身。",
+  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
+  "cooldown": "最后慢跑或步行5分钟，再做轻度拉伸。",
   "structured_workout": [
     {
       "name": "Warm up",
       "type": "warmup",
-      "duration_min": 12,
-      "target": "zone 2"
+      "duration_min": 8,
+      "target": "easy"
     },
     {
-      "name": "Tempo",
+      "name": "Easy run",
       "type": "run",
-      "duration_min": 28,
-      "target": "zone 3-4",
-      "target_hr_zone": "zone 3-4",
+      "duration_min": 27,
+      "target": "zone 2",
+      "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 6.25,
-        "max": 6.55,
-        "display": "6:15/km - 6:33/km"
+        "min": 7.32,
+        "max": 7.77,
+        "display": "7:19/km - 7:46/km"
       }
     },
     {
       "name": "Cool down",
       "type": "cooldown",
-      "duration_min": 10,
-      "target": "zone 1-2"
+      "duration_min": 5,
+      "target": "walk"
     }
   ],
-  "rationale": "虽然原始计划字段显示为tempo，但该决策与当前约束存在内部冲突：guardrail 为 easy_comeback，且 forbidden_workout_types 明确禁止 tempo。结合你已经4天没跑、过去7天跑量仅11.74公里、近一周跑量只有前一周的35%，今天更安全的做法是保留原定总时长50分钟和约6.8公里的训练量，但把内容降为一次轻松回归跑，而不是节奏课。这样既能重新建立跑步节奏，又能避免在恢复衔接期因强度过高带来额外疲劳。你的长期目标是109天后的半马2小时，现阶段一次保守的有氧回归比勉强完成高强度更有利于持续训练。",
+  "rationale": "今天按计划进行40分钟轻松跑，保持5.4公里左右。你昨天刚完成14.66公里长跑，近期疲劳信号为中等，且保护规则为 easy_only，因此今天不适合做节奏跑、间歇或任何进阶强度。当前距离10月1日半马目标还有108天，重点是稳住有氧基础和恢复质量，而不是追加刺激。结合你最近轻松跑多在约7:00-7:50/km之间、心率常落在中低强度区间，今天以二区、可对话强度完成最安全，也有助于为本周后续训练保留状态。",
   "cautions": [
-    "今天不要执行节奏跑或任何接近比赛配速的持续加速。",
-    "若心率明显偏高、呼吸发紧或双腿发沉，请立即降速，必要时改为跑走结合。",
-    "如果出现疼痛而不是普通酸胀，应立刻停止训练。",
-    "天气炎热潮湿时，以体感和心率为先，不要强求配速。"
+    "如果起跑后双腿明显沉重、心率异常偏高或呼吸不顺，可放慢到配速下限之外，优先守住轻松强度。",
+    "昨天长跑爬升较多，若出现膝踝或小腿不适，今天可改为更轻松地完成，必要时以步行结束冷身。",
+    "天气闷热时以体感和心率优先，不要为了追配速而加力。"
   ],
-  "email_subject": "6月14日跑步计划：50分钟轻松回归跑",
-  "hard_session_allowed": true,
+  "email_subject": "6月15日跑步计划：40分钟二区轻松跑",
+  "hard_session_allowed": false,
   "phase": "specific_endurance",
   "training_cycle": {
     "phase": "specific_endurance",
@@ -86,159 +85,67 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 24.8,
-    "long_run_km": 13.7,
+    "distance_km": 28.7,
+    "long_run_km": 15.4,
     "quality_sessions": 1
   },
   "week_plan": [
     {
-      "date": "2026-06-08",
+      "date": "2026-06-15",
       "weekday": "Mon",
-      "status": "completed",
-      "planned": null,
-      "actual": {
-        "run_count": 1,
-        "distance_km": 5.9,
-        "duration_min": 40.3,
-        "workout_types": [
-          "easy"
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-15",
+        "run_or_rest": "run",
+        "workout_type": "easy_run",
+        "duration_min": 40,
+        "distance_km": 5.4,
+        "intensity": "RPE 3-4 / conversational",
+        "target_hr_zone": "zone 2",
+        "target_pace_min_per_km": {
+          "min": 7.32,
+          "max": 7.77,
+          "display": "7:19/km - 7:46/km"
+        },
+        "warmup": "5-10 min easy jog with light dynamic drills",
+        "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
+        "cooldown": "5 min easy jog or walk, then light stretching.",
+        "structured_workout": [
+          {
+            "name": "Warm up",
+            "type": "warmup",
+            "duration_min": 8,
+            "target": "easy"
+          },
+          {
+            "name": "Easy run",
+            "type": "run",
+            "duration_min": 27,
+            "target": "zone 2",
+            "target_hr_zone": "zone 2",
+            "target_pace_min_per_km": {
+              "min": 7.32,
+              "max": 7.77,
+              "display": "7:19/km - 7:46/km"
+            }
+          },
+          {
+            "name": "Cool down",
+            "type": "cooldown",
+            "duration_min": 5,
+            "target": "walk"
+          }
         ],
-        "feedback_tags": []
-      }
+        "hard_session_allowed": false
+      },
+      "actual": null
     },
     {
-      "date": "2026-06-09",
+      "date": "2026-06-16",
       "weekday": "Tue",
       "status": "planned",
       "planned": {
-        "date": "2026-06-09",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-10",
-      "weekday": "Wed",
-      "status": "completed",
-      "planned": null,
-      "actual": {
-        "run_count": 1,
-        "distance_km": 5.9,
-        "duration_min": 41.5,
-        "workout_types": [
-          "moderate"
-        ],
-        "feedback_tags": []
-      }
-    },
-    {
-      "date": "2026-06-11",
-      "weekday": "Thu",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-11",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-12",
-      "weekday": "Fri",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-12",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-13",
-      "weekday": "Sat",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-13",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-14",
-      "weekday": "Sun",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-14",
+        "date": "2026-06-16",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -282,6 +189,190 @@
         "hard_session_allowed": true
       },
       "actual": null
+    },
+    {
+      "date": "2026-06-17",
+      "weekday": "Wed",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-17",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-18",
+      "weekday": "Thu",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-18",
+        "run_or_rest": "run",
+        "workout_type": "easy_run",
+        "duration_min": 40,
+        "distance_km": 5.4,
+        "intensity": "RPE 3-4 / conversational",
+        "target_hr_zone": "zone 2",
+        "target_pace_min_per_km": {
+          "min": 7.32,
+          "max": 7.77,
+          "display": "7:19/km - 7:46/km"
+        },
+        "warmup": "5-10 min easy jog with light dynamic drills",
+        "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
+        "cooldown": "5 min easy jog or walk, then light stretching.",
+        "structured_workout": [
+          {
+            "name": "Warm up",
+            "type": "warmup",
+            "duration_min": 8,
+            "target": "easy"
+          },
+          {
+            "name": "Easy run",
+            "type": "run",
+            "duration_min": 27,
+            "target": "zone 2",
+            "target_hr_zone": "zone 2",
+            "target_pace_min_per_km": {
+              "min": 7.32,
+              "max": 7.77,
+              "display": "7:19/km - 7:46/km"
+            }
+          },
+          {
+            "name": "Cool down",
+            "type": "cooldown",
+            "duration_min": 5,
+            "target": "walk"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-19",
+      "weekday": "Fri",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-19",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-20",
+      "weekday": "Sat",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-20",
+        "run_or_rest": "run",
+        "workout_type": "long_run",
+        "duration_min": 91,
+        "distance_km": 13.1,
+        "intensity": "RPE 3-4 / easy endurance",
+        "target_hr_zone": "zone 2",
+        "target_pace_min_per_km": {
+          "min": 7.42,
+          "max": 7.97,
+          "display": "7:25/km - 7:58/km"
+        },
+        "warmup": "10 min easy jog",
+        "main_set": "Long easy run. Keep the first half especially relaxed.",
+        "cooldown": "5-10 min walk and mobility.",
+        "structured_workout": [
+          {
+            "name": "Warm up",
+            "type": "warmup",
+            "duration_min": 10,
+            "target": "zone 2"
+          },
+          {
+            "name": "Long run",
+            "type": "run",
+            "duration_min": 73,
+            "target": "zone 2",
+            "target_hr_zone": "zone 2",
+            "target_pace_min_per_km": {
+              "min": 7.42,
+              "max": 7.97,
+              "display": "7:25/km - 7:58/km"
+            }
+          },
+          {
+            "name": "Cool down",
+            "type": "cooldown",
+            "duration_min": 8,
+            "target": "walk"
+          }
+        ],
+        "hard_session_allowed": true
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-21",
+      "weekday": "Sun",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-21",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
     }
   ],
   "performance": {
@@ -307,21 +398,21 @@
       "5k": {
         "distance": "5k",
         "distance_km": 5.0,
-        "estimated_time_min": 30.3,
-        "pace_min_per_km": 6.06,
+        "estimated_time_min": 33.6,
+        "pace_min_per_km": 6.72,
         "source": "auto_history",
-        "source_run_id": 18640093530,
-        "source_date": "2026-05-24",
+        "source_run_id": 18776669143,
+        "source_date": "2026-06-03",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       },
       "10k": {
         "distance": "10k",
         "distance_km": 10.0,
-        "estimated_time_min": 60.6,
-        "pace_min_per_km": 6.06,
+        "estimated_time_min": 69.9,
+        "pace_min_per_km": 6.99,
         "source": "auto_history",
-        "source_run_id": 18640093530,
-        "source_date": "2026-05-24",
+        "source_run_id": 18802703188,
+        "source_date": "2026-06-05",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       }
     },
@@ -329,11 +420,11 @@
       "5k": {
         "distance": "5k",
         "distance_km": 5.0,
-        "estimated_time_min": 30.3,
-        "pace_min_per_km": 6.06,
+        "estimated_time_min": 33.6,
+        "pace_min_per_km": 6.72,
         "source": "auto_history",
-        "source_run_id": 18640093530,
-        "source_date": "2026-05-24",
+        "source_run_id": 18776669143,
+        "source_date": "2026-06-03",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       },
       "10k": {
@@ -380,9 +471,9 @@
         "display": "6:15/km - 6:33/km"
       },
       "intervals": {
-        "min": 5.96,
-        "max": 6.26,
-        "display": "5:58/km - 6:16/km"
+        "min": 6.62,
+        "max": 6.92,
+        "display": "6:37/km - 6:55/km"
       }
     }
   }
