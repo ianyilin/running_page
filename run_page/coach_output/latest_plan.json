@@ -1,9 +1,9 @@
 {
-  "date": "2026-06-15",
+  "date": "2026-06-16",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
-  "distance_km": 5.4,
+  "distance_km": 5.5,
   "intensity": "RPE 3-4 / conversational",
   "target_hr_zone": "zone 2",
   "target_pace_min_per_km": {
@@ -40,13 +40,14 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天按计划进行40分钟轻松跑，保持5.4公里左右。你昨天刚完成14.66公里长跑，近期疲劳信号为中等，且保护规则为 easy_only，因此今天不适合做节奏跑、间歇或任何进阶强度。当前距离10月1日半马目标还有108天，重点是稳住有氧基础和恢复质量，而不是追加刺激。结合你最近轻松跑多在约7:00-7:50/km之间、心率常落在中低强度区间，今天以二区、可对话强度完成最安全，也有助于为本周后续训练保留状态。",
+  "rationale": "今天按计划进行40分钟、约5.5公里的轻松跑。你昨天刚完成一趟5.21公里轻松跑，前天还有14.66公里长距离，因此今天以低风险的有氧恢复与耐力巩固为主最稳妥。当前处于半马专项耐力阶段，距离10月1日目标半马还有107天，今天这类zone 2轻松跑有助于维持跑量、促进恢复，并为明天计划中的节奏训练保留体能。结合你最近轻松跑多在约6:52-7:32/km、心率约144-148的表现，今天更应优先守住轻松强度，而不是追求速度。",
   "cautions": [
-    "如果起跑后双腿明显沉重、心率异常偏高或呼吸不顺，可放慢到配速下限之外，优先守住轻松强度。",
-    "昨天长跑爬升较多，若出现膝踝或小腿不适，今天可改为更轻松地完成，必要时以步行结束冷身。",
-    "天气闷热时以体感和心率优先，不要为了追配速而加力。"
+    "全程以轻松可交谈为标准，若心率明显飘高或呼吸变重，请主动放慢。",
+    "如果双腿仍有前天长距离后的酸胀感，宁可跑慢一点，也不要加速。",
+    "天气闷热或湿度高时，配速可慢于目标区间，优先看体感和心率。",
+    "若出现刺痛、步态异常或头晕不适，应立即停止并改为步行返回。"
   ],
-  "email_subject": "6月15日跑步计划：40分钟二区轻松跑",
+  "email_subject": "6月16日跑步计划：40分钟5.5公里轻松跑",
   "hard_session_allowed": false,
   "phase": "specific_endurance",
   "training_cycle": {
@@ -85,7 +86,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 28.7,
+    "distance_km": 30.1,
     "long_run_km": 15.4,
     "quality_sessions": 1
   },
@@ -93,13 +94,28 @@
     {
       "date": "2026-06-15",
       "weekday": "Mon",
+      "status": "completed",
+      "planned": null,
+      "actual": {
+        "run_count": 1,
+        "distance_km": 5.2,
+        "duration_min": 36.2,
+        "workout_types": [
+          "easy"
+        ],
+        "feedback_tags": []
+      }
+    },
+    {
+      "date": "2026-06-16",
+      "weekday": "Tue",
       "status": "planned",
       "planned": {
-        "date": "2026-06-15",
+        "date": "2026-06-16",
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
-        "distance_km": 5.4,
+        "distance_km": 5.5,
         "intensity": "RPE 3-4 / conversational",
         "target_hr_zone": "zone 2",
         "target_pace_min_per_km": {
@@ -141,11 +157,11 @@
       "actual": null
     },
     {
-      "date": "2026-06-16",
-      "weekday": "Tue",
+      "date": "2026-06-17",
+      "weekday": "Wed",
       "status": "planned",
       "planned": {
-        "date": "2026-06-16",
+        "date": "2026-06-17",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -191,34 +207,6 @@
       "actual": null
     },
     {
-      "date": "2026-06-17",
-      "weekday": "Wed",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-17",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
       "date": "2026-06-18",
       "weekday": "Thu",
       "status": "planned",
@@ -227,7 +215,7 @@
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
-        "distance_km": 5.4,
+        "distance_km": 5.5,
         "intensity": "RPE 3-4 / conversational",
         "target_hr_zone": "zone 2",
         "target_pace_min_per_km": {
