@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-18",
+  "date": "2026-06-19",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
@@ -11,9 +11,9 @@
     "max": 7.78,
     "display": "7:20/km - 7:47/km"
   },
-  "warmup": "5-10分钟轻松慢跑，配合简单动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
-  "cooldown": "5分钟轻松慢跑或步行，随后做轻度拉伸。",
+  "warmup": "先慢跑5-10分钟，并做轻度动态热身。",
+  "main_set": "进行轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
+  "cooldown": "最后慢跑或步行5分钟，再做轻度拉伸。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,13 +40,14 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天按计划进行40分钟、约5.4公里的轻松跑。你昨天刚完成一趟5.44公里轻松跑，近7天总量25.31公里，疲劳信号低，当前也处于半马目标前105天的专项耐力阶段，因此继续用低风险的有氧跑来维持频率最合适。此次训练重点不是提速，而是稳定累积有氧时间，为明天计划中的节奏跑和本周后段长距离做准备。结合你近期轻松跑多在约6:52-7:22/km、心率约145-148附近，今天更应优先守住二区和轻松主观感受，宁可稍慢也不要跑成中等强度。",
+  "rationale": "今天按计划进行40分钟、约5.4公里的轻松跑即可。你距离10月1日半马目标还有104天，当前更重要的是在保证恢复的前提下维持稳定有氧训练。最近7天跑量较前一周明显上升，系统疲劳信号为高，且保护规则为 easy_only，因此今天不适合做节奏跑、间歇或更长距离训练。结合你近几次轻松跑配速与心率表现，本次以二区、可交谈强度完成最安全，也有助于为后续周末长跑保留体能。",
   "cautions": [
-    "如果今天感觉双腿沉重、心率异常偏高或天气闷热，请优先按心率和体感控制，配速可以比目标范围更慢。",
-    "全程应保持可以完整说话的强度；若不自觉加速，请主动放慢，避免影响明天训练质量。",
-    "若出现头晕、胸闷、刺痛或步态异常，立即停止训练并改为步行返回。"
+    "严格保持轻松强度，不要因为状态好就加速。",
+    "若心率明显高于平时轻松跑，优先降速，必要时改为跑走结合。",
+    "如出现头晕、胸闷、异常气短或任何疼痛，请立即停止训练。",
+    "近期跑量增长较快，今天以完成恢复性有氧刺激为目标，不追求配速。"
   ],
-  "email_subject": "6月18日跑步计划：40分钟5.4公里轻松有氧跑",
+  "email_subject": "6月19日跑步计划：40分钟轻松跑，保持二区放松完成",
   "hard_session_allowed": false,
   "phase": "specific_endurance",
   "training_cycle": {
@@ -85,7 +86,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 31.5,
+    "distance_km": 30.1,
     "long_run_km": 15.4,
     "quality_sessions": 1
   },
@@ -154,6 +155,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-06-18",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-19",
+      "weekday": "Fri",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-19",
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
@@ -195,56 +224,6 @@
           }
         ],
         "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-19",
-      "weekday": "Fri",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-19",
-        "run_or_rest": "run",
-        "workout_type": "tempo",
-        "duration_min": 50,
-        "distance_km": 6.7,
-        "intensity": "RPE 6-7 / comfortably hard",
-        "target_hr_zone": "zone 3-4",
-        "target_pace_min_per_km": {
-          "min": 6.25,
-          "max": 6.55,
-          "display": "6:15/km - 6:33/km"
-        },
-        "warmup": "10-15 min easy jog plus 4 short strides",
-        "main_set": "Tempo blocks at controlled effort with easy recovery.",
-        "cooldown": "10 min easy jog.",
-        "structured_workout": [
-          {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 12,
-            "target": "zone 2"
-          },
-          {
-            "name": "Tempo",
-            "type": "run",
-            "duration_min": 28,
-            "target": "zone 3-4",
-            "target_hr_zone": "zone 3-4",
-            "target_pace_min_per_km": {
-              "min": 6.25,
-              "max": 6.55,
-              "display": "6:15/km - 6:33/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 10,
-            "target": "zone 1-2"
-          }
-        ],
-        "hard_session_allowed": true
       },
       "actual": null
     },
