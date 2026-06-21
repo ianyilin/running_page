@@ -103,52 +103,17 @@
   {
     "date": "2026-06-20",
     "weekday": "Sat",
-    "status": "planned",
-    "planned": {
-      "date": "2026-06-20",
-      "run_or_rest": "run",
-      "workout_type": "easy_run",
-      "duration_min": 40,
-      "distance_km": 5.6,
-      "intensity": "RPE 3-4 / conversational",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 7.4,
-        "max": 7.85,
-        "display": "7:24/km - 7:51/km"
-      },
-      "warmup": "5-10 min easy jog with light dynamic drills",
-      "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-      "cooldown": "5 min easy jog or walk, then light stretching.",
-      "structured_workout": [
-        {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 8,
-          "target": "easy"
-        },
-        {
-          "name": "Easy run",
-          "type": "run",
-          "duration_min": 27,
-          "target": "zone 2",
-          "target_hr_zone": "zone 2",
-          "target_pace_min_per_km": {
-            "min": 7.4,
-            "max": 7.85,
-            "display": "7:24/km - 7:51/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 5,
-          "target": "walk"
-        }
+    "status": "completed",
+    "planned": null,
+    "actual": {
+      "run_count": 1,
+      "distance_km": 11.5,
+      "duration_min": 86.8,
+      "workout_types": [
+        "easy"
       ],
-      "hard_session_allowed": false
-    },
-    "actual": null
+      "feedback_tags": []
+    }
   },
   {
     "date": "2026-06-21",
@@ -163,9 +128,9 @@
       "intensity": "RPE 3-4 / easy endurance",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 7.5,
-        "max": 8.05,
-        "display": "7:30/km - 8:03/km"
+        "min": 7.26,
+        "max": 7.81,
+        "display": "7:16/km - 7:49/km"
       },
       "warmup": "10 min easy jog",
       "main_set": "Long easy run. Keep the first half especially relaxed.",
@@ -184,9 +149,9 @@
           "target": "zone 2",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 7.5,
-            "max": 8.05,
-            "display": "7:30/km - 8:03/km"
+            "min": 7.26,
+            "max": 7.81,
+            "display": "7:16/km - 7:49/km"
           }
         },
         {
