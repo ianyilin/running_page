@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-26",
+  "date": "2026-06-27",
   "run_or_rest": "run",
   "workout_type": "tempo",
   "duration_min": 50,
@@ -11,9 +11,9 @@
     "max": 6.55,
     "display": "6:15/km - 6:33/km"
   },
-  "warmup": "先慢跑10-15分钟，让呼吸和步频自然进入状态；今天不建议做加速跑。",
-  "main_set": "按轻松回归原则完成一次非常轻松的慢跑，以能完整对话、呼吸放松为准。若感觉僵硬，可在中段加入1-2次各30-60秒的自然提频，但不要进入节奏跑强度。",
-  "cooldown": "最后慢跑或步行10分钟，结束后做小腿、臀部和髋部轻度放松。",
+  "warmup": "先慢跑10-15分钟，不做加速跑；以非常轻松的感觉进入训练。",
+  "main_set": "由于今天处于轻松回归保护规则，主训练改为全程轻松跑，保持能顺畅交谈，不做节奏段。",
+  "cooldown": "最后10分钟放慢到非常轻松，结束后步行几分钟。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,14 @@
       "target": "zone 1-2"
     }
   ],
-  "rationale": "今天距离你的10月1日半马目标还有97天，长期目标是以稳定训练维持并提升半马能力。虽然原始计划里写的是tempo，但当前保护规则为 easy_comeback，而且约束中明确禁止 tempo、steady、intervals 和 long run。你已经连续3天没有跑步，最近7天跑量也低于前一周，此时更适合用一次轻松回归跑重新找回节奏，而不是直接做舒适偏硬的质量课。保留今天跑步、总时长50分钟和总距离约6.9公里的安排，但把执行强度降到轻松范围，更符合当前恢复与安全优先的要求，也能为明后两天训练留出余地。",
+  "rationale": "今天原始计划中的tempo与当前保护规则存在内部冲突：guardrail 为 easy_comeback，且约束明确禁止 tempo、steady_run、long_run、intervals，因此不能安排硬训练。结合你已经4天没跑、最近7天跑量只有前一周的约25%、近一周仅2次跑步，今天更安全的做法是保留原定跑步日、总时长50分钟和约6.9公里的总体负荷框架，但把内容降为轻松回归跑。这样既能恢复跑感，也能为距离半马目标日还有96天的后续专项耐力训练保留余地。你近期轻松跑常见心率大约在144-147附近，因此今天以轻松可控、不过度追配速为先。",
   "cautions": [
-    "今天不要按6:15-6:33/km的节奏配速执行。",
-    "全程以轻松感受优先；如果心率明显飘高或呼吸变重，立即降速。",
-    "若出现头晕、胸闷、异常疲劳或任何疼痛，立刻停止并改为步行返回。",
-    "如果天气炎热潮湿，配速可比平时更慢，优先看体感而不是看表。"
+    "今天不要执行节奏跑或任何接近阈值的持续加速。",
+    "如果心率明显高于平时轻松跑，立即降速，必要时改为跑走结合。",
+    "若出现头晕、胸闷、异常气短或任何疼痛，请立刻停止。",
+    "明天若还计划长距离，今天务必保守，避免累积疲劳。"
   ],
-  "email_subject": "6月26日跑步计划：轻松回归跑，先把状态找回来",
+  "email_subject": "6月27日跑步计划：轻松回归跑 50分钟",
   "hard_session_allowed": true,
   "phase": "specific_endurance",
   "training_cycle": {
@@ -86,7 +86,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 27.7,
+    "distance_km": 26.4,
     "long_run_km": 15.4,
     "quality_sessions": 1
   },
@@ -196,6 +196,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-06-26",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-27",
+      "weekday": "Sat",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-27",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -241,11 +269,11 @@
       "actual": null
     },
     {
-      "date": "2026-06-27",
-      "weekday": "Sat",
+      "date": "2026-06-28",
+      "weekday": "Sun",
       "status": "planned",
       "planned": {
-        "date": "2026-06-27",
+        "date": "2026-06-28",
         "run_or_rest": "run",
         "workout_type": "long_run",
         "duration_min": 91,
@@ -287,56 +315,6 @@
           }
         ],
         "hard_session_allowed": true
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-06-28",
-      "weekday": "Sun",
-      "status": "planned",
-      "planned": {
-        "date": "2026-06-28",
-        "run_or_rest": "run",
-        "workout_type": "recovery_run",
-        "duration_min": 30,
-        "distance_km": 4.2,
-        "intensity": "RPE 2-3 / very easy",
-        "target_hr_zone": "zone 1-2",
-        "target_pace_min_per_km": {
-          "min": 7.53,
-          "max": 8.12,
-          "display": "7:32/km - 8:08/km"
-        },
-        "warmup": "5-10 min walk or very easy jog",
-        "main_set": "Very easy run. Keep breathing relaxed and effort low.",
-        "cooldown": "5 min walk, then light calf and hip mobility.",
-        "structured_workout": [
-          {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 8,
-            "target": "easy"
-          },
-          {
-            "name": "Recovery run",
-            "type": "run",
-            "duration_min": 17,
-            "target": "zone 1-2",
-            "target_hr_zone": "zone 1-2",
-            "target_pace_min_per_km": {
-              "min": 7.53,
-              "max": 8.12,
-              "display": "7:32/km - 8:08/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 5,
-            "target": "walk"
-          }
-        ],
-        "hard_session_allowed": false
       },
       "actual": null
     }
