@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-29",
+  "date": "2026-06-30",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
@@ -11,9 +11,9 @@
     "max": 7.63,
     "display": "7:11/km - 7:38/km"
   },
-  "warmup": "先慢跑 5-10 分钟，并做几项轻度动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
-  "cooldown": "最后 5 分钟慢跑或步行，然后做轻度拉伸。",
+  "warmup": "先慢跑 5-10 分钟，并做轻度动态热身。",
+  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅对话为准。",
+  "cooldown": "最后 5 分钟慢跑或步行，再做轻度拉伸。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,15 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天安排 40 分钟、约 5.5 公里的轻松跑。你昨天刚完成一堂偏硬的 12.77 公里跑，近 7 天也已有 2 次偏强训练，当前疲劳信号为中等，且保护规则是 easy_only，因此今天只能做轻松有氧，不适合再加节奏或间歇。这个安排既能维持半马目标所需的有氧连续性，也能把恢复放在第一位。配速建议按 7:11-7:38/km 执行，重点看体感和心率，尽量稳定在 zone 2，跑得轻松比跑得快更重要。",
+  "rationale": "今天按计划进行 40 分钟、约 5.5 公里的轻松跑。你距离 10 月 1 日半马目标还有 93 天，当前重点是稳定有氧能力和持续性，而不是继续叠加强度。最近 7 天只有 2 次跑步，但两次都偏硬，尤其 6 月 28 日的 12.77 公里跑平均心率较高，因此当前保护规则为 easy_only。今天最安全、最合适的安排就是严格执行轻松跑：把心率放在 zone 2，配速控制在 7:11-7:38/km，主观强度维持在 RPE 3-4。这样既能延续训练节奏，也能降低疲劳累积和受伤风险，为后续训练留出恢复空间。",
   "cautions": [
-    "如果起跑后双腿明显沉重、心率异常偏高或呼吸不顺，立即降速，必要时改为跑走结合。",
-    "今天不要自行加速、加距离或追加冲刺，因为保护规则明确限制为轻松日。",
-    "若天气闷热潮湿，可优先按心率和体感控制，不必强求配速落在目标区间内。",
-    "跑后注意补水，并做简单放松，帮助从昨天的高负荷中恢复。"
+    "今天不要加速、不要跑成节奏跑，也不要临时加距离。",
+    "如果心率明显高于平时，优先降速，必要时改为跑走结合。",
+    "前天刚完成偏硬的长距离跑，若双腿沉重或呼吸不顺，应以轻松完成为第一目标。",
+    "天气闷热时配速可比目标范围更慢，以心率和体感为准。",
+    "如出现头晕、胸闷、尖锐疼痛或步态异常，立即停止训练。"
   ],
-  "email_subject": "6月29日跑步计划：40分钟Zone 2轻松跑",
+  "email_subject": "6月30日跑步计划：40分钟Zone 2轻松跑",
   "hard_session_allowed": false,
   "phase": "specific_endurance",
   "training_cycle": {
@@ -86,7 +87,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 28.7,
+    "distance_km": 27.2,
     "long_run_km": 15.4,
     "quality_sessions": 1
   },
@@ -97,6 +98,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-06-29",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-06-30",
+      "weekday": "Tue",
+      "status": "planned",
+      "planned": {
+        "date": "2026-06-30",
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
@@ -142,11 +171,11 @@
       "actual": null
     },
     {
-      "date": "2026-06-30",
-      "weekday": "Tue",
+      "date": "2026-07-01",
+      "weekday": "Wed",
       "status": "planned",
       "planned": {
-        "date": "2026-06-30",
+        "date": "2026-07-01",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -188,34 +217,6 @@
           }
         ],
         "hard_session_allowed": true
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-07-01",
-      "weekday": "Wed",
-      "status": "planned",
-      "planned": {
-        "date": "2026-07-01",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
       },
       "actual": null
     },
