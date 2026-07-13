@@ -32,6 +32,7 @@ STRAVA_ONLY_RUN=1
 ```bash
 pnpm data:download:strava   # update run_page/data.db and src/static/activities.json
 pnpm data:import:apple      # import Apple Watch GPX files from APPLE_WORKOUTS_DIR
+pnpm data:sync:intervals    # sync runs from Intervals.icu
 pnpm coach:dry-run          # generate run_page/coach_output/*.json without Azure/email
 pnpm coach:send             # call Azure OpenAI and email the next-day plan
 pnpm dev                    # local preview at http://localhost:5173/
@@ -49,6 +50,7 @@ pnpm lint
 - `run_page/strava_sync.py`: GitHub Actions Strava sync entrypoint
 - `run_page/strava_env_sync.py`: local `.env` sync entrypoint
 - `run_page/apple_workout_import.py`: Apple Watch GPX import entrypoint
+- `run_page/intervals_icu_sync.py`: Intervals.icu sync entrypoint
 - `run_page/coach/`: daily AI coach context, Azure OpenAI call, and SMTP email
 - `run_page/coach/planner.py`: deterministic rule-based training planner
 - `run_page/coach/workout_library.py`: reusable workout templates
@@ -207,9 +209,8 @@ GitHub Actions runs `run_data_sync.yml` every day and can also be run manually.
 Required repository secrets:
 
 ```text
-STRAVA_CLIENT_ID
-STRAVA_CLIENT_SECRET
-STRAVA_CLIENT_REFRESH_TOKEN
+INTERVALS_ICU_ATHLETE_ID
+INTERVALS_ICU_API_KEY
 HOMEPAGE_DEPLOY_TOKEN
 ```
 

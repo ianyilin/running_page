@@ -2,9 +2,8 @@ name: Run Data Sync
 
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types:
-      - gpx-updated
+  schedule:
+    - cron: '10 3 * * *'
   push:
     branches:
       - master
@@ -22,6 +21,7 @@ on:
       - run_page/strava_sync.py
       - run_page/strava_env_sync.py
       - run_page/apple_workout_import.py
+      - run_page/intervals_icu_sync.py
       - run_page/polyline_processor.py
       - scripts/**
       - requirements.txt
@@ -34,7 +34,7 @@ env:
 
 jobs:
   sync:
-    name: Import GPX and Publish
+    name: Sync Intervals.icu and Publish
     runs-on: ubuntu-latest
 
     steps:
@@ -56,19 +56,12 @@ jobs:
         if: github.event_name != 'push'
         run: pip install -r requirements.txt
 
-      - name: Checkout GPX data repository
+      - name: Sync Intervals.icu runs
         if: github.event_name != 'push'
-        uses: actions/checkout@v4
-        with:
-          repository: ianyilin/running-gpx-data
-          ref: main
-          token: ${{ secrets.GPX_DATA_TOKEN }}
-          path: gpx-data
-          persist-credentials: false
-
-      - name: Import GPX runs
-        if: github.event_name != 'push'
-        run: python run_page/apple_workout_import.py gpx-data/gpx
+        run: |
+          python run_page/intervals_icu_sync.py \
+            "${{ secrets.INTERVALS_ICU_ATHLETE_ID }}" \
+            "${{ secrets.INTERVALS_ICU_API_KEY }}"
 
       - name: Commit synced data
         if: github.event_name != 'push'
@@ -80,7 +73,7 @@ jobs:
             echo 'No new GPX runs to commit.'
             exit 0
           fi
-          git commit -m 'import gpx runs [skip ci]'
+          git commit -m 'sync intervals runs [skip ci]'
           git push
 
       - name: Set up Node.js

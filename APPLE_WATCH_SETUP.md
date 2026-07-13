@@ -13,7 +13,25 @@ Apple Watch -> iPhone export app -> iCloud Drive GPX folder -> Mac launchd job
 GitHub Actions cannot read Apple Health directly from the cloud. The automatic
 part therefore runs on this Mac and pushes the updated JSON to GitHub.
 
-## Cloud-only GPX flow
+## Intervals.icu cloud sync
+
+The preferred cloud-only flow is:
+
+```text
+Apple Watch native Workout -> Intervals.icu Companion -> Intervals.icu
+-> GitHub Actions sync -> ianyilin.github.io/running/
+```
+
+Required secrets in `ianyilin/running_page`:
+
+- `INTERVALS_ICU_ATHLETE_ID`
+- `INTERVALS_ICU_API_KEY`
+- `HOMEPAGE_DEPLOY_TOKEN`
+
+The workflow runs daily at `03:10 UTC`, which is `23:10` in New York during
+daylight saving time.
+
+## Legacy private GPX flow
 
 If GPX files are uploaded to the private `ianyilin/running-gpx-data` repository,
 the workflow can run fully in GitHub Actions:
