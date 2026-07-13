@@ -13,6 +13,32 @@ Apple Watch -> iPhone export app -> iCloud Drive GPX folder -> Mac launchd job
 GitHub Actions cannot read Apple Health directly from the cloud. The automatic
 part therefore runs on this Mac and pushes the updated JSON to GitHub.
 
+## Cloud-only GPX flow
+
+If GPX files are uploaded to the private `ianyilin/running-gpx-data` repository,
+the workflow can run fully in GitHub Actions:
+
+```text
+Apple Watch -> GPX Export -> upload to running-gpx-data/gpx/
+-> repository_dispatch -> running_page imports GPX
+-> build and publish ianyilin.github.io/running/
+```
+
+Required secrets:
+
+- In `ianyilin/running_page`: `GPX_DATA_TOKEN`
+  - Fine-grained PAT with read access to `ianyilin/running-gpx-data`.
+- In `ianyilin/running-gpx-data`: `RUNNING_PAGE_DISPATCH_TOKEN`
+  - Fine-grained PAT that can create repository dispatch events for
+    `ianyilin/running_page`.
+
+The private GPX repository should use:
+
+```text
+gpx/
+  2026-07-13-run.gpx
+```
+
 ## 1. Export GPX files to iCloud Drive
 
 Use an iPhone app that can export Apple Health workout routes as GPX files.

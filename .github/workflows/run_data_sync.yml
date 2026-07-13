@@ -2,6 +2,9 @@ name: Run Data Sync
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types:
+      - gpx-updated
   push:
     branches:
       - master
@@ -31,7 +34,7 @@ env:
 
 jobs:
   sync:
-    name: Publish Running Page
+    name: Import GPX and Publish
     runs-on: ubuntu-latest
 
     steps:
@@ -53,39 +56,32 @@ jobs:
         if: github.event_name != 'push'
         run: pip install -r requirements.txt
 
-      - name: Sync Strava runs
+      - name: Checkout GPX data repository
         if: github.event_name != 'push'
-        run: |
-          python run_page/strava_sync.py \
-            "${{ secrets.STRAVA_CLIENT_ID }}" \
-            "${{ secrets.STRAVA_CLIENT_SECRET }}" \
-            "${{ secrets.STRAVA_CLIENT_REFRESH_TOKEN }}" \
-            --only-run
+        uses: actions/checkout@v4
+        with:
+          repository: ianyilin/running-gpx-data
+          ref: main
+          token: ${{ secrets.GPX_DATA_TOKEN }}
+          path: gpx-data
+          persist-credentials: false
 
-      - name: Generate and email daily coach plan
+      - name: Import GPX runs
         if: github.event_name != 'push'
-        env:
-          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
-          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
-          AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
-          AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
-          COACH_EMAIL_TO: ${{ secrets.COACH_EMAIL_TO }}
-          COACH_EMAIL_FROM: ${{ secrets.COACH_EMAIL_FROM }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-        run: python run_page/coach/daily_coach.py --send-email
+        run: python run_page/apple_workout_import.py gpx-data/gpx
 
       - name: Commit synced data
         if: github.event_name != 'push'
         run: |
           git config --local user.email 'action@github.com'
           git config --local user.name 'GitHub Action'
-          git add run_page/data.db src/static/activities.json
-          test ! -d run_page/coach_output || git add run_page/coach_output
-          git commit -m 'update new runs' || echo 'nothing to commit'
-          git push || echo 'nothing to push'
+          git add src/static/activities.json
+          if git diff --cached --quiet; then
+            echo 'No new GPX runs to commit.'
+            exit 0
+          fi
+          git commit -m 'import gpx runs [skip ci]'
+          git push
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
