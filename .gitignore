@@ -30,3 +30,7 @@ route.svg
 
 # Local copy of the visual reference site source.
 /reference/
+
+# Local Apple Watch workout exports.
+/apple_workouts/
+/logs/

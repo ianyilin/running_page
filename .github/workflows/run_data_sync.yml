@@ -2,9 +2,6 @@ name: Run Data Sync
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 23 * * *'
-      timezone: 'America/New_York'
   push:
     branches:
       - master
@@ -21,7 +18,9 @@ on:
       - run_page/coach/**
       - run_page/strava_sync.py
       - run_page/strava_env_sync.py
+      - run_page/apple_workout_import.py
       - run_page/polyline_processor.py
+      - scripts/**
       - requirements.txt
 
 permissions:
@@ -32,7 +31,7 @@ env:
 
 jobs:
   sync:
-    name: Sync Strava and Publish
+    name: Publish Running Page
     runs-on: ubuntu-latest
 
     steps:
@@ -43,6 +42,7 @@ jobs:
           persist-credentials: true
 
       - name: Set up Python
+        if: github.event_name != 'push'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -50,9 +50,11 @@ jobs:
           cache-dependency-path: requirements.txt
 
       - name: Install Python dependencies
+        if: github.event_name != 'push'
         run: pip install -r requirements.txt
 
       - name: Sync Strava runs
+        if: github.event_name != 'push'
         run: |
           python run_page/strava_sync.py \
             "${{ secrets.STRAVA_CLIENT_ID }}" \
@@ -76,6 +78,7 @@ jobs:
         run: python run_page/coach/daily_coach.py --send-email
 
       - name: Commit synced data
+        if: github.event_name != 'push'
         run: |
           git config --local user.email 'action@github.com'
           git config --local user.name 'GitHub Action'
