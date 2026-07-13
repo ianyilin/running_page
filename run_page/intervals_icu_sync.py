@@ -12,6 +12,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from apple_workout_import import (
+    duration_string,
+    haversine_m,
     is_same_run,
     load_existing,
     parse_gpx_activity,
@@ -19,6 +21,9 @@ from apple_workout_import import (
     recompute_streaks,
 )
 from config import JSON_FILE
+from polyline_processor import filter_out
+
+import polyline
 
 
 BASE_URL = "https://intervals.icu/api/v1"
@@ -185,6 +190,114 @@ def activity_from_metadata(activity: dict[str, Any], timezone: ZoneInfo) -> dict
     }
 
 
+def normalize_timestamp(value: Any, timezone: ZoneInfo) -> dt.datetime | None:
+    if value is None:
+        return None
+    if isinstance(value, dt.datetime):
+        parsed = value
+    else:
+        text = str(value).replace("Z", "+00:00")
+        try:
+            parsed = dt.datetime.fromisoformat(text)
+        except ValueError:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone)
+    return parsed.astimezone(dt.timezone.utc)
+
+
+def parse_fit_activity(
+    path: Path, metadata: dict[str, Any], timezone: ZoneInfo
+) -> dict[str, Any] | None:
+    try:
+        from fit_tool.fit_file import FitFile
+        from fit_tool.profile.messages.record_message import RecordMessage
+    except Exception as exc:
+        print(f"Warning: fit-tool is unavailable, using Intervals metadata: {exc}")
+        return None
+
+    fit = FitFile.from_file(str(path))
+    coords: list[tuple[float, float]] = []
+    timestamps: list[dt.datetime] = []
+    heart_rates: list[float] = []
+    elevations: list[float] = []
+    record_distances: list[float] = []
+
+    for record in fit.records:
+        msg = record.message
+        if not isinstance(msg, RecordMessage):
+            continue
+
+        timestamp = normalize_timestamp(getattr(msg, "timestamp", None), timezone)
+        if timestamp:
+            timestamps.append(timestamp)
+
+        lat = getattr(msg, "position_lat", None)
+        lon = getattr(msg, "position_long", None)
+        if lat is not None and lon is not None:
+            coords.append((float(lat), float(lon)))
+
+        heart_rate = getattr(msg, "heart_rate", None)
+        if heart_rate is not None:
+            heart_rates.append(float(heart_rate))
+
+        altitude = getattr(msg, "enhanced_altitude", None) or getattr(
+            msg, "altitude", None
+        )
+        if altitude is not None:
+            elevations.append(float(altitude))
+
+        distance = getattr(msg, "distance", None)
+        if distance is not None:
+            record_distances.append(float(distance))
+
+    if not timestamps and not coords:
+        return None
+
+    if record_distances:
+        distance = max(record_distances)
+    else:
+        distance = sum(haversine_m(prev, curr) for prev, curr in zip(coords, coords[1:]))
+
+    if len(timestamps) >= 2:
+        moving_seconds = max(1.0, (max(timestamps) - min(timestamps)).total_seconds())
+        start_utc = min(timestamps)
+    else:
+        start_utc, _ = parse_interval_time(metadata, timezone)
+        moving_seconds = seconds_from_value(
+            first_value(metadata, ("moving_time", "elapsed_time", "duration"))
+        )
+        moving_seconds = max(1.0, moving_seconds)
+
+    elevation_gain = 0.0
+    for prev, curr in zip(elevations, elevations[1:]):
+        delta = curr - prev
+        if delta > 0:
+            elevation_gain += delta
+
+    start_local = start_utc.astimezone(timezone).replace(tzinfo=None)
+    encoded = filter_out(polyline.encode(coords)) if len(coords) >= 2 else ""
+    average_hr = (
+        round(sum(heart_rates) / len(heart_rates), 1) if heart_rates else None
+    )
+
+    return {
+        "run_id": stable_run_id(metadata),
+        "name": metadata.get("name") or "Intervals.icu Run",
+        "distance": round(distance, 1),
+        "moving_time": duration_string(moving_seconds),
+        "type": "Run",
+        "subtype": metadata.get("type") or "Run",
+        "start_date": start_utc.strftime("%Y-%m-%d %H:%M:%S+00:00"),
+        "start_date_local": start_local.strftime("%Y-%m-%d %H:%M:%S"),
+        "location_country": "",
+        "summary_polyline": encoded or "",
+        "average_heartrate": average_hr,
+        "average_speed": round(distance / moving_seconds, 3),
+        "elevation_gain": round(elevation_gain, 1),
+    }
+
+
 def merge_activity(activities: list[dict[str, Any]], candidate: dict[str, Any]) -> bool:
     for index, existing in enumerate(activities):
         if existing.get("run_id") == candidate["run_id"] or is_same_run(existing, candidate):
@@ -248,6 +361,8 @@ def sync_intervals(
                 if candidate:
                     candidate["run_id"] = stable_run_id(activity)
                     candidate["name"] = activity.get("name") or candidate["name"]
+            elif file_path and file_path.suffix.lower() == ".fit":
+                candidate = parse_fit_activity(file_path, activity, timezone)
 
             if candidate is None:
                 candidate = activity_from_metadata(activity, timezone)

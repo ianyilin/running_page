@@ -6,3 +6,4 @@ requests
 sqlalchemy
 stravalib==0.10.4
 certifi==2025.1.31
+fit-tool
