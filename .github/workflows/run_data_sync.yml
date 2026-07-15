@@ -63,14 +63,30 @@ jobs:
             "${{ secrets.INTERVALS_ICU_ATHLETE_ID }}" \
             "${{ secrets.INTERVALS_ICU_API_KEY }}"
 
+      - name: Generate and email daily coach plan
+        if: github.event_name != 'push'
+        env:
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
+          AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
+          COACH_EMAIL_TO: ${{ secrets.COACH_EMAIL_TO }}
+          COACH_EMAIL_FROM: ${{ secrets.COACH_EMAIL_FROM }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: python run_page/coach/daily_coach.py --send-email
+
       - name: Commit synced data
         if: github.event_name != 'push'
         run: |
           git config --local user.email 'action@github.com'
           git config --local user.name 'GitHub Action'
           git add src/static/activities.json
+          test ! -d run_page/coach_output || git add run_page/coach_output
           if git diff --cached --quiet; then
-            echo 'No new GPX runs to commit.'
+            echo 'No synced data or coach output changes to commit.'
             exit 0
           fi
           git commit -m 'sync intervals runs [skip ci]'
