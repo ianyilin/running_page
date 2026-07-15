@@ -40,11 +40,17 @@ def _parse_duration(value) -> int:
         return 0
     if isinstance(value, (int, float)):
         return int(value)
-    parts = str(value).split(".")[0].split(":")
+    text = str(value).split(".")[0]
+    days = 0
+    if "day" in text:
+        day_text, _, time_text = text.partition(",")
+        days = int(day_text.split()[0])
+        text = time_text.strip()
+    parts = text.split(":")
     if len(parts) != 3:
         return 0
     hours, minutes, seconds = [int(part) for part in parts]
-    return hours * 3600 + minutes * 60 + seconds
+    return days * 86400 + hours * 3600 + minutes * 60 + seconds
 
 
 def _parse_local_datetime(value: str) -> dt.datetime:

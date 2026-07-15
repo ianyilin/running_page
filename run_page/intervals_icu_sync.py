@@ -156,8 +156,7 @@ def parse_interval_time(value: Any, timezone: ZoneInfo) -> tuple[dt.datetime, dt
     return utc, local
 
 
-def activity_from_metadata(activity: dict[str, Any], timezone: ZoneInfo) -> dict[str, Any]:
-    distance = distance_meters(activity)
+def metadata_duration_seconds(activity: dict[str, Any], timezone: ZoneInfo) -> float:
     moving_seconds = seconds_from_value(
         first_value(activity, ("moving_time", "elapsed_time", "duration"))
     )
@@ -165,7 +164,12 @@ def activity_from_metadata(activity: dict[str, Any], timezone: ZoneInfo) -> dict
         _, start_local = parse_interval_time(activity, timezone)
         end_local = dt.datetime.fromisoformat(str(activity["end_date_local"]))
         moving_seconds = max(1.0, (end_local - start_local).total_seconds())
-    moving_seconds = max(1.0, moving_seconds)
+    return max(1.0, moving_seconds)
+
+
+def activity_from_metadata(activity: dict[str, Any], timezone: ZoneInfo) -> dict[str, Any]:
+    distance = distance_meters(activity)
+    moving_seconds = metadata_duration_seconds(activity, timezone)
     start_utc, start_local = parse_interval_time(activity, timezone)
 
     return {
@@ -259,15 +263,11 @@ def parse_fit_activity(
     else:
         distance = sum(haversine_m(prev, curr) for prev, curr in zip(coords, coords[1:]))
 
-    if len(timestamps) >= 2:
-        moving_seconds = max(1.0, (max(timestamps) - min(timestamps)).total_seconds())
-        start_utc = min(timestamps)
-    else:
-        start_utc, _ = parse_interval_time(metadata, timezone)
-        moving_seconds = seconds_from_value(
-            first_value(metadata, ("moving_time", "elapsed_time", "duration"))
-        )
-        moving_seconds = max(1.0, moving_seconds)
+    # Intervals metadata is the authority for workout date and duration.
+    # FIT files from Apple/Health integrations can contain nonstandard epoch
+    # values that fit-tool may decode as impossible dates.
+    start_utc, start_local = parse_interval_time(metadata, timezone)
+    moving_seconds = metadata_duration_seconds(metadata, timezone)
 
     elevation_gain = 0.0
     for prev, curr in zip(elevations, elevations[1:]):
@@ -275,7 +275,6 @@ def parse_fit_activity(
         if delta > 0:
             elevation_gain += delta
 
-    start_local = start_utc.astimezone(timezone).replace(tzinfo=None)
     encoded = filter_out(polyline.encode(coords)) if len(coords) >= 2 else ""
     average_hr = (
         round(sum(heart_rates) / len(heart_rates), 1) if heart_rates else None
@@ -300,7 +299,19 @@ def parse_fit_activity(
 
 def merge_activity(activities: list[dict[str, Any]], candidate: dict[str, Any]) -> bool:
     for index, existing in enumerate(activities):
-        if existing.get("run_id") == candidate["run_id"] or is_same_run(existing, candidate):
+        if existing.get("run_id") == candidate["run_id"]:
+            merged = {
+                **existing,
+                **candidate,
+                "location_country": existing.get("location_country")
+                or candidate.get("location_country")
+                or "",
+            }
+            if merged != existing:
+                activities[index] = merged
+                return True
+            return False
+        if is_same_run(existing, candidate):
             if candidate.get("summary_polyline") and not existing.get("summary_polyline"):
                 activities[index] = {**existing, **candidate}
                 return True
