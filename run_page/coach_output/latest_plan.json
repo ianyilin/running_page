@@ -1,5 +1,5 @@
 {
-  "date": "2026-07-17",
+  "date": "2026-07-18",
   "run_or_rest": "run",
   "workout_type": "tempo",
   "duration_min": 50,
@@ -11,9 +11,9 @@
     "max": 6.55,
     "display": "6:15/km - 6:33/km"
   },
-  "warmup": "先慢跑10-15分钟，逐步进入轻松节奏；今天不做加速跑。",
-  "main_set": "全程以轻松可交谈的有氧配速完成，保持呼吸平稳，不追求速度。",
-  "cooldown": "最后10分钟放慢到非常轻松，结束后步行几分钟。",
+  "warmup": "先慢跑10-15分钟，配合轻松活动关节；今天不做冲刺加速跑。",
+  "main_set": "全程以轻松稳定的有氧配速完成，保持呼吸平稳，不追求速度。",
+  "cooldown": "最后10分钟放慢到很轻松，结束后步行几分钟。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,14 @@
       "target": "zone 1-2"
     }
   ],
-  "rationale": "今天原始计划中的tempo与当前约束冲突：guardrail 为 easy_comeback，且禁止 tempo，因此已下调为同等时长与距离的轻松跑。你最近3天没有跑步，近7天跑量相对前一周上升明显，疲劳信号为高；在距离10月1日半马目标还有76天的阶段，当前更重要的是安全恢复连续性，而不是追加质量训练。结合你最近轻松跑多在约7分20到7分45配速附近、心率表现也更适合控制在轻松有氧范围，今天以 zone 2 完成即可，为后续训练保留恢复空间。",
+  "rationale": "今天原始计划里给出了节奏跑，但该决策与当前保护规则不一致：guardrail 为 easy_comeback，且限制中明确禁止 tempo。你距离10月1日半马目标还有75天，长期目标是以较稳妥方式维持并提升半马耐力；不过你已经4天没跑，近7天仅跑了2次，最近一次7月14日的5.96公里平均心率157.4也不算特别轻松，因此今天更适合做一次回归型轻松跑。保留原计划的总时长50分钟和约6.8公里的体量，但把强度降到 zone 2，有助于恢复跑感、维持周训练连续性，并为后续周末训练留出余地。这也更符合你近期常见的轻松跑配速区间和保守推进原则。",
   "cautions": [
-    "如果热身后仍感觉双腿沉重、心率异常偏高或呼吸不顺，立即把主训练改为更慢的恢复跑。",
-    "今天不要做节奏跑、冲刺或额外加速段，严格遵守轻松强度。",
-    "如遇高温潮湿天气，优先按体感和心率控制，不必强求配速。",
-    "若出现疼痛而非一般疲劳，请立刻停止训练并改为休息。"
+    "今天不要把轻松跑跑成节奏跑，若心率明显上飘就主动降速。",
+    "若天气闷热、补水不足或体感沉重，优先按心率和呼吸控制，不必强求配速。",
+    "如出现头晕、胸闷、异常气短或局部疼痛加重，应立即停止。",
+    "结束后可做5-10分钟轻度拉伸和步行，帮助恢复。"
   ],
-  "email_subject": "7月17日跑步计划：50分钟轻松有氧恢复跑",
+  "email_subject": "7月18日跑步计划：50分钟轻松回归跑",
   "hard_session_allowed": true,
   "phase": "specific_endurance",
   "training_cycle": {
@@ -86,7 +86,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 16.4,
+    "distance_km": 15.9,
     "long_run_km": 13.4,
     "quality_sessions": 1
   },
@@ -196,6 +196,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-07-17",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-07-18",
+      "weekday": "Sat",
+      "status": "planned",
+      "planned": {
+        "date": "2026-07-18",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -241,11 +269,11 @@
       "actual": null
     },
     {
-      "date": "2026-07-18",
-      "weekday": "Sat",
+      "date": "2026-07-19",
+      "weekday": "Sun",
       "status": "planned",
       "planned": {
-        "date": "2026-07-18",
+        "date": "2026-07-19",
         "run_or_rest": "run",
         "workout_type": "long_run",
         "duration_min": 79,
@@ -287,34 +315,6 @@
           }
         ],
         "hard_session_allowed": true
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-07-19",
-      "weekday": "Sun",
-      "status": "planned",
-      "planned": {
-        "date": "2026-07-19",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
       },
       "actual": null
     }

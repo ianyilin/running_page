@@ -104,6 +104,34 @@
     "status": "planned",
     "planned": {
       "date": "2026-07-17",
+      "run_or_rest": "rest",
+      "workout_type": "rest",
+      "duration_min": 0,
+      "distance_km": 0,
+      "intensity": "rest",
+      "target_hr_zone": null,
+      "target_pace_min_per_km": null,
+      "warmup": "Optional 5-10 min walk",
+      "main_set": "Rest day. Optional easy walk and light mobility.",
+      "cooldown": "Gentle stretching if it feels good.",
+      "structured_workout": [
+        {
+          "name": "Rest",
+          "type": "rest",
+          "duration_min": 0,
+          "target": "rest"
+        }
+      ],
+      "hard_session_allowed": false
+    },
+    "actual": null
+  },
+  {
+    "date": "2026-07-18",
+    "weekday": "Sat",
+    "status": "planned",
+    "planned": {
+      "date": "2026-07-18",
       "run_or_rest": "run",
       "workout_type": "tempo",
       "duration_min": 50,
@@ -149,11 +177,11 @@
     "actual": null
   },
   {
-    "date": "2026-07-18",
-    "weekday": "Sat",
+    "date": "2026-07-19",
+    "weekday": "Sun",
     "status": "planned",
     "planned": {
-      "date": "2026-07-18",
+      "date": "2026-07-19",
       "run_or_rest": "run",
       "workout_type": "long_run",
       "duration_min": 79,
@@ -195,34 +223,6 @@
         }
       ],
       "hard_session_allowed": true
-    },
-    "actual": null
-  },
-  {
-    "date": "2026-07-19",
-    "weekday": "Sun",
-    "status": "planned",
-    "planned": {
-      "date": "2026-07-19",
-      "run_or_rest": "rest",
-      "workout_type": "rest",
-      "duration_min": 0,
-      "distance_km": 0,
-      "intensity": "rest",
-      "target_hr_zone": null,
-      "target_pace_min_per_km": null,
-      "warmup": "Optional 5-10 min walk",
-      "main_set": "Rest day. Optional easy walk and light mobility.",
-      "cooldown": "Gentle stretching if it feels good.",
-      "structured_workout": [
-        {
-          "name": "Rest",
-          "type": "rest",
-          "duration_min": 0,
-          "target": "rest"
-        }
-      ],
-      "hard_session_allowed": false
     },
     "actual": null
   }
