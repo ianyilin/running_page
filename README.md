@@ -1,10 +1,10 @@
 # RUN.LOG
 
-Personal Strava running page for `https://ianyilin.github.io/running/`.
+Personal Garmin running page for `https://ianyilin.github.io/running/`.
 
 This fork is intentionally narrow:
 
-- sync Strava activities only
+- sync Garmin running activities only
 - show running activities only
 - build a React/Vite page under `/running/`
 - publish the built `dist/` output into `ianyilin/ianyilin.github.io/running/`
@@ -21,17 +21,15 @@ cp .env.example .env
 Fill `.env` with:
 
 ```bash
-STRAVA_CLIENT_ID=
-STRAVA_CLIENT_SECRET=
-STRAVA_CLIENT_REFRESH_TOKEN=
-STRAVA_ONLY_RUN=1
+GARMIN_SECRET_STRING=
 ```
 
 ## Common Commands
 
 ```bash
-pnpm data:download:strava   # update run_page/data.db and src/static/activities.json
+pnpm data:download:strava   # legacy Strava sync
 pnpm data:import:apple      # import Apple Watch GPX files from APPLE_WORKOUTS_DIR
+pnpm data:sync:garmin       # sync running activities from Garmin Connect
 pnpm data:sync:intervals    # sync runs from Intervals.icu
 pnpm coach:dry-run          # generate run_page/coach_output/*.json without Azure/email
 pnpm coach:send             # call Azure OpenAI and email the next-day plan
@@ -47,9 +45,10 @@ pnpm lint
 - `src/styles/index.css`: visual tokens and page styling
 - `src/static/races.json`: manually maintained race records
 - `src/utils/const.ts`: map provider and route color settings
-- `run_page/strava_sync.py`: GitHub Actions Strava sync entrypoint
-- `run_page/strava_env_sync.py`: local `.env` sync entrypoint
+- `run_page/strava_sync.py`: legacy Strava sync entrypoint
+- `run_page/strava_env_sync.py`: legacy local Strava sync entrypoint
 - `run_page/apple_workout_import.py`: Apple Watch GPX import entrypoint
+- `run_page/garmin_connect_sync.py`: Garmin Connect sync entrypoint
 - `run_page/intervals_icu_sync.py`: Intervals.icu sync entrypoint
 - `run_page/coach/`: daily AI coach context, Azure OpenAI call, and SMTP email
 - `run_page/coach/planner.py`: deterministic rule-based training planner
@@ -60,9 +59,41 @@ pnpm lint
 - `.github/workflows/run_data_sync.yml`: daily cloud sync and `/running/` deployment
 - `APPLE_WATCH_SETUP.md`: Apple Watch GPX import and local Mac automation
 
+## Garmin Sync
+
+This project uses the upstream `running_page` Garmin Connect approach: generate a
+Garmin login secret locally, save it as a GitHub Actions secret, then let GitHub
+Actions pull only running activities.
+
+```bash
+.venv/bin/python run_page/get_garmin_secret_browser.py
+```
+
+The command opens Garmin's browser login page. Log in normally, then copy the
+browser URL from `mobile.integration.garmin.com/gcm/android?ticket=ST-...` back
+into the terminal. The script prints a `secret_string`. Add that value to GitHub
+Actions as:
+
+```text
+GARMIN_SECRET_STRING
+```
+
+Then test locally:
+
+```bash
+GARMIN_SECRET_STRING='...' .venv/bin/python run_page/garmin_connect_sync.py --only-run --dry-run --max-pages 1
+```
+
+If the browser flow stops working, the legacy upstream password flow is still
+available:
+
+```bash
+.venv/bin/python run_page/get_garmin_secret.py YOUR_GARMIN_EMAIL
+```
+
 ## Daily AI Coach
 
-The daily workflow can generate a next-day running plan after Strava sync. It
+The daily workflow can generate a next-day running plan after Garmin sync. It
 uses the latest `src/static/activities.json`, writes:
 
 ```text
@@ -148,12 +179,12 @@ fields are optional; fill only the data you want the coach to use:
 ```
 
 If manual benchmarks are blank, the planner estimates 5K/10K/half/full paces
-from recent Strava activity-level pace. Those estimates are intentionally
+from recent activity-level pace. Those estimates are intentionally
 conservative because they are not split-level best efforts. For heart-rate
 targets, the email only uses Apple Watch-style zone labels such as `zone 2`,
 `zone 3`, and `zone 4`.
 
-Simple feedback can be added to Strava activity names. Titles containing words
+Simple feedback can be added to activity names. Titles containing words
 like `累`, `疲劳`, `酸痛`, `受伤`, `疼痛`, `tired`, `sore`, or `injury` will make
 the next plan more conservative.
 
@@ -200,8 +231,8 @@ array. Photos can be remote URLs, or local paths under `public/` such as
 ]
 ```
 
-`activityId` is optional. If it matches a Strava activity ID, the manual record
-replaces the auto-detected Strava race entry.
+`activityId` is optional. If it matches an activity ID, the manual record
+replaces the auto-detected race entry.
 
 ## Deployment
 
@@ -209,8 +240,7 @@ GitHub Actions runs `run_data_sync.yml` every day and can also be run manually.
 Required repository secrets:
 
 ```text
-INTERVALS_ICU_ATHLETE_ID
-INTERVALS_ICU_API_KEY
+GARMIN_SECRET_STRING
 HOMEPAGE_DEPLOY_TOKEN
 ```
 

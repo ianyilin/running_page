@@ -33,4 +33,5 @@ route.svg
 
 # Local Apple Watch workout exports.
 /apple_workouts/
+/garmin_workouts/
 /logs/

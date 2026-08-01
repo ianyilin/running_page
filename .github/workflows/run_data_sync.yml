@@ -21,6 +21,7 @@ on:
       - run_page/strava_sync.py
       - run_page/strava_env_sync.py
       - run_page/apple_workout_import.py
+      - run_page/garmin_connect_sync.py
       - run_page/intervals_icu_sync.py
       - run_page/polyline_processor.py
       - scripts/**
@@ -34,7 +35,7 @@ env:
 
 jobs:
   sync:
-    name: Sync Intervals.icu and Publish
+    name: Sync Garmin Connect and Publish
     runs-on: ubuntu-latest
 
     steps:
@@ -56,12 +57,12 @@ jobs:
         if: github.event_name != 'push'
         run: pip install -r requirements.txt
 
-      - name: Sync Intervals.icu runs
+      - name: Sync Garmin Connect runs
         if: github.event_name != 'push'
         run: |
-          python run_page/intervals_icu_sync.py \
-            "${{ secrets.INTERVALS_ICU_ATHLETE_ID }}" \
-            "${{ secrets.INTERVALS_ICU_API_KEY }}"
+          python run_page/garmin_connect_sync.py \
+            "${{ secrets.GARMIN_SECRET_STRING }}" \
+            --only-run
 
       - name: Generate and email daily coach plan
         if: github.event_name != 'push'

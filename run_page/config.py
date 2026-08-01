@@ -4,3 +4,4 @@ ROOT = Path(__file__).resolve().parent.parent
 
 SQL_FILE = str(ROOT / "run_page" / "data.db")
 JSON_FILE = str(ROOT / "src" / "static" / "activities.json")
+GARMIN_GPX_DIR = str(ROOT / "garmin_workouts" / "gpx")

@@ -1,6 +1,6 @@
 {
   "name": "ianyilin-running-page",
-  "description": "Personal Strava running log for ianyilin.github.io/running/",
+  "description": "Personal Garmin running log for ianyilin.github.io/running/",
   "version": "1.0.0",
   "author": "Yi Lin",
   "packageManager": "pnpm@8.9.0+sha256.8f5264ad1d100da11a6add6bb8a94c6f1e913f9e9261b2a551fabefad2ec0fec",
@@ -26,6 +26,7 @@
     "data:clean": "rm -f run_page/data.db src/static/activities.json",
     "data:download:strava": ".venv/bin/python run_page/strava_env_sync.py",
     "data:import:apple": ".venv/bin/python run_page/apple_workout_import.py",
+    "data:sync:garmin": ".venv/bin/python run_page/garmin_connect_sync.py --only-run",
     "data:sync:intervals": ".venv/bin/python run_page/intervals_icu_sync.py",
     "coach:dry-run": ".venv/bin/python run_page/coach/daily_coach.py --dry-run",
     "coach:send": ".venv/bin/python run_page/coach/daily_coach.py --send-email",
