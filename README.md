@@ -13,15 +13,15 @@ This fork is intentionally narrow:
 
 ```bash
 pnpm install
-python3.11 -m venv .venv
+python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Fill `.env` with:
+After Garmin token setup, `.env` can contain:
 
 ```bash
-GARMIN_SECRET_STRING=
+GARMIN_TOKEN_KEY=
 ```
 
 ## Common Commands
@@ -61,34 +61,43 @@ pnpm lint
 
 ## Garmin Sync
 
-This project uses the upstream `running_page` Garmin Connect approach: generate a
-Garmin login secret locally, save it as a GitHub Actions secret, then let GitHub
-Actions pull only running activities.
+Garmin authentication uses the current `garminconnect` DI OAuth flow. The first
+login happens locally; the resulting token is encrypted before it is committed.
+GitHub Actions decrypts it temporarily, refreshes it, syncs running activities,
+and commits the rotated encrypted token for the next run.
+
+Create the encrypted token once:
 
 ```bash
-.venv/bin/python run_page/get_garmin_secret_browser.py
+.venv/bin/python run_page/garmin_token_manager.py bootstrap \
+  --email linyi_pk@outlook.com
 ```
 
-The command opens Garmin's browser login page. Log in normally, then copy the
-browser URL from `mobile.integration.garmin.com/gcm/android?ticket=ST-...` back
-into the terminal. The script prints a `secret_string`. Add that value to GitHub
-Actions as:
+Enter the Garmin password and MFA code when prompted. The command writes
+`run_page/garmin_tokens.enc` and prints a new encryption key. Add that exact key
+to the `running_page` repository's GitHub Actions secrets as:
 
 ```text
-GARMIN_SECRET_STRING
+GARMIN_TOKEN_KEY
 ```
 
-Then test locally:
+Never commit `garmin_tokens.json`, the encryption key, or the Garmin password.
+To test locally without putting the key in shell history:
 
 ```bash
-GARMIN_SECRET_STRING='...' .venv/bin/python run_page/garmin_connect_sync.py --only-run --dry-run --max-pages 1
+read -s GARMIN_TOKEN_KEY
+export GARMIN_TOKEN_KEY
+.venv/bin/python run_page/garmin_connect_sync.py \
+  --only-run --dry-run --max-pages 1
+unset GARMIN_TOKEN_KEY
 ```
 
-If the browser flow stops working, the legacy upstream password flow is still
-available:
+Commit the encrypted token with the migration code, then push:
 
 ```bash
-.venv/bin/python run_page/get_garmin_secret.py YOUR_GARMIN_EMAIL
+git add run_page/garmin_tokens.enc
+git commit -m "configure Garmin DI OAuth token"
+git push
 ```
 
 ## Daily AI Coach
@@ -240,7 +249,7 @@ GitHub Actions runs `run_data_sync.yml` every day and can also be run manually.
 Required repository secrets:
 
 ```text
-GARMIN_SECRET_STRING
+GARMIN_TOKEN_KEY
 HOMEPAGE_DEPLOY_TOKEN
 ```
 

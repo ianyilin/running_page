@@ -1,8 +1,8 @@
 [project]
 name = "running-page"
 version = "1.0.0"
-description = "Personal Strava running log published under /running/."
-requires-python = ">=3.11"
+description = "Personal Garmin running log published under /running/."
+requires-python = ">=3.12"
 dependencies = [
   "arrow",
   "geopy",
@@ -12,6 +12,8 @@ dependencies = [
   "sqlalchemy",
   "stravalib==0.10.4",
   "certifi==2025.1.31",
+  "cryptography>=45,<47",
+  "garminconnect==0.3.10",
 ]
 
 [dependency-groups]

@@ -3,16 +3,13 @@ import datetime as dt
 import gzip
 import json
 import os
-import warnings
+import tempfile
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
-os.environ["GARTH_TELEMETRY_ENABLED"] = "false"
-warnings.filterwarnings("ignore", message="Garth is deprecated", category=DeprecationWarning)
-
-import garth
-import requests
+from garminconnect import Garmin
+from garminconnect.exceptions import GarminConnectNotFoundError
 
 from apple_workout_import import (
     duration_string,
@@ -23,18 +20,15 @@ from apple_workout_import import (
     recompute_streaks,
 )
 from config import GARMIN_GPX_DIR, JSON_FILE
+from garmin_token_manager import (
+    DEFAULT_ENCRYPTED_TOKEN,
+    TOKEN_FILENAME,
+    TOKEN_KEY_ENV,
+    decrypt_token_file,
+    encrypt_token_file,
+)
 
 
-GARMIN_DOMAINS = {
-    "COM": {
-        "garth_domain": "garmin.com",
-        "connect_api": "https://connectapi.garmin.com",
-    },
-    "CN": {
-        "garth_domain": "garmin.cn",
-        "connect_api": "https://connectapi.garmin.cn",
-    },
-}
 DEFAULT_TIMEZONE = "America/New_York"
 
 
@@ -132,61 +126,37 @@ def metadata_from_activity(
 
 
 class GarminConnectClient:
-    def __init__(self, secret_string: str, domain: str):
+    def __init__(self, token_store: Path, domain: str):
         domain_key = domain.upper()
-        if domain_key not in GARMIN_DOMAINS:
+        if domain_key not in {"COM", "CN"}:
             raise ValueError(f"Unsupported Garmin domain: {domain}")
 
-        config = GARMIN_DOMAINS[domain_key]
-        garth.configure(domain=config["garth_domain"], ssl_verify=domain_key != "CN")
-        garth.client.loads(secret_string)
-        if garth.client.oauth2_token.expired:
-            garth.client.refresh_oauth2()
-
-        self.base_url = config["connect_api"]
-        self.session = requests.Session()
-        self.session.headers.update(
-            {
-                "Authorization": str(garth.client.oauth2_token),
-                "User-Agent": (
-                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-                ),
-                "Accept": "application/json, text/plain, */*",
-            }
-        )
+        self.client = Garmin(is_cn=domain_key == "CN")
+        self.client.login(str(token_store))
 
     def get_activities(self, start: int, limit: int, only_run: bool) -> list[dict[str, Any]]:
-        params: dict[str, Any] = {"start": start, "limit": limit}
-        if only_run:
-            params["activityType"] = "running"
-        response = self.session.get(
-            f"{self.base_url}/activitylist-service/activities/search/activities",
-            params=params,
-            timeout=120,
+        activities = self.client.get_activities(
+            start=start,
+            limit=limit,
+            activitytype="running" if only_run else None,
         )
-        response.raise_for_status()
-        return response.json()
+        if not isinstance(activities, list):
+            raise RuntimeError("Garmin returned an invalid activities response.")
+        return activities
 
     def get_activity_summary(self, activity_id: int) -> dict[str, Any] | None:
-        response = self.session.get(
-            f"{self.base_url}/activity-service/activity/{activity_id}",
-            timeout=120,
-        )
-        if response.status_code == 404:
+        try:
+            return self.client.get_activity(str(activity_id))
+        except GarminConnectNotFoundError:
             return None
-        response.raise_for_status()
-        return response.json()
 
     def download_gpx(self, activity_id: int) -> bytes | None:
-        response = self.session.get(
-            f"{self.base_url}/download-service/export/gpx/activity/{activity_id}",
-            timeout=180,
-        )
-        if response.status_code in {204, 404}:
+        try:
+            content = self.client.download_activity(
+                str(activity_id), Garmin.ActivityDownloadFormat.GPX
+            )
+        except GarminConnectNotFoundError:
             return None
-        response.raise_for_status()
-        content = response.content
         if content[:2] == bytes([0x1F, 0x8B]):
             content = gzip.decompress(content)
         return content
@@ -280,7 +250,7 @@ def build_candidate(
 
 
 def sync_garmin(
-    secret_string: str,
+    token_store: Path,
     output_file: Path,
     gpx_dir: Path,
     timezone_name: str,
@@ -290,7 +260,7 @@ def sync_garmin(
     max_pages: int | None,
 ) -> tuple[int, int, int]:
     timezone = ZoneInfo(timezone_name)
-    client = GarminConnectClient(secret_string, domain)
+    client = GarminConnectClient(token_store, domain)
     source_activities = fetch_all_activities(
         client=client,
         only_run=only_run,
@@ -358,10 +328,10 @@ def sync_garmin(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sync running activities from Garmin Connect.")
     parser.add_argument(
-        "secret_string",
-        nargs="?",
-        default=os.environ.get("GARMIN_SECRET_STRING"),
-        help="secret string from get_garmin_secret.py",
+        "--encrypted-token",
+        type=Path,
+        default=DEFAULT_ENCRYPTED_TOKEN,
+        help="encrypted Garmin DI OAuth token file",
     )
     parser.add_argument("--output", default=JSON_FILE)
     parser.add_argument("--gpx-dir", default=GARMIN_GPX_DIR)
@@ -372,19 +342,32 @@ def main() -> None:
     parser.add_argument("--max-pages", type=int, default=None)
     args = parser.parse_args()
 
-    if not args.secret_string:
-        raise SystemExit("Missing GARMIN_SECRET_STRING")
+    key = os.environ.get(TOKEN_KEY_ENV)
+    if not key:
+        raise SystemExit(f"Missing {TOKEN_KEY_ENV}")
+    if not args.encrypted_token.is_file():
+        raise SystemExit(
+            f"Missing {args.encrypted_token}. Run garmin_token_manager.py bootstrap first."
+        )
 
-    imported, skipped, downloaded = sync_garmin(
-        secret_string=args.secret_string,
-        output_file=Path(args.output),
-        gpx_dir=Path(args.gpx_dir),
-        timezone_name=args.timezone,
-        only_run=args.only_run,
-        domain="CN" if args.is_cn else "COM",
-        dry_run=args.dry_run,
-        max_pages=args.max_pages,
-    )
+    with tempfile.TemporaryDirectory(prefix="garmin-sync-") as directory:
+        token_file = Path(directory) / TOKEN_FILENAME
+        decrypt_token_file(args.encrypted_token, token_file, key)
+        original_token = token_file.read_bytes()
+        try:
+            imported, skipped, downloaded = sync_garmin(
+                token_store=token_file,
+                output_file=Path(args.output),
+                gpx_dir=Path(args.gpx_dir),
+                timezone_name=args.timezone,
+                only_run=args.only_run,
+                domain="CN" if args.is_cn else "COM",
+                dry_run=args.dry_run,
+                max_pages=args.max_pages,
+            )
+        finally:
+            if token_file.read_bytes() != original_token:
+                encrypt_token_file(token_file, args.encrypted_token, key)
     action = "Would import" if args.dry_run else "Imported"
     print(
         f"{action} {imported} Garmin run(s); skipped {skipped}; "

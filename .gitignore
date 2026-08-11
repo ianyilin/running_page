@@ -27,6 +27,7 @@ route.png
 route.svg
 
 .env
+garmin_tokens.json
 
 # Local copy of the visual reference site source.
 /reference/
