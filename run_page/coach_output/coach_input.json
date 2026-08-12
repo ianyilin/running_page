@@ -1,28 +1,12 @@
 {
-  "generated_at": "2026-08-11T17:10:13-04:00",
-  "analysis_date": "2026-08-11",
-  "target_date": "2026-08-11",
+  "generated_at": "2026-08-12T00:55:51-04:00",
+  "analysis_date": "2026-08-12",
+  "target_date": "2026-08-12",
   "source": {
     "activities_file": "src/static/activities.json",
-    "run_count_total": 100
+    "run_count_total": 101
   },
   "recent_runs": [
-    {
-      "run_id": 165413312,
-      "date": "2026-07-06",
-      "start_time_local": "01:04",
-      "name": "Run",
-      "feedback_tags": [],
-      "distance_km": 6.57,
-      "moving_time_min": 49.5,
-      "pace_min_per_km": 7.53,
-      "average_heartrate": null,
-      "average_speed_mps": 2.212,
-      "elevation_gain_m": 32.4,
-      "subtype": "Run",
-      "streak": 1,
-      "inferred_type": "easy"
-    },
     {
       "run_id": 165413226,
       "date": "2026-07-11",
@@ -230,19 +214,35 @@
       "subtype": "Run",
       "streak": 1,
       "inferred_type": "hard"
+    },
+    {
+      "run_id": 23942986461,
+      "date": "2026-08-11",
+      "start_time_local": "19:16",
+      "name": "New York - 基础训练",
+      "feedback_tags": [],
+      "distance_km": 5.32,
+      "moving_time_min": 33.0,
+      "pace_min_per_km": 6.2,
+      "average_heartrate": 161.0,
+      "average_speed_mps": 2.687,
+      "elevation_gain_m": 14.0,
+      "subtype": "Run",
+      "streak": 2,
+      "inferred_type": "hard"
     }
   ],
   "summary": {
     "last_7_days": {
       "days": 7,
-      "start_date": "2026-08-05",
-      "end_date": "2026-08-11",
-      "run_count": 3,
-      "total_distance_km": 17.33,
-      "total_time_min": 114.2,
-      "average_distance_km": 5.78,
-      "average_heartrate": 161.7,
-      "hard_run_count": 2,
+      "start_date": "2026-08-06",
+      "end_date": "2026-08-12",
+      "run_count": 4,
+      "total_distance_km": 22.65,
+      "total_time_min": 147.2,
+      "average_distance_km": 5.66,
+      "average_heartrate": 161.5,
+      "hard_run_count": 3,
       "longest_run": {
         "run_id": 23903202480,
         "date": "2026-08-08",
@@ -262,14 +262,14 @@
     },
     "last_14_days": {
       "days": 14,
-      "start_date": "2026-07-29",
-      "end_date": "2026-08-11",
-      "run_count": 5,
-      "total_distance_km": 29.65,
-      "total_time_min": 195.7,
-      "average_distance_km": 5.93,
-      "average_heartrate": 159.4,
-      "hard_run_count": 3,
+      "start_date": "2026-07-30",
+      "end_date": "2026-08-12",
+      "run_count": 6,
+      "total_distance_km": 34.97,
+      "total_time_min": 228.7,
+      "average_distance_km": 5.83,
+      "average_heartrate": 159.7,
+      "hard_run_count": 4,
       "longest_run": {
         "run_id": 23903202480,
         "date": "2026-08-08",
@@ -289,14 +289,14 @@
     },
     "last_28_days": {
       "days": 28,
-      "start_date": "2026-07-15",
-      "end_date": "2026-08-11",
-      "run_count": 10,
-      "total_distance_km": 65.94,
-      "total_time_min": 456.7,
-      "average_distance_km": 6.59,
-      "average_heartrate": 154.6,
-      "hard_run_count": 3,
+      "start_date": "2026-07-16",
+      "end_date": "2026-08-12",
+      "run_count": 11,
+      "total_distance_km": 71.26,
+      "total_time_min": 489.7,
+      "average_distance_km": 6.48,
+      "average_heartrate": 155.2,
+      "hard_run_count": 4,
       "longest_run": {
         "run_id": 167303250,
         "date": "2026-07-19",
@@ -375,7 +375,7 @@
     "primary_goal": {
       "name": "No competition",
       "date": "2026-10-01",
-      "days_until": 51,
+      "days_until": 50,
       "distance": "half_marathon",
       "distance_km": 21.0975,
       "target_time": "02:00:00",
@@ -386,7 +386,7 @@
       {
         "name": "No competition",
         "date": "2026-10-01",
-        "days_until": 51,
+        "days_until": 50,
         "distance": "half_marathon",
         "distance_km": 21.0975,
         "target_time": "02:00:00",
@@ -399,9 +399,10 @@
     "fatigue_signal": "high",
     "recommended_guardrail": "easy_only",
     "days_since_last_run": 1,
-    "last_7_vs_previous_7_distance_ratio": 1.41,
+    "last_7_vs_previous_7_distance_ratio": 1.84,
     "reasons": [
       "last run was hard",
+      "two harder efforts in the last 3 days",
       "7-day distance increased sharply versus previous week"
     ]
   },
@@ -466,11 +467,11 @@
         "5k": {
           "distance": "5k",
           "distance_km": 5.0,
-          "estimated_time_min": 31.5,
-          "pace_min_per_km": 6.3,
+          "estimated_time_min": 31.0,
+          "pace_min_per_km": 6.2,
           "source": "auto_history",
-          "source_run_id": 23929590068,
-          "source_date": "2026-08-10",
+          "source_run_id": 23942986461,
+          "source_date": "2026-08-11",
           "note": "Estimated from whole-activity pace, not split-level best effort."
         },
         "10k": {
@@ -488,11 +489,11 @@
         "5k": {
           "distance": "5k",
           "distance_km": 5.0,
-          "estimated_time_min": 31.5,
-          "pace_min_per_km": 6.3,
+          "estimated_time_min": 31.0,
+          "pace_min_per_km": 6.2,
           "source": "auto_history",
-          "source_run_id": 23929590068,
-          "source_date": "2026-08-10",
+          "source_run_id": 23942986461,
+          "source_date": "2026-08-11",
           "note": "Estimated from whole-activity pace, not split-level best effort."
         },
         "10k": {
@@ -539,14 +540,14 @@
           "display": "6:15/km - 6:33/km"
         },
         "intervals": {
-          "min": 6.2,
-          "max": 6.5,
-          "display": "6:12/km - 6:30/km"
+          "min": 6.1,
+          "max": 6.4,
+          "display": "6:06/km - 6:24/km"
         }
       }
     },
     "weekly_target": {
-      "distance_km": 17.0,
+      "distance_km": 19.8,
       "long_run_km": 13.4,
       "quality_sessions": 1
     },
@@ -569,9 +570,24 @@
       {
         "date": "2026-08-11",
         "weekday": "Tue",
+        "status": "completed",
+        "planned": null,
+        "actual": {
+          "run_count": 1,
+          "distance_km": 5.3,
+          "duration_min": 33.0,
+          "workout_types": [
+            "hard"
+          ],
+          "feedback_tags": []
+        }
+      },
+      {
+        "date": "2026-08-12",
+        "weekday": "Wed",
         "status": "planned",
         "planned": {
-          "date": "2026-08-11",
+          "date": "2026-08-12",
           "run_or_rest": "run",
           "workout_type": "easy_run",
           "duration_min": 40,
@@ -617,11 +633,11 @@
         "actual": null
       },
       {
-        "date": "2026-08-12",
-        "weekday": "Wed",
+        "date": "2026-08-13",
+        "weekday": "Thu",
         "status": "planned",
         "planned": {
-          "date": "2026-08-12",
+          "date": "2026-08-13",
           "run_or_rest": "run",
           "workout_type": "tempo",
           "duration_min": 50,
@@ -663,34 +679,6 @@
             }
           ],
           "hard_session_allowed": true
-        },
-        "actual": null
-      },
-      {
-        "date": "2026-08-13",
-        "weekday": "Thu",
-        "status": "planned",
-        "planned": {
-          "date": "2026-08-13",
-          "run_or_rest": "rest",
-          "workout_type": "rest",
-          "duration_min": 0,
-          "distance_km": 0,
-          "intensity": "rest",
-          "target_hr_zone": null,
-          "target_pace_min_per_km": null,
-          "warmup": "Optional 5-10 min walk",
-          "main_set": "Rest day. Optional easy walk and light mobility.",
-          "cooldown": "Gentle stretching if it feels good.",
-          "structured_workout": [
-            {
-              "name": "Rest",
-              "type": "rest",
-              "duration_min": 0,
-              "target": "rest"
-            }
-          ],
-          "hard_session_allowed": false
         },
         "actual": null
       },
@@ -780,7 +768,7 @@
       }
     ],
     "decision": {
-      "date": "2026-08-11",
+      "date": "2026-08-12",
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
