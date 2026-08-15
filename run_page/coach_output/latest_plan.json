@@ -1,19 +1,19 @@
 {
   "date": "2026-08-14",
   "run_or_rest": "run",
-  "workout_type": "easy_run",
-  "duration_min": 40,
-  "distance_km": 5.5,
-  "intensity": "RPE 3-4 / conversational",
-  "target_hr_zone": "zone 2",
+  "workout_type": "recovery_run",
+  "duration_min": 30,
+  "distance_km": 4.1,
+  "intensity": "RPE 2-3 / very easy",
+  "target_hr_zone": "zone 1-2",
   "target_pace_min_per_km": {
-    "min": 7.25,
-    "max": 7.7,
-    "display": "7:15/km - 7:42/km"
+    "min": 7.6,
+    "max": 8.2,
+    "display": "7:36/km - 8:12/km"
   },
-  "warmup": "先慢跑 5-10 分钟，并做几项轻度动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅对话为准。",
-  "cooldown": "最后 5 分钟慢跑或步行放松，再做轻度拉伸。",
+  "warmup": "先步行或非常轻松慢跑 5-10 分钟。",
+  "main_set": "进行一次非常轻松的恢复跑，全程以呼吸放松、能轻松说话为准。",
+  "cooldown": "结束后步行 5 分钟，再做轻度小腿和髋部活动。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -22,15 +22,15 @@
       "target": "easy"
     },
     {
-      "name": "Easy run",
+      "name": "Recovery run",
       "type": "run",
-      "duration_min": 27,
-      "target": "zone 2",
-      "target_hr_zone": "zone 2",
+      "duration_min": 17,
+      "target": "zone 1-2",
+      "target_hr_zone": "zone 1-2",
       "target_pace_min_per_km": {
-        "min": 7.25,
-        "max": 7.7,
-        "display": "7:15/km - 7:42/km"
+        "min": 7.6,
+        "max": 8.2,
+        "display": "7:36/km - 8:12/km"
       }
     },
     {
@@ -40,14 +40,14 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天安排一次轻松跑，严格按照回归期的 easy_comeback 保护原则执行，不做任何质量课。你过去 7 天内 3 次跑步都偏硬，平均心率较高，且近 7 天跑量相对前一周上升明显，同时已经 3 天没跑；在这种情况下，用 40 分钟、约 5.5 公里的二区轻松跑来恢复节奏最稳妥。结合你 10 月 1 日半马目标（目标 2:00，剩余 48 天），当前更重要的是先把有氧连续性和疲劳管理做好，而不是继续加速。今天只需把配速控制在 7:15-7:42/km，保持轻松、均匀、可对话，为后续周末长跑留出恢复空间。",
+  "rationale": "今天安排的是30分钟、约4.1公里的恢复跑，重点是恢复而不是训练刺激。你最近7天跑了4次且全部偏硬，平均心率较高，同时近7天跑量相对前一周明显上升，当前疲劳信号为高，保护规则也是 easy_only，因此只能做非常轻松的内容，不能加速、不能延长、也不适合做长距离。结合你48天后有半马目标，这次训练的价值在于维持跑步频率、促进恢复、为后续更稳定的周末长跑做准备。配速建议保持在7:36/km - 8:12/km，如当天心率偏高或腿部发沉，可进一步放慢，必要时改为跑走结合。",
   "cautions": [
-    "如果热身后仍觉得双腿沉重、心率异常偏高或呼吸不顺，立即降速，必要时改为步行结束。",
-    "今天不要加速跑、不要冲刺、不要把轻松跑跑成节奏跑。",
-    "以心率和体感优先于配速；天气闷热时可比目标配速更慢。",
-    "若出现疼痛而不是普通酸胀，立刻停止训练。"
+    "今天只做恢复，不要临时加速、加圈或加入节奏段。",
+    "如果心率明显高于平时轻松跑，立即放慢到走跑结合。",
+    "若出现头晕、胸闷、异常气短或局部疼痛，请立刻停止。",
+    "你最近连续多次高强度输出，明天长跑前更要把今天控制得足够轻松。"
   ],
-  "email_subject": "8月14日跑步计划：40分钟二区轻松回归跑",
+  "email_subject": "8月14日跑步计划：30分钟超轻松恢复跑",
   "hard_session_allowed": false,
   "phase": "race_specific",
   "training_cycle": {
@@ -86,7 +86,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 18.3,
+    "distance_km": 19.9,
     "long_run_km": 13.4,
     "quality_sessions": 1
   },
@@ -180,52 +180,17 @@
     {
       "date": "2026-08-14",
       "weekday": "Fri",
-      "status": "planned",
-      "planned": {
-        "date": "2026-08-14",
-        "run_or_rest": "run",
-        "workout_type": "easy_run",
-        "duration_min": 40,
-        "distance_km": 5.5,
-        "intensity": "RPE 3-4 / conversational",
-        "target_hr_zone": "zone 2",
-        "target_pace_min_per_km": {
-          "min": 7.25,
-          "max": 7.7,
-          "display": "7:15/km - 7:42/km"
-        },
-        "warmup": "5-10 min easy jog with light dynamic drills",
-        "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-        "cooldown": "5 min easy jog or walk, then light stretching.",
-        "structured_workout": [
-          {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 8,
-            "target": "easy"
-          },
-          {
-            "name": "Easy run",
-            "type": "run",
-            "duration_min": 27,
-            "target": "zone 2",
-            "target_hr_zone": "zone 2",
-            "target_pace_min_per_km": {
-              "min": 7.25,
-              "max": 7.7,
-              "display": "7:15/km - 7:42/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 5,
-            "target": "walk"
-          }
+      "status": "completed",
+      "planned": null,
+      "actual": {
+        "run_count": 1,
+        "distance_km": 3.6,
+        "duration_min": 24.0,
+        "workout_types": [
+          "hard"
         ],
-        "hard_session_allowed": false
-      },
-      "actual": null
+        "feedback_tags": []
+      }
     },
     {
       "date": "2026-08-15",
