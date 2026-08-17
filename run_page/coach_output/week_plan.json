@@ -106,56 +106,6 @@
     "status": "planned",
     "planned": {
       "date": "2026-08-15",
-      "run_or_rest": "run",
-      "workout_type": "recovery_run",
-      "duration_min": 30,
-      "distance_km": 4.1,
-      "intensity": "RPE 2-3 / very easy",
-      "target_hr_zone": "zone 1-2",
-      "target_pace_min_per_km": {
-        "min": 7.6,
-        "max": 8.2,
-        "display": "7:36/km - 8:12/km"
-      },
-      "warmup": "5-10 min walk or very easy jog",
-      "main_set": "Very easy run. Keep breathing relaxed and effort low.",
-      "cooldown": "5 min walk, then light calf and hip mobility.",
-      "structured_workout": [
-        {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 8,
-          "target": "easy"
-        },
-        {
-          "name": "Recovery run",
-          "type": "run",
-          "duration_min": 17,
-          "target": "zone 1-2",
-          "target_hr_zone": "zone 1-2",
-          "target_pace_min_per_km": {
-            "min": 7.6,
-            "max": 8.2,
-            "display": "7:36/km - 8:12/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 5,
-          "target": "walk"
-        }
-      ],
-      "hard_session_allowed": false
-    },
-    "actual": null
-  },
-  {
-    "date": "2026-08-16",
-    "weekday": "Sun",
-    "status": "planned",
-    "planned": {
-      "date": "2026-08-16",
       "run_or_rest": "rest",
       "workout_type": "rest",
       "duration_min": 0,
@@ -177,5 +127,20 @@
       "hard_session_allowed": false
     },
     "actual": null
+  },
+  {
+    "date": "2026-08-16",
+    "weekday": "Sun",
+    "status": "completed",
+    "planned": null,
+    "actual": {
+      "run_count": 1,
+      "distance_km": 8.2,
+      "duration_min": 56.5,
+      "workout_types": [
+        "moderate"
+      ],
+      "feedback_tags": []
+    }
   }
 ]
