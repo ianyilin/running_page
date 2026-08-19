@@ -1,53 +1,30 @@
 {
-  "date": "2026-08-17",
-  "run_or_rest": "run",
-  "workout_type": "easy_run",
-  "duration_min": 40,
-  "distance_km": 5.5,
-  "intensity": "RPE 3-4 / conversational",
-  "target_hr_zone": "zone 2",
-  "target_pace_min_per_km": {
-    "min": 7.23,
-    "max": 7.68,
-    "display": "7:14/km - 7:41/km"
-  },
-  "warmup": "5-10分钟轻松慢跑，配合简单动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
-  "cooldown": "5分钟轻松慢跑或步行，然后做轻度拉伸。",
+  "date": "2026-08-18",
+  "run_or_rest": "rest",
+  "workout_type": "rest",
+  "duration_min": 0,
+  "distance_km": 0,
+  "intensity": "rest",
+  "target_hr_zone": null,
+  "target_pace_min_per_km": null,
+  "warmup": "可选 5-10 分钟轻松步行",
+  "main_set": "休息日。可选轻松散步和简单活动度练习。",
+  "cooldown": "如果感觉舒服，可做温和拉伸。",
   "structured_workout": [
     {
-      "name": "Warm up",
-      "type": "warmup",
-      "duration_min": 8,
-      "target": "easy"
-    },
-    {
-      "name": "Easy run",
-      "type": "run",
-      "duration_min": 27,
-      "target": "zone 2",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 7.23,
-        "max": 7.68,
-        "display": "7:14/km - 7:41/km"
-      }
-    },
-    {
-      "name": "Cool down",
-      "type": "cooldown",
-      "duration_min": 5,
-      "target": "walk"
+      "name": "Rest",
+      "type": "rest",
+      "duration_min": 0,
+      "target": "rest"
     }
   ],
-  "rationale": "今天按计划进行40分钟、约5.5公里的轻松跑。你距离10月1日半马目标还有45天，长期目标是以约2小时完赛，但结合当前保护规则 easy_only、今天已经有一次偏硬的实际跑步记录、近7天4跑且其中3次偏硬、疲劳信号为中等，今天只能安排低强度有氧内容，不能再加节奏或间歇。此次训练的重点是维持跑步频率、补充基础有氧、控制心率与主观强度，帮助恢复而不是继续堆疲劳。配速以7:14-7:41/公里为参考，若天气闷热、心率偏高或双腿发沉，应优先守住二区和轻松感，而不是追求配速。",
+  "rationale": "今天按计划安排为休息。你在最近7天内已有4次跑步、其中心率和强度偏高的训练较多，最近3天里也出现了两次更吃力的跑步；而且今天刚完成一趟5.04公里、30分钟、平均心率164的偏硬跑。当前疲劳信号为高，保护规则明确要求“休息或恢复”，同时禁止节奏跑、稳态跑、间歇和长距离。因此今天最安全、最有利于后续训练连续性的做法就是完全休息，或仅做非常轻松的步行与活动度练习。这样能帮助你为44天后的半马目标保留恢复空间，降低累积疲劳和受伤风险。",
   "cautions": [
-    "今天的首要目标是轻松恢复，不要把轻松跑跑成稳态跑。",
-    "如果心率明显高于平时、呼吸不顺或腿部沉重，请立即降速，必要时改为跑走结合。",
-    "由于最近高强度比例偏高，今天不要加速冲刺、不要追加节奏段。",
-    "如出现疼痛而非一般酸胀，应停止训练。"
+    "今天不要再加跑，也不要补做任何节奏跑、间歇或力量型跑步训练。",
+    "如果有异常疲劳、心率偏高、腿部酸痛加重或睡眠差，优先完全休息。",
+    "可选活动仅限轻松步行和温和拉伸，过程中应保持轻松、无喘、无疼痛。"
   ],
-  "email_subject": "8月17日跑步计划：40分钟二区轻松跑",
+  "email_subject": "8月18日跑步计划：休息恢复日",
   "hard_session_allowed": false,
   "phase": "race_specific",
   "training_cycle": {
@@ -86,7 +63,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 19.2,
+    "distance_km": 19.0,
     "long_run_km": 8.9,
     "quality_sessions": 1
   },
@@ -109,9 +86,24 @@
     {
       "date": "2026-08-18",
       "weekday": "Tue",
+      "status": "completed",
+      "planned": null,
+      "actual": {
+        "run_count": 1,
+        "distance_km": 5.0,
+        "duration_min": 30.0,
+        "workout_types": [
+          "hard"
+        ],
+        "feedback_tags": []
+      }
+    },
+    {
+      "date": "2026-08-19",
+      "weekday": "Wed",
       "status": "planned",
       "planned": {
-        "date": "2026-08-18",
+        "date": "2026-08-19",
         "run_or_rest": "run",
         "workout_type": "tempo",
         "duration_min": 50,
@@ -153,34 +145,6 @@
           }
         ],
         "hard_session_allowed": true
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-08-19",
-      "weekday": "Wed",
-      "status": "planned",
-      "planned": {
-        "date": "2026-08-19",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
       },
       "actual": null
     },
@@ -268,47 +232,25 @@
       "status": "planned",
       "planned": {
         "date": "2026-08-22",
-        "run_or_rest": "run",
-        "workout_type": "long_run",
-        "duration_min": 75,
-        "distance_km": 8.9,
-        "intensity": "RPE 3-4 / easy endurance",
-        "target_hr_zone": "zone 2",
-        "target_pace_min_per_km": {
-          "min": 7.33,
-          "max": 7.88,
-          "display": "7:20/km - 7:53/km"
-        },
-        "warmup": "10 min easy jog",
-        "main_set": "Long easy run. Keep the first half especially relaxed.",
-        "cooldown": "5-10 min walk and mobility.",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
         "structured_workout": [
           {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 10,
-            "target": "zone 2"
-          },
-          {
-            "name": "Long run",
-            "type": "run",
-            "duration_min": 57,
-            "target": "zone 2",
-            "target_hr_zone": "zone 2",
-            "target_pace_min_per_km": {
-              "min": 7.33,
-              "max": 7.88,
-              "display": "7:20/km - 7:53/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 8,
-            "target": "walk"
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
           }
         ],
-        "hard_session_allowed": true
+        "hard_session_allowed": false
       },
       "actual": null
     },
@@ -364,21 +306,11 @@
       "5k": {
         "distance": "5k",
         "distance_km": 5.0,
-        "estimated_time_min": 31.0,
-        "pace_min_per_km": 6.2,
+        "estimated_time_min": 29.8,
+        "pace_min_per_km": 5.96,
         "source": "auto_history",
-        "source_run_id": 23942986461,
-        "source_date": "2026-08-11",
-        "note": "Estimated from whole-activity pace, not split-level best effort."
-      },
-      "10k": {
-        "distance": "10k",
-        "distance_km": 10.0,
-        "estimated_time_min": 67.7,
-        "pace_min_per_km": 6.77,
-        "source": "auto_history",
-        "source_run_id": 167303250,
-        "source_date": "2026-07-19",
+        "source_run_id": 24029458941,
+        "source_date": "2026-08-18",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       }
     },
@@ -386,11 +318,11 @@
       "5k": {
         "distance": "5k",
         "distance_km": 5.0,
-        "estimated_time_min": 31.0,
-        "pace_min_per_km": 6.2,
+        "estimated_time_min": 29.8,
+        "pace_min_per_km": 5.96,
         "source": "auto_history",
-        "source_run_id": 23942986461,
-        "source_date": "2026-08-11",
+        "source_run_id": 24029458941,
+        "source_date": "2026-08-18",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       },
       "10k": {
@@ -437,9 +369,9 @@
         "display": "6:15/km - 6:33/km"
       },
       "intervals": {
-        "min": 6.1,
-        "max": 6.4,
-        "display": "6:06/km - 6:24/km"
+        "min": 5.86,
+        "max": 6.16,
+        "display": "5:52/km - 6:10/km"
       }
     }
   }
