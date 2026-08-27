@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-25T23:59:31-04:00",
-  "analysis_date": "2026-08-25",
-  "target_date": "2026-08-25",
+  "generated_at": "2026-08-27T10:04:36-04:00",
+  "analysis_date": "2026-08-27",
+  "target_date": "2026-08-27",
   "source": {
     "activities_file": "src/static/activities.json",
     "run_count_total": 107
@@ -235,8 +235,8 @@
   "summary": {
     "last_7_days": {
       "days": 7,
-      "start_date": "2026-08-19",
-      "end_date": "2026-08-25",
+      "start_date": "2026-08-21",
+      "end_date": "2026-08-27",
       "run_count": 2,
       "total_distance_km": 7.62,
       "total_time_min": 49.1,
@@ -262,8 +262,8 @@
     },
     "last_14_days": {
       "days": 14,
-      "start_date": "2026-08-12",
-      "end_date": "2026-08-25",
+      "start_date": "2026-08-14",
+      "end_date": "2026-08-27",
       "run_count": 6,
       "total_distance_km": 29.31,
       "total_time_min": 189.7,
@@ -289,13 +289,13 @@
     },
     "last_28_days": {
       "days": 28,
-      "start_date": "2026-07-29",
-      "end_date": "2026-08-25",
-      "run_count": 12,
-      "total_distance_km": 64.28,
-      "total_time_min": 418.4,
-      "average_distance_km": 5.36,
-      "average_heartrate": 158.9,
+      "start_date": "2026-07-31",
+      "end_date": "2026-08-27",
+      "run_count": 11,
+      "total_distance_km": 58.89,
+      "total_time_min": 380.9,
+      "average_distance_km": 5.35,
+      "average_heartrate": 159.8,
       "hard_run_count": 8,
       "longest_run": {
         "run_id": 24003598625,
@@ -375,7 +375,7 @@
     "primary_goal": {
       "name": "No competition",
       "date": "2026-10-01",
-      "days_until": 37,
+      "days_until": 35,
       "distance": "half_marathon",
       "distance_km": 21.0975,
       "target_time": "02:00:00",
@@ -386,7 +386,7 @@
       {
         "name": "No competition",
         "date": "2026-10-01",
-        "days_until": 37,
+        "days_until": 35,
         "distance": "half_marathon",
         "distance_km": 21.0975,
         "target_time": "02:00:00",
@@ -397,11 +397,12 @@
   },
   "signals": {
     "fatigue_signal": "medium",
-    "recommended_guardrail": "easy_only",
-    "days_since_last_run": 1,
+    "recommended_guardrail": "easy_comeback",
+    "days_since_last_run": 3,
     "last_7_vs_previous_7_distance_ratio": 0.35,
     "reasons": [
-      "last run was hard"
+      "last run was hard",
+      "several days since last run"
     ]
   },
   "planner": {
@@ -535,7 +536,7 @@
       }
     },
     "weekly_target": {
-      "distance_km": 16.6,
+      "distance_km": 15.5,
       "long_run_km": 8.6,
       "quality_sessions": 1
     },
@@ -561,6 +562,62 @@
         "status": "planned",
         "planned": {
           "date": "2026-08-25",
+          "run_or_rest": "rest",
+          "workout_type": "rest",
+          "duration_min": 0,
+          "distance_km": 0,
+          "intensity": "rest",
+          "target_hr_zone": null,
+          "target_pace_min_per_km": null,
+          "warmup": "Optional 5-10 min walk",
+          "main_set": "Rest day. Optional easy walk and light mobility.",
+          "cooldown": "Gentle stretching if it feels good.",
+          "structured_workout": [
+            {
+              "name": "Rest",
+              "type": "rest",
+              "duration_min": 0,
+              "target": "rest"
+            }
+          ],
+          "hard_session_allowed": false
+        },
+        "actual": null
+      },
+      {
+        "date": "2026-08-26",
+        "weekday": "Wed",
+        "status": "planned",
+        "planned": {
+          "date": "2026-08-26",
+          "run_or_rest": "rest",
+          "workout_type": "rest",
+          "duration_min": 0,
+          "distance_km": 0,
+          "intensity": "rest",
+          "target_hr_zone": null,
+          "target_pace_min_per_km": null,
+          "warmup": "Optional 5-10 min walk",
+          "main_set": "Rest day. Optional easy walk and light mobility.",
+          "cooldown": "Gentle stretching if it feels good.",
+          "structured_workout": [
+            {
+              "name": "Rest",
+              "type": "rest",
+              "duration_min": 0,
+              "target": "rest"
+            }
+          ],
+          "hard_session_allowed": false
+        },
+        "actual": null
+      },
+      {
+        "date": "2026-08-27",
+        "weekday": "Thu",
+        "status": "planned",
+        "planned": {
+          "date": "2026-08-27",
           "run_or_rest": "run",
           "workout_type": "easy_run",
           "duration_min": 40,
@@ -606,11 +663,11 @@
         "actual": null
       },
       {
-        "date": "2026-08-26",
-        "weekday": "Wed",
+        "date": "2026-08-28",
+        "weekday": "Fri",
         "status": "planned",
         "planned": {
-          "date": "2026-08-26",
+          "date": "2026-08-28",
           "run_or_rest": "run",
           "workout_type": "tempo",
           "duration_min": 50,
@@ -652,62 +709,6 @@
             }
           ],
           "hard_session_allowed": true
-        },
-        "actual": null
-      },
-      {
-        "date": "2026-08-27",
-        "weekday": "Thu",
-        "status": "planned",
-        "planned": {
-          "date": "2026-08-27",
-          "run_or_rest": "rest",
-          "workout_type": "rest",
-          "duration_min": 0,
-          "distance_km": 0,
-          "intensity": "rest",
-          "target_hr_zone": null,
-          "target_pace_min_per_km": null,
-          "warmup": "Optional 5-10 min walk",
-          "main_set": "Rest day. Optional easy walk and light mobility.",
-          "cooldown": "Gentle stretching if it feels good.",
-          "structured_workout": [
-            {
-              "name": "Rest",
-              "type": "rest",
-              "duration_min": 0,
-              "target": "rest"
-            }
-          ],
-          "hard_session_allowed": false
-        },
-        "actual": null
-      },
-      {
-        "date": "2026-08-28",
-        "weekday": "Fri",
-        "status": "planned",
-        "planned": {
-          "date": "2026-08-28",
-          "run_or_rest": "rest",
-          "workout_type": "rest",
-          "duration_min": 0,
-          "distance_km": 0,
-          "intensity": "rest",
-          "target_hr_zone": null,
-          "target_pace_min_per_km": null,
-          "warmup": "Optional 5-10 min walk",
-          "main_set": "Rest day. Optional easy walk and light mobility.",
-          "cooldown": "Gentle stretching if it feels good.",
-          "structured_workout": [
-            {
-              "name": "Rest",
-              "type": "rest",
-              "duration_min": 0,
-              "target": "rest"
-            }
-          ],
-          "hard_session_allowed": false
         },
         "actual": null
       },
@@ -769,7 +770,7 @@
       }
     ],
     "decision": {
-      "date": "2026-08-25",
+      "date": "2026-08-27",
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
@@ -819,10 +820,10 @@
         "steady_run",
         "tempo"
       ],
-      "guardrail": "easy_only"
+      "guardrail": "easy_comeback"
     },
     "reasons": [
-      "guardrail is easy_only, so no quality workout is allowed",
+      "guardrail is easy_comeback, so no quality workout is allowed",
       "default choice supports aerobic consistency with low injury risk"
     ]
   }
