@@ -1,54 +1,55 @@
 {
-  "date": "2026-08-28",
+  "date": "2026-08-29",
   "run_or_rest": "run",
-  "workout_type": "easy_run",
-  "duration_min": 40,
-  "distance_km": 5.7,
-  "intensity": "RPE 3-4 / conversational",
+  "workout_type": "long_run",
+  "duration_min": 75,
+  "distance_km": 8.6,
+  "intensity": "RPE 3-4 / easy endurance",
   "target_hr_zone": "zone 2",
   "target_pace_min_per_km": {
-    "min": 7.14,
-    "max": 7.59,
-    "display": "7:09/km - 7:36/km"
+    "min": 6.99,
+    "max": 7.54,
+    "display": "6:59/km - 7:32/km"
   },
-  "warmup": "先慢跑 5-10 分钟，并做轻量动态热身。",
-  "main_set": "进行轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
-  "cooldown": "最后 5 分钟慢跑或步行放松，再做轻度拉伸。",
+  "warmup": "10分钟轻松慢跑",
+  "main_set": "长距离轻松跑，前半程尤其放松，稳定控制在二区。",
+  "cooldown": "5-10分钟步行加简单活动放松。",
   "structured_workout": [
     {
       "name": "Warm up",
       "type": "warmup",
-      "duration_min": 8,
-      "target": "easy"
+      "duration_min": 10,
+      "target": "zone 2"
     },
     {
-      "name": "Easy run",
+      "name": "Long run",
       "type": "run",
-      "duration_min": 27,
+      "duration_min": 57,
       "target": "zone 2",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 7.14,
-        "max": 7.59,
-        "display": "7:09/km - 7:36/km"
+        "min": 6.99,
+        "max": 7.54,
+        "display": "6:59/km - 7:32/km"
       }
     },
     {
       "name": "Cool down",
       "type": "cooldown",
-      "duration_min": 5,
+      "duration_min": 8,
       "target": "walk"
     }
   ],
-  "rationale": "今天按计划进行 40 分钟轻松跑，作为一次安全的回归训练。你距离 10 月 1 日半马目标还有 34 天，长期目标是以约 2 小时完赛，但当前信号显示疲劳中等，且距离上一次跑步已过 4 天，最近一次还是偏硬的训练，因此今天不适合做节奏跑、间歇或长距离。按照 easy_comeback 保护规则，本次以区间 2 的轻松有氧为主，既能恢复跑感、维持本周连续性，也能降低受伤风险。结合你最近不少跑步心率偏高的情况，今天比配速更应优先看体感和心率，宁可稍慢，也不要把轻松跑跑成中高强度。",
+  "rationale": "今天按计划进行一次长距离轻松跑。距离半马目标日还有33天，目前处于专项期，这次训练的重点不是跑快，而是用可控强度积累耐力，为半马持续输出做准备。你最近7天跑量约13公里、近14天约31公里，昨天刚跑了5.39公里中等强度，因此今天采用RPE 3-4的轻松耐力跑最稳妥。结合你近期多次跑步心率偏高的情况，今天更应优先守住二区和配速上限，尤其前半程要刻意保守，避免把长跑跑成稳态跑。8.6公里也符合本周长跑目标，既能建立专项耐力，又不会在当前训练连续性下把负荷拉得过高。",
   "cautions": [
-    "今天严格保持轻松，不要临时加速、加段落或把它跑成稳态跑。",
-    "若心率明显高于平时轻松跑水平，优先降速，必要时改为跑走结合。",
-    "如果出现头晕、胸闷、异常气短或任何疼痛，请立即停止。",
-    "最近跑量较低且有数天未跑，今天重在找回节奏，不追求速度。"
+    "前半程务必放慢，不要因为状态好就提速。",
+    "如果心率明显高于平时二区，即使配速变慢也要继续降强度。",
+    "若出现胸闷、头晕、异常气短或步态不稳，应立即停止训练。",
+    "今天重点是轻松完成，不要在最后2公里加速冲刺。",
+    "跑后补水，并做小腿、臀部和髋部的轻度放松。"
   ],
-  "email_subject": "8月28日跑步计划：40分钟二区轻松回归跑",
-  "hard_session_allowed": false,
+  "email_subject": "8月29日跑步计划：8.6公里轻松长跑",
+  "hard_session_allowed": true,
   "phase": "race_specific",
   "training_cycle": {
     "phase": "race_specific",
@@ -193,52 +194,17 @@
     {
       "date": "2026-08-28",
       "weekday": "Fri",
-      "status": "planned",
-      "planned": {
-        "date": "2026-08-28",
-        "run_or_rest": "run",
-        "workout_type": "easy_run",
-        "duration_min": 40,
-        "distance_km": 5.7,
-        "intensity": "RPE 3-4 / conversational",
-        "target_hr_zone": "zone 2",
-        "target_pace_min_per_km": {
-          "min": 7.14,
-          "max": 7.59,
-          "display": "7:09/km - 7:36/km"
-        },
-        "warmup": "5-10 min easy jog with light dynamic drills",
-        "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-        "cooldown": "5 min easy jog or walk, then light stretching.",
-        "structured_workout": [
-          {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 8,
-            "target": "easy"
-          },
-          {
-            "name": "Easy run",
-            "type": "run",
-            "duration_min": 27,
-            "target": "zone 2",
-            "target_hr_zone": "zone 2",
-            "target_pace_min_per_km": {
-              "min": 7.14,
-              "max": 7.59,
-              "display": "7:09/km - 7:36/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 5,
-            "target": "walk"
-          }
+      "status": "completed",
+      "planned": null,
+      "actual": {
+        "run_count": 1,
+        "distance_km": 5.4,
+        "duration_min": 34.1,
+        "workout_types": [
+          "moderate"
         ],
-        "hard_session_allowed": false
-      },
-      "actual": null
+        "feedback_tags": []
+      }
     },
     {
       "date": "2026-08-29",
@@ -253,9 +219,9 @@
         "intensity": "RPE 3-4 / easy endurance",
         "target_hr_zone": "zone 2",
         "target_pace_min_per_km": {
-          "min": 7.24,
-          "max": 7.79,
-          "display": "7:15/km - 7:48/km"
+          "min": 6.99,
+          "max": 7.54,
+          "display": "6:59/km - 7:32/km"
         },
         "warmup": "10 min easy jog",
         "main_set": "Long easy run. Keep the first half especially relaxed.",
@@ -274,9 +240,9 @@
             "target": "zone 2",
             "target_hr_zone": "zone 2",
             "target_pace_min_per_km": {
-              "min": 7.24,
-              "max": 7.79,
-              "display": "7:15/km - 7:48/km"
+              "min": 6.99,
+              "max": 7.54,
+              "display": "6:59/km - 7:32/km"
             }
           },
           {
@@ -380,24 +346,24 @@
     },
     "pace_targets": {
       "recovery_run": {
-        "min": 7.49,
-        "max": 8.09,
-        "display": "7:30/km - 8:06/km"
+        "min": 7.24,
+        "max": 7.84,
+        "display": "7:14/km - 7:50/km"
       },
       "easy_run": {
-        "min": 7.14,
-        "max": 7.59,
-        "display": "7:09/km - 7:36/km"
+        "min": 6.89,
+        "max": 7.34,
+        "display": "6:53/km - 7:20/km"
       },
       "long_run": {
-        "min": 7.24,
-        "max": 7.79,
-        "display": "7:15/km - 7:48/km"
+        "min": 6.99,
+        "max": 7.54,
+        "display": "6:59/km - 7:32/km"
       },
       "steady_run": {
-        "min": 6.84,
-        "max": 7.24,
-        "display": "6:51/km - 7:15/km"
+        "min": 6.59,
+        "max": 6.99,
+        "display": "6:35/km - 6:59/km"
       },
       "tempo": {
         "min": 6.25,
