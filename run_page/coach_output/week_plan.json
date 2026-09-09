@@ -30,19 +30,34 @@
   {
     "date": "2026-09-08",
     "weekday": "Tue",
+    "status": "completed",
+    "planned": null,
+    "actual": {
+      "run_count": 1,
+      "distance_km": 5.0,
+      "duration_min": 43.8,
+      "workout_types": [
+        "easy"
+      ],
+      "feedback_tags": []
+    }
+  },
+  {
+    "date": "2026-09-09",
+    "weekday": "Wed",
     "status": "planned",
     "planned": {
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
-      "distance_km": 6.1,
+      "distance_km": 5.7,
       "intensity": "RPE 3-4 / conversational",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 6.58,
-        "max": 7.03,
-        "display": "6:35/km - 7:02/km"
+        "min": 7.03,
+        "max": 7.48,
+        "display": "7:02/km - 7:29/km"
       },
       "warmup": "5-10 min easy jog with light dynamic drills",
       "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
@@ -61,9 +76,9 @@
           "target": "zone 2",
           "target_hr_zone": "zone 2",
           "target_pace_min_per_km": {
-            "min": 6.58,
-            "max": 7.03,
-            "display": "6:35/km - 7:02/km"
+            "min": 7.03,
+            "max": 7.48,
+            "display": "7:02/km - 7:29/km"
           }
         },
         {
@@ -78,21 +93,21 @@
     "actual": null
   },
   {
-    "date": "2026-09-09",
-    "weekday": "Wed",
+    "date": "2026-09-10",
+    "weekday": "Thu",
     "status": "planned",
     "planned": {
-      "date": "2026-09-09",
+      "date": "2026-09-10",
       "run_or_rest": "run",
       "workout_type": "steady_run",
       "duration_min": 45,
-      "distance_km": 6.8,
+      "distance_km": 6.4,
       "intensity": "RPE 5-6 / steady but controlled",
       "target_hr_zone": "zone 3",
       "target_pace_min_per_km": {
-        "min": 6.28,
-        "max": 6.68,
-        "display": "6:17/km - 6:41/km"
+        "min": 6.73,
+        "max": 7.13,
+        "display": "6:44/km - 7:08/km"
       },
       "warmup": "10 min easy jog with light drills",
       "main_set": "Steady aerobic running. No racing, no surges.",
@@ -111,9 +126,9 @@
           "target": "zone 3",
           "target_hr_zone": "zone 3",
           "target_pace_min_per_km": {
-            "min": 6.28,
-            "max": 6.68,
-            "display": "6:17/km - 6:41/km"
+            "min": 6.73,
+            "max": 7.13,
+            "display": "6:44/km - 7:08/km"
           }
         },
         {
@@ -124,56 +139,6 @@
         }
       ],
       "hard_session_allowed": true
-    },
-    "actual": null
-  },
-  {
-    "date": "2026-09-10",
-    "weekday": "Thu",
-    "status": "planned",
-    "planned": {
-      "date": "2026-09-10",
-      "run_or_rest": "run",
-      "workout_type": "easy_run",
-      "duration_min": 40,
-      "distance_km": 6.1,
-      "intensity": "RPE 3-4 / conversational",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 6.58,
-        "max": 7.03,
-        "display": "6:35/km - 7:02/km"
-      },
-      "warmup": "5-10 min easy jog with light dynamic drills",
-      "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-      "cooldown": "5 min easy jog or walk, then light stretching.",
-      "structured_workout": [
-        {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 8,
-          "target": "easy"
-        },
-        {
-          "name": "Easy run",
-          "type": "run",
-          "duration_min": 27,
-          "target": "zone 2",
-          "target_hr_zone": "zone 2",
-          "target_pace_min_per_km": {
-            "min": 6.58,
-            "max": 7.03,
-            "display": "6:35/km - 7:02/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 5,
-          "target": "walk"
-        }
-      ],
-      "hard_session_allowed": false
     },
     "actual": null
   },
