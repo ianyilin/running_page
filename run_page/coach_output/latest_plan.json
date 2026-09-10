@@ -1,55 +1,54 @@
 {
-  "date": "2026-09-09",
+  "date": "2026-09-10",
   "run_or_rest": "run",
-  "workout_type": "easy_run",
-  "duration_min": 40,
-  "distance_km": 5.7,
-  "intensity": "RPE 3-4 / conversational",
-  "target_hr_zone": "zone 2",
+  "workout_type": "steady_run",
+  "duration_min": 45,
+  "distance_km": 6.4,
+  "intensity": "RPE 5-6 / steady but controlled",
+  "target_hr_zone": "zone 3",
   "target_pace_min_per_km": {
-    "min": 7.03,
-    "max": 7.48,
-    "display": "7:02/km - 7:29/km"
+    "min": 6.73,
+    "max": 7.13,
+    "display": "6:44/km - 7:08/km"
   },
-  "warmup": "5-10分钟轻松慢跑，配合简单动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅对话为准。",
-  "cooldown": "5分钟轻松慢跑或步行，随后做轻度拉伸。",
+  "warmup": "10分钟轻松慢跑，配合简单动态热身",
+  "main_set": "稳定有氧跑，保持可控，不要比赛化，不要突然加速",
+  "cooldown": "10分钟轻松慢跑或步行放松",
   "structured_workout": [
     {
       "name": "Warm up",
       "type": "warmup",
-      "duration_min": 8,
-      "target": "easy"
+      "duration_min": 10,
+      "target": "zone 2"
     },
     {
-      "name": "Easy run",
+      "name": "Steady run",
       "type": "run",
-      "duration_min": 27,
-      "target": "zone 2",
-      "target_hr_zone": "zone 2",
+      "duration_min": 25,
+      "target": "zone 3",
+      "target_hr_zone": "zone 3",
       "target_pace_min_per_km": {
-        "min": 7.03,
-        "max": 7.48,
-        "display": "7:02/km - 7:29/km"
+        "min": 6.73,
+        "max": 7.13,
+        "display": "6:44/km - 7:08/km"
       }
     },
     {
       "name": "Cool down",
       "type": "cooldown",
-      "duration_min": 5,
-      "target": "walk"
+      "duration_min": 10,
+      "target": "zone 1-2"
     }
   ],
-  "rationale": "今天按计划进行40分钟轻松跑，目标是为10月1日半马目标继续积累稳定有氧能力，而不是追求速度。距离目标日还有22天，当前处于峰值期，但规则已明确今天不是高强度日。你昨天完成了一次偏轻松的跑步，近7天总量16.72公里、疲劳信号低，适合继续做一次保守的有氧衔接。结合你近期不少跑步平均心率偏高，今天更应严格压在Zone 2，宁可稍慢也不要把轻松跑跑成中高强度，这样既能支持半马耐力，也能降低受伤和累积疲劳风险。",
+  "rationale": "今天按计划进行45分钟、约6.4公里的稳定跑。你距离10月1日半马目标还有21天，当前处于峰值期，但最近7天跑量只有9.96公里，且距离上次跑步已2天，疲劳信号低，适合完成一次受控的稳态有氧训练。这个安排能在不过度刺激的前提下，帮助你维持半马专项耐力与节奏感。结合你近期不少跑步心率偏高的情况，今天重点是“稳”和“可控”，宁可略慢也不要跑成阈值或冲刺训练。",
   "cautions": [
-    "如果心率明显高于平时，优先降速，不要硬跟配速。",
-    "以轻松可对话为第一标准；若配速达不到计划范围也没关系。",
-    "若出现胸闷、头晕、异常气短或疼痛，请立即停止并改为步行返回。",
-    "近期不少训练心率偏高，今天不要加速冲刺、不要追加节奏段。",
-    "跑后补水，若天气闷热可适当缩短主训练时间但不要加大强度。"
+    "主训练段尽量控制在zone 3，不要因为状态好就加速到更高强度。",
+    "如果热身后感觉心率异常偏高、双腿沉重或呼吸不顺，可把主训练段下调为更轻松的稳定跑。",
+    "近期你不少中短距离跑平均心率偏高，今天优先看体感和心率，不要只盯配速。",
+    "如出现头晕、胸闷、刺痛或步态异常，立即停止训练并改为步行返回。"
   ],
-  "email_subject": "9月9日跑步计划：40分钟Zone 2轻松跑",
-  "hard_session_allowed": false,
+  "email_subject": "9月10日跑步计划：45分钟稳定跑（可控有氧）",
+  "hard_session_allowed": true,
   "phase": "peak",
   "training_cycle": {
     "phase": "peak",
@@ -141,44 +140,22 @@
       "status": "planned",
       "planned": {
         "date": "2026-09-09",
-        "run_or_rest": "run",
-        "workout_type": "easy_run",
-        "duration_min": 40,
-        "distance_km": 5.7,
-        "intensity": "RPE 3-4 / conversational",
-        "target_hr_zone": "zone 2",
-        "target_pace_min_per_km": {
-          "min": 7.03,
-          "max": 7.48,
-          "display": "7:02/km - 7:29/km"
-        },
-        "warmup": "5-10 min easy jog with light dynamic drills",
-        "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-        "cooldown": "5 min easy jog or walk, then light stretching.",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
         "structured_workout": [
           {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 8,
-            "target": "easy"
-          },
-          {
-            "name": "Easy run",
-            "type": "run",
-            "duration_min": 27,
-            "target": "zone 2",
-            "target_hr_zone": "zone 2",
-            "target_pace_min_per_km": {
-              "min": 7.03,
-              "max": 7.48,
-              "display": "7:02/km - 7:29/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 5,
-            "target": "walk"
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
           }
         ],
         "hard_session_allowed": false
@@ -241,25 +218,47 @@
       "status": "planned",
       "planned": {
         "date": "2026-09-11",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
+        "run_or_rest": "run",
+        "workout_type": "steady_run",
+        "duration_min": 45,
+        "distance_km": 6.4,
+        "intensity": "RPE 5-6 / steady but controlled",
+        "target_hr_zone": "zone 3",
+        "target_pace_min_per_km": {
+          "min": 6.73,
+          "max": 7.13,
+          "display": "6:44/km - 7:08/km"
+        },
+        "warmup": "10 min easy jog with light drills",
+        "main_set": "Steady aerobic running. No racing, no surges.",
+        "cooldown": "10 min easy jog or walk.",
         "structured_workout": [
           {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
+            "name": "Warm up",
+            "type": "warmup",
+            "duration_min": 10,
+            "target": "zone 2"
+          },
+          {
+            "name": "Steady run",
+            "type": "run",
+            "duration_min": 25,
+            "target": "zone 3",
+            "target_hr_zone": "zone 3",
+            "target_pace_min_per_km": {
+              "min": 6.73,
+              "max": 7.13,
+              "display": "6:44/km - 7:08/km"
+            }
+          },
+          {
+            "name": "Cool down",
+            "type": "cooldown",
+            "duration_min": 10,
+            "target": "zone 1-2"
           }
         ],
-        "hard_session_allowed": false
+        "hard_session_allowed": true
       },
       "actual": null
     },

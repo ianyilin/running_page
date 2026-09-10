@@ -48,44 +48,22 @@
     "status": "planned",
     "planned": {
       "date": "2026-09-09",
-      "run_or_rest": "run",
-      "workout_type": "easy_run",
-      "duration_min": 40,
-      "distance_km": 5.7,
-      "intensity": "RPE 3-4 / conversational",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 7.03,
-        "max": 7.48,
-        "display": "7:02/km - 7:29/km"
-      },
-      "warmup": "5-10 min easy jog with light dynamic drills",
-      "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-      "cooldown": "5 min easy jog or walk, then light stretching.",
+      "run_or_rest": "rest",
+      "workout_type": "rest",
+      "duration_min": 0,
+      "distance_km": 0,
+      "intensity": "rest",
+      "target_hr_zone": null,
+      "target_pace_min_per_km": null,
+      "warmup": "Optional 5-10 min walk",
+      "main_set": "Rest day. Optional easy walk and light mobility.",
+      "cooldown": "Gentle stretching if it feels good.",
       "structured_workout": [
         {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 8,
-          "target": "easy"
-        },
-        {
-          "name": "Easy run",
-          "type": "run",
-          "duration_min": 27,
-          "target": "zone 2",
-          "target_hr_zone": "zone 2",
-          "target_pace_min_per_km": {
-            "min": 7.03,
-            "max": 7.48,
-            "display": "7:02/km - 7:29/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 5,
-          "target": "walk"
+          "name": "Rest",
+          "type": "rest",
+          "duration_min": 0,
+          "target": "rest"
         }
       ],
       "hard_session_allowed": false
@@ -148,25 +126,47 @@
     "status": "planned",
     "planned": {
       "date": "2026-09-11",
-      "run_or_rest": "rest",
-      "workout_type": "rest",
-      "duration_min": 0,
-      "distance_km": 0,
-      "intensity": "rest",
-      "target_hr_zone": null,
-      "target_pace_min_per_km": null,
-      "warmup": "Optional 5-10 min walk",
-      "main_set": "Rest day. Optional easy walk and light mobility.",
-      "cooldown": "Gentle stretching if it feels good.",
+      "run_or_rest": "run",
+      "workout_type": "steady_run",
+      "duration_min": 45,
+      "distance_km": 6.4,
+      "intensity": "RPE 5-6 / steady but controlled",
+      "target_hr_zone": "zone 3",
+      "target_pace_min_per_km": {
+        "min": 6.73,
+        "max": 7.13,
+        "display": "6:44/km - 7:08/km"
+      },
+      "warmup": "10 min easy jog with light drills",
+      "main_set": "Steady aerobic running. No racing, no surges.",
+      "cooldown": "10 min easy jog or walk.",
       "structured_workout": [
         {
-          "name": "Rest",
-          "type": "rest",
-          "duration_min": 0,
-          "target": "rest"
+          "name": "Warm up",
+          "type": "warmup",
+          "duration_min": 10,
+          "target": "zone 2"
+        },
+        {
+          "name": "Steady run",
+          "type": "run",
+          "duration_min": 25,
+          "target": "zone 3",
+          "target_hr_zone": "zone 3",
+          "target_pace_min_per_km": {
+            "min": 6.73,
+            "max": 7.13,
+            "display": "6:44/km - 7:08/km"
+          }
+        },
+        {
+          "name": "Cool down",
+          "type": "cooldown",
+          "duration_min": 10,
+          "target": "zone 1-2"
         }
       ],
-      "hard_session_allowed": false
+      "hard_session_allowed": true
     },
     "actual": null
   },
