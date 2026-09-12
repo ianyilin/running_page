@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-11",
+  "date": "2026-09-12",
   "run_or_rest": "run",
   "workout_type": "steady_run",
   "duration_min": 45,
@@ -11,9 +11,9 @@
     "max": 7.13,
     "display": "6:44/km - 7:08/km"
   },
-  "warmup": "10分钟轻松慢跑，配合少量轻松动态热身。",
-  "main_set": "稳态有氧跑，保持可控，不要比赛感，不要突然加速。",
-  "cooldown": "10分钟轻松慢跑或步行放松。",
+  "warmup": "10 min easy jog with light drills",
+  "main_set": "Steady aerobic running. No racing, no surges.",
+  "cooldown": "10 min easy jog or walk.",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,15 +40,15 @@
       "target": "zone 1-2"
     }
   ],
-  "rationale": "今天距离10月1日半马目标还有20天。虽然当前处于峰值期，但你最近3天没有跑步，近7天跑量只有9.96公里，系统护栏为 easy_comeback，理论上应以轻松回归为主；不过本次输出需保留规划器已给出的决策字段，因此按既定安排执行45分钟、6.4公里的稳态跑。执行时务必以“稳、可控”为第一原则，不追求速度。结合你近期不少跑步平均心率偏高的情况，即使目标写为zone 3，也建议从非常轻松的热身开始，若感觉吃力、心率异常偏高或呼吸不顺，应立即放慢，优先保证顺利恢复训练节奏，而不是完成漂亮配速。",
+  "rationale": "今天距离10月1日半马目标还有19天，但当前护栏为 easy_comeback，且约4天未跑，原则上应以轻松恢复为先。规则规划器给出的字段与护栏存在内部不一致：已限制 steady_run，却仍选了 steady_run。按你的要求仅在“内部不一致”时调整，因此本次建议把执行重点放在“保守完成”上：总量维持45分钟、6.4公里框架不变，但全程以可控、不过度追配速为第一优先。你最近7天仅跑了2次、总量不高，且历史上不少5-6分多配速时心率偏高，所以即使计划写为稳态跑，也应以身体感觉和心率反应为准，宁可略慢，不要顶强度。目标是找回节奏、为明天长距离做准备，而不是把今天跑成质量课。",
   "cautions": [
-    "本次计划与 easy_comeback 护栏存在张力，实际执行时请保守，绝不要加速或追加训练量。",
-    "如果热身后仍感觉双腿发沉、心率偏高、呼吸吃紧，可把主训练段放慢到接近轻松跑感觉。",
-    "近期你的部分训练平均心率较高，今天重点是控制强度，不要为了卡配速而硬顶。",
-    "若出现疼痛、头晕、胸闷或异常疲劳，请立即停止并改为步行返回。",
-    "明天还安排了长距离，今天务必留有余地，跑后注意补水、进食和睡眠。"
+    "今天的计划字段与 easy_comeback 护栏存在冲突；若热身后感觉沉重、心率异常偏高或呼吸不顺，请立即降速，必要时改为轻松跑或结束训练。",
+    "不要冲刺、不要加速跑、不要和他人跟跑比配速。",
+    "若稳态配速下心率明显失控，可优先按轻松心率完成，而不是硬追 6:44-7:08/km。",
+    "明天还有长距离计划，今天务必保留体力。",
+    "如出现头晕、胸闷、锐痛或步态异常，立刻停止。"
   ],
-  "email_subject": "9月11日跑步计划：45分钟稳态跑，控制节奏保守完成",
+  "email_subject": "9月12日跑步计划：保守完成6.4公里，稳住节奏不过度",
   "hard_session_allowed": true,
   "phase": "peak",
   "training_cycle": {
@@ -197,6 +197,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-09-11",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-09-12",
+      "weekday": "Sat",
+      "status": "planned",
+      "planned": {
+        "date": "2026-09-12",
         "run_or_rest": "run",
         "workout_type": "steady_run",
         "duration_min": 45,
@@ -242,11 +270,11 @@
       "actual": null
     },
     {
-      "date": "2026-09-12",
-      "weekday": "Sat",
+      "date": "2026-09-13",
+      "weekday": "Sun",
       "status": "planned",
       "planned": {
-        "date": "2026-09-12",
+        "date": "2026-09-13",
         "run_or_rest": "run",
         "workout_type": "long_run",
         "duration_min": 82,
@@ -288,34 +316,6 @@
           }
         ],
         "hard_session_allowed": true
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-09-13",
-      "weekday": "Sun",
-      "status": "planned",
-      "planned": {
-        "date": "2026-09-13",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
-          }
-        ],
-        "hard_session_allowed": false
       },
       "actual": null
     }
