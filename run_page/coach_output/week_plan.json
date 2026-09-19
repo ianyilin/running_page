@@ -101,9 +101,24 @@
   {
     "date": "2026-09-18",
     "weekday": "Fri",
+    "status": "completed",
+    "planned": null,
+    "actual": {
+      "run_count": 1,
+      "distance_km": 5.0,
+      "duration_min": 29.1,
+      "workout_types": [
+        "hard"
+      ],
+      "feedback_tags": []
+    }
+  },
+  {
+    "date": "2026-09-19",
+    "weekday": "Sat",
     "status": "planned",
     "planned": {
-      "date": "2026-09-18",
+      "date": "2026-09-19",
       "run_or_rest": "run",
       "workout_type": "easy_run",
       "duration_min": 40,
@@ -145,56 +160,6 @@
         }
       ],
       "hard_session_allowed": false
-    },
-    "actual": null
-  },
-  {
-    "date": "2026-09-19",
-    "weekday": "Sat",
-    "status": "planned",
-    "planned": {
-      "date": "2026-09-19",
-      "run_or_rest": "run",
-      "workout_type": "long_run",
-      "duration_min": 82,
-      "distance_km": 11.7,
-      "intensity": "RPE 3-4 / easy endurance",
-      "target_hr_zone": "zone 2",
-      "target_pace_min_per_km": {
-        "min": 6.96,
-        "max": 7.51,
-        "display": "6:58/km - 7:31/km"
-      },
-      "warmup": "10 min easy jog",
-      "main_set": "Long easy run. Keep the first half especially relaxed.",
-      "cooldown": "5-10 min walk and mobility.",
-      "structured_workout": [
-        {
-          "name": "Warm up",
-          "type": "warmup",
-          "duration_min": 10,
-          "target": "zone 2"
-        },
-        {
-          "name": "Long run",
-          "type": "run",
-          "duration_min": 64,
-          "target": "zone 2",
-          "target_hr_zone": "zone 2",
-          "target_pace_min_per_km": {
-            "min": 6.96,
-            "max": 7.51,
-            "display": "6:58/km - 7:31/km"
-          }
-        },
-        {
-          "name": "Cool down",
-          "type": "cooldown",
-          "duration_min": 8,
-          "target": "walk"
-        }
-      ],
-      "hard_session_allowed": true
     },
     "actual": null
   },
