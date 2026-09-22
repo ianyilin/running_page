@@ -1,18 +1,18 @@
 {
-  "date": "2026-09-21",
+  "date": "2026-09-22",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
-  "distance_km": 5.8,
+  "distance_km": 5.9,
   "intensity": "RPE 3-4 / conversational",
   "target_hr_zone": "zone 2",
   "target_pace_min_per_km": {
-    "min": 6.86,
-    "max": 7.31,
-    "display": "6:52/km - 7:19/km"
+    "min": 6.75,
+    "max": 7.2,
+    "display": "6:45/km - 7:12/km"
   },
   "warmup": "先慢跑 5-10 分钟，并做轻度动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能轻松对话为准。",
+  "main_set": "进行轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
   "cooldown": "最后 5 分钟慢跑或步行放松，再做轻度拉伸。",
   "structured_workout": [
     {
@@ -28,9 +28,9 @@
       "target": "zone 2",
       "target_hr_zone": "zone 2",
       "target_pace_min_per_km": {
-        "min": 6.86,
-        "max": 7.31,
-        "display": "6:52/km - 7:19/km"
+        "min": 6.75,
+        "max": 7.2,
+        "display": "6:45/km - 7:12/km"
       }
     },
     {
@@ -40,14 +40,14 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天处于半马目标日前 10 天的减量期，规则已指定为轻松跑。结合你最近 7 天 3 次跑步且全部偏硬、最近一次 10 公里平均心率较高，以及当前 guardrail 为 easy_only，今天最安全的安排就是按计划完成 40 分钟、约 5.8 公里的二区轻松跑，不加入任何提速内容。这样既能维持跑感和有氧连续性，也能降低疲劳累积，帮助你以更清爽的状态进入后续减量周。",
+  "rationale": "今天按计划进行 40 分钟轻松跑。你目前处于减量期，距离 10 月 1 日的半马目标还有 9 天；同时最近 7 天跑量较前一周明显上升，系统疲劳信号为高，且保护规则为 easy_only，所以今天只能安排低强度有氧，不做节奏跑、间歇或长距离。昨天刚完成 6.72 公里跑步，过去 7 天已有 27.15 公里且多次心率偏高，今天这次轻松跑的重点是维持跑感、促进恢复、避免继续堆积疲劳。配速按 6:45-7:12/km、心率控制在 zone 2，更符合当前安全和稳妥的安排。",
   "cautions": [
-    "全程以轻松可对话为标准，若心率明显飙高就主动降速。",
-    "如果双腿仍有前一场硬跑后的沉重感，可优先按心率和体感，不必勉强追配速。",
-    "不要临时加速、加距离或做冲刺，今天不是质量课。",
-    "若出现胸闷、头晕、异常疼痛或步态改变，应立即停止并改为步行返回。"
+    "如果热身后仍感觉双腿沉重、心率异常偏高或呼吸不顺，立即降速，必要时改为步行结束。",
+    "今天不要加速、不要冲刺、不要自行延长距离或时间。",
+    "以轻松可交谈为第一标准；若配速达不到也没关系，优先守住低强度。",
+    "跑后只做轻度拉伸和补水，避免额外高强度力量训练。"
   ],
-  "email_subject": "9月21日跑步计划：40分钟二区轻松跑",
+  "email_subject": "9月22日跑步计划：40分钟二区轻松跑",
   "hard_session_allowed": false,
   "phase": "taper",
   "training_cycle": {
@@ -86,7 +86,7 @@
     ]
   },
   "weekly_target": {
-    "distance_km": 10.0,
+    "distance_km": 12.7,
     "long_run_km": 13.8,
     "quality_sessions": 0
   },
@@ -94,52 +94,17 @@
     {
       "date": "2026-09-21",
       "weekday": "Mon",
-      "status": "planned",
-      "planned": {
-        "date": "2026-09-21",
-        "run_or_rest": "run",
-        "workout_type": "easy_run",
-        "duration_min": 40,
-        "distance_km": 5.8,
-        "intensity": "RPE 3-4 / conversational",
-        "target_hr_zone": "zone 2",
-        "target_pace_min_per_km": {
-          "min": 6.86,
-          "max": 7.31,
-          "display": "6:52/km - 7:19/km"
-        },
-        "warmup": "5-10 min easy jog with light dynamic drills",
-        "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
-        "cooldown": "5 min easy jog or walk, then light stretching.",
-        "structured_workout": [
-          {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 8,
-            "target": "easy"
-          },
-          {
-            "name": "Easy run",
-            "type": "run",
-            "duration_min": 27,
-            "target": "zone 2",
-            "target_hr_zone": "zone 2",
-            "target_pace_min_per_km": {
-              "min": 6.86,
-              "max": 7.31,
-              "display": "6:52/km - 7:19/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 5,
-            "target": "walk"
-          }
+      "status": "completed",
+      "planned": null,
+      "actual": {
+        "run_count": 1,
+        "distance_km": 6.7,
+        "duration_min": 40.9,
+        "workout_types": [
+          "moderate"
         ],
-        "hard_session_allowed": false
-      },
-      "actual": null
+        "feedback_tags": []
+      }
     },
     {
       "date": "2026-09-22",
@@ -150,13 +115,13 @@
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
-        "distance_km": 5.8,
+        "distance_km": 5.9,
         "intensity": "RPE 3-4 / conversational",
         "target_hr_zone": "zone 2",
         "target_pace_min_per_km": {
-          "min": 6.86,
-          "max": 7.31,
-          "display": "6:52/km - 7:19/km"
+          "min": 6.75,
+          "max": 7.2,
+          "display": "6:45/km - 7:12/km"
         },
         "warmup": "5-10 min easy jog with light dynamic drills",
         "main_set": "Easy aerobic running. Keep the effort controlled throughout.",
@@ -175,9 +140,9 @@
             "target": "zone 2",
             "target_hr_zone": "zone 2",
             "target_pace_min_per_km": {
-              "min": 6.86,
-              "max": 7.31,
-              "display": "6:52/km - 7:19/km"
+              "min": 6.75,
+              "max": 7.2,
+              "display": "6:45/km - 7:12/km"
             }
           },
           {
@@ -403,24 +368,24 @@
     },
     "pace_targets": {
       "recovery_run": {
-        "min": 7.21,
-        "max": 7.81,
-        "display": "7:13/km - 7:49/km"
+        "min": 7.09,
+        "max": 7.7,
+        "display": "7:06/km - 7:42/km"
       },
       "easy_run": {
-        "min": 6.86,
-        "max": 7.31,
-        "display": "6:52/km - 7:19/km"
+        "min": 6.75,
+        "max": 7.2,
+        "display": "6:45/km - 7:12/km"
       },
       "long_run": {
-        "min": 6.96,
-        "max": 7.51,
-        "display": "6:58/km - 7:31/km"
+        "min": 6.84,
+        "max": 7.4,
+        "display": "6:51/km - 7:24/km"
       },
       "steady_run": {
-        "min": 6.56,
-        "max": 6.96,
-        "display": "6:34/km - 6:58/km"
+        "min": 6.45,
+        "max": 6.84,
+        "display": "6:27/km - 6:51/km"
       },
       "tempo": {
         "min": 6.25,
