@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-03",
+  "date": "2026-10-04",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
@@ -11,9 +11,9 @@
     "max": 7.16,
     "display": "6:42/km - 7:09/km"
   },
-  "warmup": "先慢跑5-10分钟，并做几项轻量动态热身。",
-  "main_set": "进行轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
-  "cooldown": "最后慢跑或步行5分钟，再做轻度拉伸。",
+  "warmup": "先慢跑 5-10 分钟，并做轻量动态热身。",
+  "main_set": "进行轻松有氧跑，全程把强度控制住，以能轻松对话为准。",
+  "cooldown": "最后 5 分钟慢跑或步行放松，再做轻度拉伸。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,14 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天按计划进行40分钟轻松跑，目标5.9公里，强度保持在RPE 3-4、可交谈水平。你距离上一次跑步已有5天，当前保护规则为 easy_comeback，因此今天最合适的是保守地恢复跑感，而不是加入节奏跑、间歇或更长距离。最近7天跑量只有5.45公里，近14天也只有12.17公里，说明近期训练连续性偏低；在这种情况下，用二区轻松跑重建有氧节奏，更有利于降低受伤风险。结合你近期轻松/中等强度跑大多在约6:05-6:33/km、心率151-156附近，今天建议严格放松，配速控制在6:42-7:09/km，宁可稍慢也不要顶强度。",
+  "rationale": "今天安排 40 分钟轻松跑，属于一次安全的回归训练。你已经有 6 天没有跑步，当前保护规则为 easy_comeback，因此不适合做节奏跑、间歇或长距离。最近 7 天跑量只有 5.45 公里，近两周总量也偏低，今天以轻松恢复有氧感觉、重新建立连续性为主。按区间配速 6:42-7:09/km 或心率 zone 2 控制即可，不要追求速度。结合你近期不少跑步心率偏高的情况，今天更应优先看体感和呼吸是否轻松，而不是硬顶到以往较快配速。",
   "cautions": [
-    "如果热身后感觉双腿发沉、呼吸偏急或心率明显高于平时，请放慢到配速范围之外也可以，优先守住轻松强度。",
-    "全程应以能完整说话为标准；若接近喘不过气，说明已经超出今天要求。",
-    "今天是恢复性回归跑，不要临时加速、加距离或在结尾冲刺。",
-    "若出现疼痛、头晕、胸闷或步态异常，立即停止并改为步行返回。"
+    "如果热身后仍感觉双腿发沉、呼吸不顺或心率异常偏高，请放慢到配速下限，必要时改为跑走结合。",
+    "全程不要加速冲刺，不要把轻松跑跑成中等强度。",
+    "若出现疼痛、头晕、胸闷或异常不适，应立即停止训练。",
+    "今天重点是恢复节奏与稳定性，不是测试当前状态。"
   ],
-  "email_subject": "10月3日跑步计划：40分钟二区轻松回归跑",
+  "email_subject": "10月4日跑步计划：40分钟二区轻松回归跑",
   "hard_session_allowed": false,
   "phase": "maintenance",
   "training_cycle": {
@@ -193,6 +193,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-10-03",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-10-04",
+      "weekday": "Sun",
+      "status": "planned",
+      "planned": {
+        "date": "2026-10-04",
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
@@ -234,56 +262,6 @@
           }
         ],
         "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-10-04",
-      "weekday": "Sun",
-      "status": "planned",
-      "planned": {
-        "date": "2026-10-04",
-        "run_or_rest": "run",
-        "workout_type": "long_run",
-        "duration_min": 75,
-        "distance_km": 10.5,
-        "intensity": "RPE 3-4 / easy endurance",
-        "target_hr_zone": "zone 2",
-        "target_pace_min_per_km": {
-          "min": 6.81,
-          "max": 7.36,
-          "display": "6:48/km - 7:22/km"
-        },
-        "warmup": "10 min easy jog",
-        "main_set": "Long easy run. Keep the first half especially relaxed.",
-        "cooldown": "5-10 min walk and mobility.",
-        "structured_workout": [
-          {
-            "name": "Warm up",
-            "type": "warmup",
-            "duration_min": 10,
-            "target": "zone 2"
-          },
-          {
-            "name": "Long run",
-            "type": "run",
-            "duration_min": 57,
-            "target": "zone 2",
-            "target_hr_zone": "zone 2",
-            "target_pace_min_per_km": {
-              "min": 6.81,
-              "max": 7.36,
-              "display": "6:48/km - 7:22/km"
-            }
-          },
-          {
-            "name": "Cool down",
-            "type": "cooldown",
-            "duration_min": 8,
-            "target": "walk"
-          }
-        ],
-        "hard_session_allowed": true
       },
       "actual": null
     }
