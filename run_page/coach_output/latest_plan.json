@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-13",
+  "date": "2026-10-14",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
@@ -12,8 +12,8 @@
     "display": "6:36/km - 7:03/km"
   },
   "warmup": "先慢跑5-10分钟，并做轻度动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅说话为准。",
-  "cooldown": "最后慢跑或步行5分钟，再做轻度拉伸。",
+  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅对话为准。",
+  "cooldown": "最后5分钟慢跑或步行放松，再做轻度拉伸。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,13 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天按计划进行40分钟轻松跑。你昨天刚完成一次偏硬的跑步，且近7天跑量相对前一周上升明显，当前疲劳信号为高，保护规则也是 easy_only，因此今天只能安排轻松有氧，不做任何节奏、间歇或长距离加码。结合你31岁、近期28天内偏高的高强度占比，以及10月10日刚跑过12.2公里长距离，今天这次6.5公里左右的二区轻松跑更适合恢复与维持连续性。配速控制在6:36-7:03/公里，重点是呼吸平稳、心率受控，而不是追求速度。虽然目前没有明确比赛目标，但这类保守安排有助于在疲劳期稳住基础能力，降低受伤风险。",
+  "rationale": "今天按计划进行40分钟轻松跑。你最近7天跑了3次、共21.79公里，而且近3次里有2次偏硬，疲劳信号为高，当前保护规则也是 easy_only，因此今天只能做轻松有氧，不适合再加速或延长。按你目前10公里约60分钟、半马约132分钟的能力，以及最近轻松配速目标，今天以2区、配速6:36-7:03/km完成最安全，既能维持跑步连续性，也能降低在连续高负荷后的受伤风险。当前没有明确比赛目标，但在维护期里，这样的安排有助于恢复并保留基础耐力。",
   "cautions": [
-    "如果热身后双腿仍明显沉重，允许把配速放得比目标更慢，只要保持轻松即可。",
-    "若心率轻易飙升、无法维持对话，立即降速，必要时改为跑走结合完成。",
-    "今天不要加速跑、不要冲坡、不要额外补量。",
-    "如出现头晕、胸闷、锐痛或异常不适，应立即停止训练。"
+    "如果心率明显高于平时、很难维持对话，立即放慢到配速以下甚至改为跑走结合。",
+    "若双腿沉重感比昨天更明显，今天宁可保守完成，也不要为了凑6.5公里而提速。",
+    "最近一周训练量较前一周上升明显，跑后请重视补水、进食和睡眠恢复。"
   ],
-  "email_subject": "10月13日跑步计划：40分钟二区轻松跑",
+  "email_subject": "10月14日跑步计划：40分钟2区轻松跑",
   "hard_session_allowed": false,
   "phase": "maintenance",
   "training_cycle": {
@@ -55,7 +54,7 @@
     "blocks": []
   },
   "weekly_target": {
-    "distance_km": 15.0,
+    "distance_km": 18.5,
     "long_run_km": 12.8,
     "quality_sessions": 0
   },
@@ -78,9 +77,24 @@
     {
       "date": "2026-10-13",
       "weekday": "Tue",
+      "status": "completed",
+      "planned": null,
+      "actual": {
+        "run_count": 1,
+        "distance_km": 4.9,
+        "duration_min": 29.8,
+        "workout_types": [
+          "hard"
+        ],
+        "feedback_tags": []
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "weekday": "Wed",
       "status": "planned",
       "planned": {
-        "date": "2026-10-13",
+        "date": "2026-10-14",
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
@@ -119,34 +133,6 @@
             "type": "cooldown",
             "duration_min": 5,
             "target": "walk"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-10-14",
-      "weekday": "Wed",
-      "status": "planned",
-      "planned": {
-        "date": "2026-10-14",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
           }
         ],
         "hard_session_allowed": false
@@ -311,11 +297,11 @@
       "5k": {
         "distance": "5k",
         "distance_km": 5.0,
-        "estimated_time_min": 27.8,
-        "pace_min_per_km": 5.55,
+        "estimated_time_min": 28.6,
+        "pace_min_per_km": 5.72,
         "source": "auto_history",
-        "source_run_id": 24190286213,
-        "source_date": "2026-08-31",
+        "source_run_id": 24620676626,
+        "source_date": "2026-10-05",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       },
       "10k": {
@@ -333,11 +319,11 @@
       "5k": {
         "distance": "5k",
         "distance_km": 5.0,
-        "estimated_time_min": 27.8,
-        "pace_min_per_km": 5.55,
+        "estimated_time_min": 28.6,
+        "pace_min_per_km": 5.72,
         "source": "auto_history",
-        "source_run_id": 24190286213,
-        "source_date": "2026-08-31",
+        "source_run_id": 24620676626,
+        "source_date": "2026-10-05",
         "note": "Estimated from whole-activity pace, not split-level best effort."
       },
       "10k": {
@@ -384,9 +370,9 @@
         "display": "6:15/km - 6:33/km"
       },
       "intervals": {
-        "min": 5.45,
-        "max": 5.75,
-        "display": "5:27/km - 5:45/km"
+        "min": 5.62,
+        "max": 5.92,
+        "display": "5:37/km - 5:55/km"
       }
     }
   }
