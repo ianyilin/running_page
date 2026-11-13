@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-12",
+  "date": "2026-11-13",
   "run_or_rest": "run",
   "workout_type": "easy_run",
   "duration_min": 40,
@@ -11,9 +11,9 @@
     "max": 7.06,
     "display": "6:37/km - 7:04/km"
   },
-  "warmup": "先慢跑5-10分钟，并做轻量动态热身。",
-  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅对话为准。",
-  "cooldown": "最后慢跑或步行5分钟，再做轻度拉伸。",
+  "warmup": "5-10分钟轻松慢跑，配合简单动态热身。",
+  "main_set": "轻松有氧跑，全程把强度控制住，以能顺畅交谈为准。",
+  "cooldown": "5分钟轻松慢跑或步行，然后做轻度拉伸。",
   "structured_workout": [
     {
       "name": "Warm up",
@@ -40,14 +40,14 @@
       "target": "walk"
     }
   ],
-  "rationale": "今天距离上一次跑步已过去8天，且当前保护规则为 easy_comeback，因此安排一次轻松跑最安全。按计划完成40分钟、约5.9公里的二区轻松跑，有助于在低疲劳和低受伤风险下恢复跑感、重建连续性。结合你最近两周跑量较低、近7天无跑步记录，以及近期轻松跑心率大约在143-150之间，今天应优先追求轻松稳定，而不是速度表现。配速按6:37-7:04/公里执行即可，如心率或主观感觉偏高，宁可放慢。",
+  "rationale": "今天安排40分钟、约5.9公里的轻松跑，符合规划器给出的easy_comeback保护规则。你已经9天没有跑步，最近7天跑量为0，过去14天总量也只有12.46公里，因此今天的重点不是追求速度，而是安全恢复跑感、重新建立有氧连续性。按Zone 2和可交谈强度完成，既能降低受伤风险，也更适合当前维护期训练状态。结合你最近几次轻松跑心率大多在143-150之间，今天应优先以呼吸平稳、动作放松为标准，必要时宁可放慢，不要硬顶配速。当前没有明确近期比赛目标，这次训练更应服务于长期稳定性，为后续周末长距离做温和衔接。",
   "cautions": [
-    "今天是回归跑，切勿自行加速、加量或加入冲刺。",
-    "如果心率明显高于平时轻松跑水平，优先降速，必要时改为跑走结合。",
-    "全程应保持可以正常说完整句子的强度；一旦呼吸吃紧，就说明过快。",
-    "若出现头晕、胸闷、异常气短或任何疼痛，请立即停止。"
+    "今天是回归跑，感觉发沉或心率异常偏高时，可以主动降速，必要时改为跑走结合。",
+    "不要把轻松跑跑成稳态跑，避免进入明显喘、无法完整说话的强度。",
+    "若出现疼痛、头晕、胸闷或步态明显变形，应立即停止训练。",
+    "近期有9天未跑，跑后注意补水和小腿、臀部的轻度放松，不要额外加速冲刺。"
   ],
-  "email_subject": "11月12日跑步计划：40分钟二区轻松回归跑",
+  "email_subject": "11月13日跑步计划：40分钟Zone 2轻松回归跑",
   "hard_session_allowed": false,
   "phase": "maintenance",
   "training_cycle": {
@@ -150,6 +150,34 @@
       "status": "planned",
       "planned": {
         "date": "2026-11-12",
+        "run_or_rest": "rest",
+        "workout_type": "rest",
+        "duration_min": 0,
+        "distance_km": 0,
+        "intensity": "rest",
+        "target_hr_zone": null,
+        "target_pace_min_per_km": null,
+        "warmup": "Optional 5-10 min walk",
+        "main_set": "Rest day. Optional easy walk and light mobility.",
+        "cooldown": "Gentle stretching if it feels good.",
+        "structured_workout": [
+          {
+            "name": "Rest",
+            "type": "rest",
+            "duration_min": 0,
+            "target": "rest"
+          }
+        ],
+        "hard_session_allowed": false
+      },
+      "actual": null
+    },
+    {
+      "date": "2026-11-13",
+      "weekday": "Fri",
+      "status": "planned",
+      "planned": {
+        "date": "2026-11-13",
         "run_or_rest": "run",
         "workout_type": "easy_run",
         "duration_min": 40,
@@ -188,34 +216,6 @@
             "type": "cooldown",
             "duration_min": 5,
             "target": "walk"
-          }
-        ],
-        "hard_session_allowed": false
-      },
-      "actual": null
-    },
-    {
-      "date": "2026-11-13",
-      "weekday": "Fri",
-      "status": "planned",
-      "planned": {
-        "date": "2026-11-13",
-        "run_or_rest": "rest",
-        "workout_type": "rest",
-        "duration_min": 0,
-        "distance_km": 0,
-        "intensity": "rest",
-        "target_hr_zone": null,
-        "target_pace_min_per_km": null,
-        "warmup": "Optional 5-10 min walk",
-        "main_set": "Rest day. Optional easy walk and light mobility.",
-        "cooldown": "Gentle stretching if it feels good.",
-        "structured_workout": [
-          {
-            "name": "Rest",
-            "type": "rest",
-            "duration_min": 0,
-            "target": "rest"
           }
         ],
         "hard_session_allowed": false
