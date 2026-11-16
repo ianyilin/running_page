@@ -102,6 +102,12 @@ git push
 
 ## Daily AI Coach
 
+Automatic coaching is currently paused. The workflow sets
+`RUNNING_COACH_ENABLED: 'false'` in `.github/workflows/run_data_sync.yml`, skipping
+plan generation, email delivery, and coach output commits. Set it to `'true'`
+to resume. Garmin sync and website publishing continue as usual. Existing coach
+code, profiles, goals, and local commands are retained.
+
 The daily workflow can generate a next-day running plan after Garmin sync. It
 uses the latest `src/static/activities.json`, writes:
 

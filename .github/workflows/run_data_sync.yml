@@ -34,6 +34,7 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  RUNNING_COACH_ENABLED: 'false'
 
 concurrency:
   group: garmin-data-sync
@@ -85,7 +86,7 @@ jobs:
           git push
 
       - name: Generate and email daily coach plan
-        if: github.event_name != 'push'
+        if: env.RUNNING_COACH_ENABLED == 'true' && github.event_name != 'push'
         env:
           AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
@@ -100,7 +101,7 @@ jobs:
         run: python run_page/coach/daily_coach.py --send-email
 
       - name: Commit coach output
-        if: github.event_name != 'push'
+        if: env.RUNNING_COACH_ENABLED == 'true' && github.event_name != 'push'
         run: |
           git config --local user.email 'action@github.com'
           git config --local user.name 'GitHub Action'
